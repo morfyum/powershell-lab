@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/powershell
+FROM mcr.microsoft.com/powershell:latest
 
 WORKDIR /usr/src/app
 
