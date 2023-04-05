@@ -89,6 +89,9 @@ chmod +x ./run.sh
 ./run.sh
 ```
 
+#### Connection between container and host
+`run.sh` mount the root `./src` folder to the container root directory. This content is editable from host system, and possible to test changes without restart container.
+
 ### MacOS
 
 ```sh
