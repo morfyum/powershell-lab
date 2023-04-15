@@ -1,0 +1,363 @@
+
+# CONTENTS
+    - CONTENTS
+    - REGISTRY HKLM
+    - SERVICES
+    - APPLICATIONS
+    - START MENU
+
+# REGISTRY HKLM:
+
+## Disable telemerty HKLM ## Not tested! 
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry" -Type DWord -Value 0
+
+## Disable wifi sense. > Sense is collecting data from other available networks ## Not tested!
+New-Item -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting" -Force
+Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting" -Name "Value" -Type DWord -Value 0
+Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" -Name "Value" -Type DWord -Value 0
+
+## Disable SmartScreen Filter ## UNSAFE ## Not tested!
+Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "SmartScreenEnabled" -Type String -Value "Off"
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppHost" -Name "EnableWebContentEvaluation" -Type DWord -Value 0
+### Enable SmartScreen Filter ## Not tested!
+### Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "SmartScreenEnabled" -Type String -Value "RequireAdmin"
+### Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppHost" -Name "EnableWebContentEvaluation"
+
+## Disable Bing search in Start menu ## Not tested!
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "BingSearchEnabled" -Type DWord -Value 0
+
+## Disable Location button and service ## Not tested!
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}" -Name "SensorPermissionState" -Type DWord -Value 0
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Services\lfsvc\Service\Configuration" -Name "Status" -Type DWord -Value 0
+
+## Disable Feedback ## Not tested!
+New-Item -Path "HKCU:\Software\Microsoft\Siuf\Rules" -Force
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Siuf\Rules" -Name "NumberOfSIUFInPeriod" -Type DWord -Value 0
+
+## Disable Advertising ID ## Not tested!
+New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo"
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo" -Name "Enabled" -Type DWord -Value 0
+
+## Disable Cortana ## Not tested!
+New-Item -Path "HKCU:\Software\Microsoft\Personalization\Settings" -Force
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Personalization\Settings" -Name "AcceptedPrivacyPolicy" -Type DWord -Value 0
+New-Item -Path "HKCU:\Software\Microsoft\InputPersonalization" -Force
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\InputPersonalization" -Name "RestrictImplicitTextCollection" -Type DWord -Value 1
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\InputPersonalization" -Name "RestrictImplicitInkCollection" -Type DWord -Value 1
+New-Item -Path "HKCU:\Software\Microsoft\InputPersonalization\TrainedDataStore" -Force
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\InputPersonalization\TrainedDataStore" -Name "HarvestContacts" -Type DWord -Value 0
+
+## Restrict P2P only to local network
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\InputPersonalization\TrainedDataStore" -Name "HarvestContacts" -Type DWord -Value 0
+New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\DeliveryOptimization"
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\DeliveryOptimization" -Name "SystemSettingsDownloadMode" -Type DWord -Value 3
+
+## Remove AutoLogger file and restrict directory ## UNSAFE? ## Not Tested
+$autoLoggerDir = "$env:PROGRAMDATA\Microsoft\Diagnosis\ETLLogs\AutoLogger"
+Remove-Item "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl"
+icacls $autoLoggerDir /deny SYSTEM:`(OI`)`(CI`)F | Out-Null
+
+## Disable Windows Update automatic restart ## UNSAFE! ## Not Tested!
+Set-ItemProperty -Path "HKLM:\Software\Microsoft\WindowsUpdate\UX\Settings" -Name "UxOption" -Type DWord -Value 1
+
+## Disable Remote Assitance ## Not tested!
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Remote Assistance" -Name "fAllowToGetHelp" -Type DWord -Value 0
+
+## Disable Remote Desktop ## Not Tested!
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "fDenyTSConnections" -Type DWord -Value 1
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name "UserAuthentication" -Type DWord -Value 1
+
+## Disable LockScreen
+New-Item -Path "HKLM:\Software\Policies\Microsoft\Windows\Personalization" | Out-Null
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreen" -Type DWord -Value 1
+## Enalbe LockScreen
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreen" -Type DWord -Value 0
+
+## Disable sticky key ## Not Tested! # enable: 510
+Set-ItemProperty -Path "HKCU:\Control Panel\Accessibility\StickyKeys" -Name "Flags" -Type String -Value "506"
+
+## Hide search box & button ## Not tested!
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Type DWord -Value 0
+
+## Show known file extensions ## Not tested!
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Type DWord -Value 0
+
+## Show hidden files ## hide: 2 ## Not tested!
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden" -Type DWord -Value 1
+
+## Change default Explorer view to "Computer" ## Not tested!
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "LaunchTo" -Type DWord -Value 1
+## Change default Explorer view to "Quick Access"
+Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "LaunchTo"
+
+## Disable seeding update ## Not tested!
+New-FolderForced -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" ## New-Item instead?
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" "DODownloadMode" 0
+
+## Disable automatic driver update ## Not tested!
+Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" "SearchOrderConfig" 0
+
+
+# SERVICES 
+
+## Stop and disable Diagnostics Tracking Service
+Stop-Service "DiagTrack"
+Set-Service "DiagTrack" -StartupType Disabled
+
+## Stop and Disable EventLog 
+Stop-Service -Name eventlog -Force
+Set-Service -Name eventlog -StartupType Disabled
+
+## Stop and Disable Home Group services
+Stop-Service "HomeGroupListener"
+Set-Service "HomeGroupListener" -StartupType Disabled
+Stop-Service "HomeGroupProvider"
+Set-Service "HomeGroupProvider" -StartupType Disabled
+
+
+$services = @(
+    "diagnosticshub.standardcollector.service" # Microsoft (R) Diagnostics Hub Standard Collector Service
+    "DiagTrack"                                # Diagnostics Tracking Service
+    "dmwappushservice"                         # WAP Push Message Routing Service (see known issues)
+    "lfsvc"                                    # Geolocation Service
+    "MapsBroker"                               # Downloaded Maps Manager
+    "NetTcpPortSharing"                        # Net.Tcp Port Sharing Service
+    "RemoteAccess"                             # Routing and Remote Access
+    # "RemoteRegistry"                         # Remote Registry
+    "SharedAccess"                             # Internet Connection Sharing (ICS)
+    "TrkWks"                                   # Distributed Link Tracking Client
+    # "WbioSrvc"                               # Windows Biometric Service (required for Fingerprint reader / facial detection)
+    #"WlanSvc"                                 # WLAN AutoConfig
+    "WMPNetworkSvc"                            # Windows Media Player Network Sharing Service
+    #"wscsvc"                                  # Windows Security Center Service
+    #"WSearch"                                 # Windows Search
+    "XblAuthManager"                           # Xbox Live Auth Manager
+    "XblGameSave"                              # Xbox Live Game Save Service
+    "XboxNetApiSvc"                            # Xbox Live Networking Service
+    "ndu"                                      # Windows Network Data Usage Monitor
+    # Services which cannot be disabled
+    #"WdNisSvc"
+)
+
+foreach ($service in $services) {
+    Write-Output "Trying to disable $service"
+    Get-Service -Name $service | Set-Service -StartupType Disabled
+}
+
+
+
+# APPLICATIONS
+
+## Disable One Drive ## Not tested!
+New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" | Out-Null
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" -Name "DisableFileSyncNGSC" -Type DWord -Value 1
+
+## Uninstall Windows Media Player ## Not tested!
+dism /online /Disable-Feature /FeatureName:MediaPlayback /Quiet /NoRestart
+
+
+## Uninstall default Microsoft applications ## Not tested!
+Get-AppxPackage "Microsoft.3DBuilder" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.BingFinance" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.BingNews" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.BingSports" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.BingWeather" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.Getstarted" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.MicrosoftOfficeHub" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.MicrosoftSolitaireCollection" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.Office.OneNote" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.People" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.SkypeApp" | Remove-AppxPackage
+# Get-AppxPackage "Microsoft.Windows.Photos" | Remove-AppxPackage
+# Get-AppxPackage "Microsoft.WindowsAlarms" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.WindowsCamera" | Remove-AppxPackage
+Get-AppxPackage "microsoft.windowscommunicationsapps" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.WindowsMaps" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.WindowsPhone" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.WindowsSoundRecorder" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.XboxApp" | Remove-AppxPackage
+# Get-AppxPackage "Microsoft.ZuneMusic" | Remove-AppxPackage
+# Get-AppxPackage "Microsoft.ZuneVideo" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.AppConnector" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.ConnectivityStore" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.Office.Sway" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.Messaging" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.CommsPhone" | Remove-AppxPackage
+Get-AppxPackage "9E2F88E3.Twitter" | Remove-AppxPackage
+Get-AppxPackage "king.com.CandyCrushSodaSaga" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.WindowsFeedbackHub" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.Wallet" | Remove-AppxPackage
+# Get-AppxPackage "Microsoft.ScreenSketch" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.GetHelp" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.Xbox.TCUI" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.XboxGameOverlay" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.XboxSpeechToTextOverlay" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.MixedReality.Portal" | Remove-AppxPackage
+Get-AppxPackage "Microsoft.XboxIdentityProvider" | Remove-AppPackage
+Get-AppxPackage "5A894077.McAfeeSecurity" | Remove-AppPackage
+Get-AppxPackage "Disney.37853FC22B2CE" | Remove-AppPackage
+Get-AppxPackage "Microsoft.GamingApp" | Remove-AppPackage
+Get-AppxPackage "Facebook.InstagramBeta" | Remove-AppPackage
+Get-AppxPackage "AdobeSystemsIncorporated.AdobeCreativeCloudExpress" | Remove-AppPackage
+Get-AppxPackage "AmazonVideo.PrimeVideo" | Remove-AppPackage
+Get-AppxPackage "BytedancePte.Ltd.TikTok" | Remove-AppPackage
+
+
+$apps = @(
+    # default Windows 10 apps
+    "Microsoft.3DBuilder"
+    "Microsoft.Advertising.Xaml"
+    "Microsoft.Appconnector"
+    "Microsoft.BingFinance"
+    "Microsoft.BingNews"
+    "Microsoft.BingSports"
+    "Microsoft.BingTranslator"
+    "Microsoft.BingWeather"
+    "Microsoft.FreshPaint"
+    "Microsoft.GamingServices"
+    "Microsoft.Microsoft3DViewer"
+    "Microsoft.WindowsFeedbackHub"
+    "Microsoft.MicrosoftOfficeHub"
+    "Microsoft.MixedReality.Portal"
+    "Microsoft.MicrosoftPowerBIForWindows"
+    "Microsoft.MicrosoftSolitaireCollection"
+    #"Microsoft.MicrosoftStickyNotes"
+    "Microsoft.MinecraftUWP"
+    "Microsoft.NetworkSpeedTest"
+    "Microsoft.Office.OneNote"
+    "Microsoft.People"
+    "Microsoft.Print3D"
+    "Microsoft.SkypeApp"
+    "Microsoft.Wallet"
+    # "Microsoft.Windows.Photos"
+    # "Microsoft.WindowsAlarms"
+    # "Microsoft.WindowsCalculator"
+    "Microsoft.WindowsCamera"
+    "microsoft.windowscommunicationsapps"
+    "Microsoft.WindowsMaps"
+    "Microsoft.WindowsPhone"
+    "Microsoft.WindowsSoundRecorder"
+    #"Microsoft.WindowsStore"   # can't be re-installed
+    "Microsoft.Xbox.TCUI"
+    "Microsoft.XboxApp"
+    "Microsoft.XboxGameOverlay"
+    "Microsoft.XboxGamingOverlay"
+    "Microsoft.XboxSpeechToTextOverlay"
+    "Microsoft.YourPhone"
+    "Microsoft.ZuneMusic"
+    "Microsoft.ZuneVideo"
+    "Microsoft.Windows.CloudExperienceHost"
+    "Microsoft.Windows.ContentDeliveryManager"
+    "Microsoft.Windows.PeopleExperienceHost"
+    "Microsoft.XboxGameCallableUI"
+    "Microsoft.GamingApp"
+
+    # Threshold 2 apps
+    "Microsoft.CommsPhone"
+    "Microsoft.ConnectivityStore"
+    "Microsoft.GetHelp"
+    "Microsoft.Getstarted"
+    "Microsoft.Messaging"
+    "Microsoft.Office.Sway"
+    "Microsoft.OneConnect"
+    "Microsoft.WindowsFeedbackHub"
+
+    # Creators Update apps
+    "Microsoft.Microsoft3DViewer"
+    #"Microsoft.MSPaint"
+
+    #Redstone apps
+    "Microsoft.BingFoodAndDrink"
+    "Microsoft.BingHealthAndFitness"
+    "Microsoft.BingTravel"
+    "Microsoft.WindowsReadingList"
+
+    # Redstone 5 apps
+    "Microsoft.MixedReality.Portal"
+    #"Microsoft.ScreenSketch"
+    "Microsoft.XboxGamingOverlay"
+    "Microsoft.YourPhone"
+
+    # non-Microsoft
+    "2FE3CB00.PicsArt-PhotoStudio"
+    "46928bounde.EclipseManager"
+    "4DF9E0F8.Netflix"
+    "613EBCEA.PolarrPhotoEditorAcademicEdition"
+    "6Wunderkinder.Wunderlist"
+    "7EE7776C.LinkedInforWindows"
+    "89006A2E.AutodeskSketchBook"
+    "9E2F88E3.Twitter"
+    "A278AB0D.DisneyMagicKingdoms"
+    "A278AB0D.MarchofEmpires"
+    "ActiproSoftwareLLC.562882FEEB491" # next one is for the Code Writer from Actipro Software LLC
+    "CAF9E577.Plex"
+    "ClearChannelRadioDigital.iHeartRadio"
+    "D52A8D61.FarmVille2CountryEscape"
+    "D5EA27B7.Duolingo-LearnLanguagesforFree"
+    "DB6EA5DB.CyberLinkMediaSuiteEssentials"
+    "DolbyLaboratories.DolbyAccess"
+    "DolbyLaboratories.DolbyAccess"
+    "Drawboard.DrawboardPDF"
+    "Facebook.Facebook"
+    "Fitbit.FitbitCoach"
+    "Flipboard.Flipboard"
+    "GAMELOFTSA.Asphalt8Airborne"
+    "KeeperSecurityInc.Keeper"
+    "NORDCURRENT.COOKINGFEVER"
+    "PandoraMediaInc.29680B314EFC2"
+    "Playtika.CaesarsSlotsFreeCasino"
+    "ShazamEntertainmentLtd.Shazam"
+    "SlingTVLLC.SlingTV"
+    "SpotifyAB.SpotifyMusic"
+    "TheNewYorkTimes.NYTCrossword"
+    "ThumbmunkeysLtd.PhototasticCollage"
+    "TuneIn.TuneInRadio"
+    "WinZipComputing.WinZipUniversal"
+    "XINGAG.XING"
+    "flaregamesGmbH.RoyalRevolt2"
+    "king.com.*"
+    "king.com.BubbleWitch3Saga"
+    "king.com.CandyCrushSaga"
+    "king.com.CandyCrushSodaSaga"
+    "5A894077.McAfeeSecurity"
+    "Disney.37853FC22B2CE"
+    "Facebook.InstagramBeta"
+    "AdobeSystemsIncorporated.AdobeCreativeCloudExpress"
+    "AmazonVideo.PrimeVideo"
+    "BytedancePte.Ltd.TikTok"
+
+    # apps which cannot be removed using Remove-AppxPackage
+    #"Microsoft.BioEnrollment"
+    #"Microsoft.MicrosoftEdge"
+    #"Microsoft.Windows.Cortana"
+    #"Microsoft.WindowsFeedback"
+    #"Microsoft.XboxGameCallableUI"
+    #"Microsoft.XboxIdentityProvider"
+    #"Windows.ContactSupport"
+
+    # apps which other apps depend on
+    "Microsoft.Advertising.Xaml"
+)
+
+foreach ($app in $apps) {
+    Write-Output "Trying to remove $app"
+
+    Get-AppxPackage -Name $app -AllUsers | Remove-AppxPackage -AllUsers
+
+    Get-AppXProvisionedPackage -Online |
+        Where-Object DisplayName -EQ $app |
+        Remove-AppxProvisionedPackage -Online
+}
+
+
+# START MENU
+
+## Remove start menu entry: 
+Remove-Item -Force -ErrorAction SilentlyContinue "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk"
+
+## Get-ScheduledTask ??
+
+## Remove password age limit. 0 -eq 0 days -> Disabled. 60 -eq 60 days.
+net accounts /maxpwage:0
+
+
