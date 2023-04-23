@@ -5,38 +5,76 @@
     - SERVICES
     - APPLICATIONS
     - START MENU
+    
+    
+# VIRTUAL MACHINE OPTIMIZATIONS
 
-# REGISTRY HKLM:
+## Disable Defrag scheduled task ## ✅ WORK!
+## Get-ScheduledTask to query tasks
+schtasks /Change /DISABLE /TN "\Microsoft\Windows\Defrag\ScheduledDefrag"
 
-## Disable telemerty HKLM ## Not tested! 
+
+# REGISTRY HKLM HKCU:
+
+## Resize Recycle Bin ## ✅ WORK!
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\BitBucket\Volume\{2e6af5e9-0000-0000-0000-100000000000}\" -Name "MaxCapacity" -Type DWord -Value 512
+
+## Disable News and Interests on Tray ## ✅ WORK!
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds\" -Name "ShellFeedsTaskbarViewMode" -Type DWord -Value 2
+
+## Remove One Drive from explorer ## ✅ WORK!
+New-PSDrive -PSProvider "Registry" -Root "HKEY_CLASSES_ROOT" -Name "HKCR"
+mkdir -Force "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}"
+# 🚧 NOT TESTED: Whats for this??? WTF ??? 🚧
+# Set-ItemProperty -Path "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" "System.IsPinnedToNameSpaceTree" 0
+# mkdir -Force "HKCR:\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}"
+# Set-ItemProperty -Path "HKCR:\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" "System.IsPinnedToNameSpaceTree" 0
+# Remove-PSDrive "HKCR"
+
+## Disable telemerty HKLM ## ✅ PROBABLY WORK! 
 Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry" -Type DWord -Value 0
+# Enable Telemetry
+# Remove-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry"
 
 ## Disable wifi sense. > Sense is collecting data from other available networks ## Not tested!
 New-Item -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting" -Force
 Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting" -Name "Value" -Type DWord -Value 0
 Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" -Name "Value" -Type DWord -Value 0
+# Enable Wi-Fi Sense
+# Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting" -Name "Value" -Type DWord -Value 1
+# Set-ItemProperty -Path "HKLM:\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" -Name "Value" -Type DWord -Value 1
 
-## Disable SmartScreen Filter ## UNSAFE ## Not tested!
+## Disable SmartScreen Filter ## UNSAFE ## ✅ WORK!
 Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "SmartScreenEnabled" -Type String -Value "Off"
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppHost" -Name "EnableWebContentEvaluation" -Type DWord -Value 0
-### Enable SmartScreen Filter ## Not tested!
+### Enable SmartScreen Filter ## ✅ WORK!
 ### Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name "SmartScreenEnabled" -Type String -Value "RequireAdmin"
 ### Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppHost" -Name "EnableWebContentEvaluation"
 
+## Disable Feedback ##  ✅ WORK
+New-Item -Path "HKCU:\Software\Microsoft\Siuf\Rules" -Force
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Siuf\Rules" -Name "NumberOfSIUFInPeriod" -Type DWord -Value 0
+## UNDO ##  ✅ WORK
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Siuf\Rules" -Name "NumberOfSIUFInPeriod" -Type DWord -Value 1
+
+## Disable Advertising ID ##  ✅ WORK
+New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo"
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo" -Name "Enabled" -Type DWord -Value 0
+# UNOD: ##  ✅ WORK
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo" -Name "Enabled" -Type DWord -Value 1
+
 ## Disable Bing search in Start menu ## Not tested!
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "BingSearchEnabled" -Type DWord -Value 0
+# Enable Bing Search in Start Menu
+# Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "BingSearchEnabled"
 
 ## Disable Location button and service ## Not tested!
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}" -Name "SensorPermissionState" -Type DWord -Value 0
 Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Services\lfsvc\Service\Configuration" -Name "Status" -Type DWord -Value 0
+# Enable Location Tracking
+# Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}" -Name "SensorPermissionState" -Type DWord -Value 1
+# Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Services\lfsvc\Service\Configuration" -Name "Status" -Type DWord -Value 1
 
-## Disable Feedback ## Not tested!
-New-Item -Path "HKCU:\Software\Microsoft\Siuf\Rules" -Force
-Set-ItemProperty -Path "HKCU:\Software\Microsoft\Siuf\Rules" -Name "NumberOfSIUFInPeriod" -Type DWord -Value 0
-
-## Disable Advertising ID ## Not tested!
-New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo"
-Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo" -Name "Enabled" -Type DWord -Value 0
 
 ## Disable Cortana ## Not tested!
 New-Item -Path "HKCU:\Software\Microsoft\Personalization\Settings" -Force
@@ -47,7 +85,7 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\InputPersonalization" -Name "Re
 New-Item -Path "HKCU:\Software\Microsoft\InputPersonalization\TrainedDataStore" -Force
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\InputPersonalization\TrainedDataStore" -Name "HarvestContacts" -Type DWord -Value 0
 
-## Restrict P2P only to local network
+## Restrict P2P only to local network ## 🚧 ISMERETLEN
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\InputPersonalization\TrainedDataStore" -Name "HarvestContacts" -Type DWord -Value 0
 New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\DeliveryOptimization"
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\DeliveryOptimization" -Name "SystemSettingsDownloadMode" -Type DWord -Value 3
@@ -73,34 +111,40 @@ Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Personalizatio
 ## Enalbe LockScreen
 Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreen" -Type DWord -Value 0
 
-## Disable sticky key ## Not Tested! # enable: 510
+## Disable sticky key ## Not Tested! # enable: 510  ## ✅ WORK! Reboot required! 
 Set-ItemProperty -Path "HKCU:\Control Panel\Accessibility\StickyKeys" -Name "Flags" -Type String -Value "506"
 
-## Hide search box & button ## Not tested!
+## Hide search box & button, 1 to undo ## ✅ WORK! 
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "SearchboxTaskbarMode" -Type DWord -Value 0
 
-## Show known file extensions ## Not tested!
+## Show known file extensions ## ✅ WORK!
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Type DWord -Value 0
 
-## Show hidden files ## hide: 2 ## Not tested!
+## Show hidden files ## hide: 2 ## ✅ WORK!
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden" -Type DWord -Value 1
 
-## Change default Explorer view to "Computer" ## Not tested!
+## Change default Explorer view to "Computer" ## ✅ WORK!
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "LaunchTo" -Type DWord -Value 1
-## Change default Explorer view to "Quick Access"
+## Change default Explorer view to "Quick Access" ## ✅ WORK!
 Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "LaunchTo"
 
-## Disable seeding update ## Not tested!
-New-FolderForced -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" ## New-Item instead?
+## Disable seeding update ## ✅ WORK! 
+New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" ## New-Item instead?
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" "DODownloadMode" 0
 
-## Disable automatic driver update ## Not tested!
+## Disable automatic driver update Default: 1 ## Not tested!
 Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" "SearchOrderConfig" 0
 
 
 # SERVICES 
+# Get-Service |select starttype, status, name, displayName
 
 ## Stop and disable Diagnostics Tracking Service
+## Get-Service -Name "*spoo*" |select Name, Starttype
+
+Stop-Service "Spooler"
+Set-Service -Name "Spooler" -StartupType Disabled
+
 Stop-Service "DiagTrack"
 Set-Service "DiagTrack" -StartupType Disabled
 
@@ -108,35 +152,27 @@ Set-Service "DiagTrack" -StartupType Disabled
 Stop-Service -Name eventlog -Force
 Set-Service -Name eventlog -StartupType Disabled
 
-## Stop and Disable Home Group services
-Stop-Service "HomeGroupListener"
-Set-Service "HomeGroupListener" -StartupType Disabled
-Stop-Service "HomeGroupProvider"
-Set-Service "HomeGroupProvider" -StartupType Disabled
-
 
 $services = @(
-    "diagnosticshub.standardcollector.service" # Microsoft (R) Diagnostics Hub Standard Collector Service
-    "DiagTrack"                                # Diagnostics Tracking Service
-    "dmwappushservice"                         # WAP Push Message Routing Service (see known issues)
-    "lfsvc"                                    # Geolocation Service
-    "MapsBroker"                               # Downloaded Maps Manager
-    "NetTcpPortSharing"                        # Net.Tcp Port Sharing Service
-    "RemoteAccess"                             # Routing and Remote Access
+    "diagnosticshub.standardcollector.service" # Manual - Microsoft (R) Diagnostics Hub Standard Collector Service
+    "DiagTrack"                                # stopped - Diagnostics Tracking Service
+    "dmwappushservice"                         # manual - WAP Push Message Routing Service (see known issues)
+    "lfsvc"                                    # manual - Geolocation Service
+    "MapsBroker"                               # auto - Downloaded Maps Manager
+    "NetTcpPortSharing"                        # disabled - Net.Tcp Port Sharing Service
+    "RemoteAccess"                             # disabled - Routing and Remote Access
     # "RemoteRegistry"                         # Remote Registry
-    "SharedAccess"                             # Internet Connection Sharing (ICS)
-    "TrkWks"                                   # Distributed Link Tracking Client
+    "SharedAccess"                             # Manual - Internet Connection Sharing (ICS)
+    "TrkWks"                                   # auto - Distributed Link Tracking Client
     # "WbioSrvc"                               # Windows Biometric Service (required for Fingerprint reader / facial detection)
     #"WlanSvc"                                 # WLAN AutoConfig
     "WMPNetworkSvc"                            # Windows Media Player Network Sharing Service
     #"wscsvc"                                  # Windows Security Center Service
     #"WSearch"                                 # Windows Search
-    "XblAuthManager"                           # Xbox Live Auth Manager
-    "XblGameSave"                              # Xbox Live Game Save Service
-    "XboxNetApiSvc"                            # Xbox Live Networking Service
-    "ndu"                                      # Windows Network Data Usage Monitor
-    # Services which cannot be disabled
-    #"WdNisSvc"
+    "XblAuthManager"                           # manual - Xbox Live Auth Manager
+    "XblGameSave"                              # manual - Xbox Live Game Save Service
+    "XboxNetApiSvc"                            # manual - Xbox Live Networking Service
+    "ndu"                                      # auto - Windows Network Data Usage Monitor
 )
 
 foreach ($service in $services) {
@@ -147,15 +183,30 @@ foreach ($service in $services) {
 
 
 # APPLICATIONS
+# AFTER END: Cleanup windows:
+dism /Online /Cleanup-Image /Restorehealth
+
+# List installed packages with winget
+# winget list
+winget uninstall onedrive
+
+# Disable internet explorer
+dism /online /Remove-Capability /CapabilityName:Browser.InternetExplorer~~~~0.0.11.0
+# Media Player
+dism /online /Remove-Capability /CapabilityName:Media.WindowsMediaPlayer~~~~0.0.12.0
+# Face authentication 
+dism /online /Remove-Capability /CapabilityName:Hello.Face.18967~~~~0.0.1.0
 
 ## Disable One Drive ## Not tested!
 New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" | Out-Null
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" -Name "DisableFileSyncNGSC" -Type DWord -Value 1
 
-## Uninstall Windows Media Player ## Not tested!
+## Uninstall Windows Media Player ## ✅ WORK!
 dism /online /Disable-Feature /FeatureName:MediaPlayback /Quiet /NoRestart
 
 
+# Re-Install default Microsoft applications
+# Add-AppxPackage -DisableDevelopmentMode -Register "$($(Get-AppXPackage -AllUsers "Microsoft.3DBuilder").InstallLocation)\AppXManifest.xml"
 ## Uninstall default Microsoft applications ## Not tested!
 Get-AppxPackage "Microsoft.3DBuilder" | Remove-AppxPackage
 Get-AppxPackage "Microsoft.BingFinance" | Remove-AppxPackage
@@ -351,6 +402,8 @@ foreach ($app in $apps) {
 
 
 # START MENU
+# C:\Users\%username%\AppData\Local\Microsoft\Windows\Shell\
+
 
 ## Remove start menu entry: 
 Remove-Item -Force -ErrorAction SilentlyContinue "$env:userprofile\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk"
