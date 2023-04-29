@@ -1,0 +1,229 @@
+{
+    "file": "security-improvements.json",
+    "securityImprovements": [
+        {
+            "name": "Specre variant 2 and meltdown (Own OS)",
+            "commandList": "001_spectrev2_and_meltdown.bat",
+            "description": "",
+            "recommendation": "['recommended', 'security']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Spectre variant 2 and meltdown (HyperV)",
+            "commandList": "002_spectre_variantv2_and_meltdown_hyperv.bat",
+            "description": "",
+            "recommendation": ["recommended", "security"],
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable Unsafe SMBv1 protocol",
+            "commandList": "003_disable_smbv1.bat",
+            "description": "",
+            "recommendation": "['recommended', 'security']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable PowerShell 2.0 against downgrade attacks",
+            "commandList": "004_disable_powershell_2_0_against_downgrade_attacks.bat",
+            "description": "",
+            "recommendation": "['recommended', 'security']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable DTLS 1.1",
+            "commandList": "005_disable_dtls_1_1.bat",
+            "description": "",
+            "recommendation": "['recommended', 'security']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable DTLS 1.3",
+            "commandList": "006_disable_tls_1_3.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable TLS 1.0",
+            "commandList": "007_disable_tls_1_0.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable TLS 1.1",
+            "commandList": "008_disable_tls_1_1.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Enable TLS 1.3",
+            "commandList": "009_enable_tls_1_3.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Enable Strong authentication for .NET applications (TLS 1.2)",
+            "commandList": "010_enable_strong_authentication_for_dot_net_applications_tls1_2.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable SSLv2",
+            "commandList": "011_disable_sslv2.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable SSLv3",
+            "commandList": "012_disable_sslv3.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable administrative shares",
+            "commandList": "013_disable_administrative_shares.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Enable data execution prevention (DEP)",
+            "commandList": "014_enable_data_execution_prevention.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable AutoPlay and AutoRun",
+            "commandList": "015_disable_autoplay_and_autorun.bat",
+            "description": "255 (0xff) means all drives",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable remote Assistance",
+            "commandList": "016_disable_remote_assistance.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable lock screen camera",
+            "commandList": "017_disable_lock_screen_camera.bat",
+            "description": "",
+            "recommendation": "['recommended', 'Break FaceID login']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Prevent the storage of the LAN Manager hash of passwords",
+            "commandList": "018_prevent_storage_lan_manager_hash_of_passwords.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable Windows Installer always install with elevated privileges",
+            "commandList": "019_disable_windows_installer_always_install_with_elevated_privileges.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Prevent WinRM from using Basic Authentication",
+            "commandList": "020_prevent_winrm_from_using_basic_authentication.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Restrict anonymous enumeration of shares",
+            "commandList": "021_restrict_anonymous_enumeration_of_shares.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Refuse less secure authentication",
+            "commandList": "022_refuse_less_secure_authentication.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Enable Structured Exception Handling Overwrite Protection (SEHOP)",
+            "commandList": "023_enable_structured_exeception_handling_overwrite_protection.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Block anonymous enumeration of SAM accounts",
+            "commandList": "024_block_anonymous_enumeration_of_sam_accounts.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Restrict anonymous access to Named Pipes and Shares",
+            "commandList": "025_restrict_anonymous_access_to_named_pipes_and_shares.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable Windows Connect Now wizard",
+            "commandList": "026_disable_windows_connect_now_wizard.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Do not send Windows Media Player statistics",
+            "commandList": "027_do_not_send_windows_media_player_statistics.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable metadata retrieval",
+            "commandList": "028_disable_metadata_retrieval.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable NET Core CLI telemetry",
+            "commandList": "029_disable_net_core_cli_telemetry.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable PowerShell 7+ telemetry",
+            "commandList": "030_disable_powershell_7_and_newer_telemetry.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Disable Cortana speech interaction while the system is locked",
+            "commandList": "031_disable_cortana_speech_interaction_while_the_system_is_locked.bat",
+            "description": "",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        },
+        {
+            "name": "Audity PowerShell Execution Policy",
+            "commandList": "",
+            "description": "When PowerShell Execution Policy not *Restricted* mode, possible to execute malicious PowerShell scripnt on your local machine.",
+            "recommendation": "['recommended']",
+            "testedOn": "['Not tested']"
+        }
+    ]
+}
