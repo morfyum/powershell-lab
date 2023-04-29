@@ -219,7 +219,7 @@
             "testedOn": "['Not tested']"
         },
         {
-            "name": "Audity PowerShell Execution Policy",
+            "name": "Audit PowerShell Execution Policy",
             "commandList": "",
             "description": "When PowerShell Execution Policy not *Restricted* mode, possible to execute malicious PowerShell scripnt on your local machine.",
             "recommendation": "['recommended']",
