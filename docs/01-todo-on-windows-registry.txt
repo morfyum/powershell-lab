@@ -9,7 +9,7 @@
     
 # VIRTUAL MACHINE OPTIMIZATIONS
 
-## Disable Defrag scheduled task ## ✅ WORK!
+## Disable Defrag scheduled task ## [ ✅ WORK ON 22H2 ]
 ## Get-ScheduledTask to query tasks
 schtasks /Change /DISABLE /TN "\Microsoft\Windows\Defrag\ScheduledDefrag"
 
