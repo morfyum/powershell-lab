@@ -1,0 +1,17 @@
+{
+    "file": "service-list.json",
+    "service": [
+        {
+            "name": "",
+            "description": "",
+            "defaultState": "",
+            "recommendation": "['on-vm', 'on-all']"
+        },
+        {
+            "name": "",
+            "description": "",
+            "defaultState": "",
+            "recommendation": ""
+        }
+    ]
+}
