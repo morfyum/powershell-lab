@@ -1,4 +1,5 @@
 ﻿# SERVICE DISABLER
+# https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize-your-device/services
 
 $logPath = "C:\Users\$env:USERNAME\Desktop"
 $logDate = Get-Date -Format "HHmm-ddMMyyyy"

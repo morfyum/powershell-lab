@@ -2,16 +2,585 @@
     "file": "service-list.json",
     "service": [
         {
-            "name": "",
+            "serviceName": "vss",
+            "readableName": "Volume Shadow Copy ",
+            "description": "Volume Shadow Copy is a windows built-in restore points. Disable it when you doesn't required windows restore points, or you have other backpus.",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'performance-over-security', 'no-restore-point', 'small-image', 'reduce-disk-io']"
+        },
+        {
+            "name": "vmicvss",
+            "readableName": "Hyper-V Volume Shadow-Copy applicant",
             "description": "",
             "defaultState": "",
-            "recommendation": "['on-vm', 'on-all']"
+            "recommendation": "['VM', 'performance','When you have backup']"
+        },
+        {
+            "name": "vmictimesync",
+            "readableName": "Hyper-V time-date sync Service",
+            "description": "",
+            "defaultState": "",
+            "recommendation": "['VM', 'security','no-hyper-v']"
+        },
+        {
+            "name": "spooler",
+            "readableName": "Print Spooler for Printing",
+            "description": "Required for Printers",
+            "defaultState": "",
+            "recommendation": "['VM', 'security', 'no-printer']"
+        },
+        {
+            "name": "PrintNotify",
+            "readableName": "Printing Notificatios",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-printer']"
+        },
+        {
+            "name": "PrintWorkflowUserSvc",
+            "readableName": "Printing workflow",
+            "description": "Permisson denied, cannot access to service!",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-printer', 'cant-disable']"
+        },
+        {
+            "name": "DiagTrack",
+            "readableName": "",
+            "description": "Telemetry",
+            "defaultState": "",
+            "recommendation": "['all', 'When you are not a Micro$oft']"
+        },
+        {
+            "name": "eventlog",
+            "readableName": "Windows Event Log",
+            "description": "Windows event log record system, application, and hardware event, and BSOD logs",
+            "defaultState": "automatic",
+            "recommendation": "['VM', 'When your system is stable']"
+        },
+        {
+            "name": "XboxGipSvc",
+            "readableName": "Xbox Accessory Management Service",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'No Gaming', 'When not use Microsoft Xbox/Game Pass services']"
+        },
+        {
+            "name": "XboxNetApiSvc",
+            "readableName": "Xbox Live Network Service",
+            "description": "",
+            "defaultState": "",
+            "recommendation": "['VM', 'No Gaming', 'When not use Microsoft Xbox/Game Pass services']"
+        },
+        {
+            "name": "XblAuthManager",
+            "readableName": "Xbox Live license manager",
+            "description": "Required for Xbox/GamePass subscriptions",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'performance', 'No-gaming', 'no-xbox']"
+        },
+        {
+            "name": "XblGameSave",
+            "readableName": "Xbox Live Game Save Service",
+            "description": "Required for Xbox/GamePass subscriptions",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'performance', 'No-gaming', 'no-xbox']"
+        },
+        {
+            "name": "DoSvc",
+            "readableName": "Windows Delivery Optimization",
+            "description": "Windows Update related service. Downloading and distributing update. Currently cant stop this. More info: https://learn.microsoft.com/en-us/windows/deployment/do/waas-delivery-optimization",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'all', 'Home', 'When you dont want to share your downloaded updates with other windows PCs on your network']"
+        },
+        {
+            "name": "PcaSvc",
+            "readableName": "Program Compatibility Assistant",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM',]"
+        },
+        {
+            "name": "PimIndexMaintenanceSvc",
+            "readableName": "Contacts data service",
+            "description": "Use and manage your Contacts.",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'When no have contacts, and/or not call peoples']"
+        },
+        {
+            "name": "UserDataSvc",
+            "readableName": "Access User Data",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'unknown']"
+        },
+        {
+            "name": "MessagingService",
+            "readableName": "Messaging Service",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'unknown']"
+        },
+        {
+            "name": "WMPNetworkSvc",
+            "readableName": "Media Player Data Collection",
+            "description": "Probably legacy service for Windows Media Player",
+            "defaultState": "",
+            "recommendation": "['all']"
+        },
+        {
+            "name": "WerSvc",
+            "readableName": "Windows Error Reporting Service",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'When your system is stable']"
+        },
+        {
+            "name": "dmwappushservice",
+            "readableName": "WAP Wireless Application Prtocol",
+            "description": "Device Management Wireless Application Protocol (WAP) Push message Routing Service",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'all']"
+        },
+        {
+            "name": "diagnosticshub.standardcollector.service",
+            "readableName": "Microsoft Diagnostics Hub Standard Collector Service",
+            "description": "If you doesn't need windows logs, and Troubleshooting tools",
+            "defaultState": "manual",
+            "recommendation": "['vm', 'all', 'no-troubleshoot', 'no-logging']"
+        },
+        {
+            "name": "diagsvc",
+            "readableName": "Diagnostic Execution Service",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'all']"
+        },
+        {
+            "name": "WbioSrvc",
+            "readableName": "Windows Biometric Service",
+            "description": "Biometric Service required for Biometric login: Fingerprint, FaceID",
+            "defaultState": "",
+            "recommendation": "['vm', 'security', 'no-face-id', 'no-fingerprint', 'desktop']"
+        },
+        {
+            "name": "wisvc",
+            "readableName": "Windows Insider Service",
+            "description": "Service for Insider users, and preview feature.",
+            "defaultState": "manual",
+            "recommendation": "['vm', 'all', 'When not using Insider (Beta) builds']"
+        },
+        {
+            "name": "lfsvc",
+            "readableName": "GeoLocation Serivce",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['vm', 'all', 'privacy', 'When not using Maps or GeoLocation based services']"
+        },
+        {
+            "name": "MapsBroker",
+            "readableName": "Managing Downloaded maps",
+            "description": "Service for Microsoft Map app",
+            "defaultState": "automatic",
+            "recommendation": "['vm', 'all', 'When not using Maps from Microsoft']"
+        },
+        {
+            "name": "NetTcpPortSharing",
+            "readableName": "Net.Tcp port sharing Service",
+            "description": "More info: https://learn.microsoft.com/en-us/dotnet/framework/wcf/feature-details/net-tcp-port-sharing",
+            "defaultState": "",
+            "recommendation": "['VM', 'unknown']"
+        },
+        {
+            "name": "RemoteAccess",
+            "readableName": "Remote Access Service",
+            "description": "",
+            "defaultState": "",
+            "recommendation": "['vm', 'security', 'When not using remote control applications']"
+        },
+        {
+            "name": "RemoteRegistry",
+            "readableName": "Remote Registry ",
+            "description": "More info: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-rrp/0fa3191d-bb79-490a-81bd-54c2601b7a78",
+            "defaultState": "",
+            "recommendation": "['VM', 'security']"
+        },
+        {
+            "name": "SharedAccess",
+            "readableName": "Internet Content Sharing (ICS)",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'security']"
+        },
+        {
+            "name": "TrkWks",
+            "readableName": "Distributed Link Tracking Client",
+            "description": "Link Tracking required for Shortcut files on windows. More info: https://learn.microsoft.com/en-us/troubleshoot/windows-server/backup-and-storage/distributed-link-tracking-on-domain-controller",
+            "defaultState": "automatic",
+            "recommendation": "['VM', 'performance', 'decrease-diskIO', 'Can Break Windows Shortcuts']"
+        },
+        {
+            "name": "WlanSvc",
+            "readableName": "WLAN network automatic configuration",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'security', 'Not-Notebook', 'no-wlan', 'When you have no WLAN adapter in your Desktop PC.']"
+        },
+        {
+            "name": "wscsvc",
+            "readableName": "Security Center",
+            "description": "",
+            "defaultState": "automatic",
+            "recommendation": "['Not recommended', 'unsafe', 'testing', 'develop']"
+        },
+        {
+            "name": "WSearch",
+            "readableName": "Windows Search",
+            "description": "More info: https://support.microsoft.com/en-us/windows/windows-search-and-privacy-99fb8251-7260-1cd6-1bbb-15c2370eb168",
+            "defaultState": "automatic",
+            "recommendation": "['VM', 'performance']"
+        },
+        {
+            "name": "AxInstSV",
+            "readableName": "ActiveX Installer",
+            "description": "More info: https://support.microsoft.com/en-us/windows/use-activex-controls-for-internet-explorer-11-25738d05-d357-39b4-eb2f-fdd074bbf347",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'all', 'no-internet-explorer']"
+        },
+        {
+            "name": "Fax",
+            "readableName": "Fax",
+            "description": "Who will till using faxes in 2023?",
+            "defaultState": "manual",
+            "recommendation": "['vm', 'security', 'no-fax']"
+        },
+        {
+            "name": "TermService",
+            "readableName": "Remote Desktop Services",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'security', 'no-remote-desktop']"
+        },
+        {
+            "name": "SessionEnv",
+            "readableName": "Remote Desktop Settings",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'security', 'no-remote-desktop']"
+        },
+        {
+            "name": "UmRdpService",
+            "readableName": "Remote Desktop Service UserMode Port Redirector",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'security', 'no-remote-desktop']"
+        },
+        {
+            "name": "Themes",
+            "readableName": "Themes",
+            "description": "",
+            "defaultState": "automatic",
+            "recommendation": "['VM', 'performance', 'no-themes']"
+        },
+        {
+            "name": "RpcLocator",
+            "readableName": "Remote Procedure Call (RPC) Locator",
+            "description": "If you not using Windows 2003 or earlier version of Windows It won't be a problem.",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'security', 'no-legacy-system']"
+        },
+        {
+            "name": "Wecsvc",
+            "readableName": "Windows Event Collector",
+            "description": "If you doesn't need windows logs, and Troubleshooting tools",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'performance', 'no-troubleshoot', 'no-logging']"
+        },
+        {
+            "name": "wercplsupport",
+            "readableName": "Problem Reports Control Panel Support",
+            "description": "If you doesn't need windows logs, and Troubleshooting tools",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'performance', 'no-troubleshoot', 'no-logging']"
+        },
+        {
+            "name": "vmicguestinterface",
+            "readableName": "Hyper-V Guest Service Interface",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-hyper-v']"
+        },
+        {
+            "name": "vmicheartbeat",
+            "readableName": "Hyper-V Heartbeat Service",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-hyper-v']"
+        },
+        {
+            "name": "vmickvpexchange",
+            "readableName": "Hyper-V Data Exchange Service",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-hyper-v']"
+        },
+        {
+            "name": "vmicrdv",
+            "readableName": "Hyper-V Remote Desktop Virtualization Service",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-hyper-v']"
+        },
+        {
+            "name": "vmicvmsession",
+            "readableName": "Hyper-V PowerShell Direct Service",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-hyper-v']"
+        },
+        {
+            "name": "vmicshutdown",
+            "readableName": "Hyper-V Guest Shutdown Service",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-hyper-v']"
+        },
+        {
+            "name": "SEMgrSvc",
+            "readableName": "Payments and NFC/SE Manager",
+            "description": "Required for NFC",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'security', 'no-nfc']"
+        },
+        {
+            "name": "SensorDataService",
+            "readableName": "Sensor Data Service",
+            "description": "If you not using Device Sensors: gyroscope",
+            "defaultState": "",
+            "recommendation": "['VM', 'security', 'no-gyroscrope', 'desktop']"
+        },
+        {
+            "name": "ScDeviceEnum",
+            "readableName": "Smart Card Device Enumeration Service",
+            "description": "Required for Smart Card devices",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'security', 'no-sd-card']"
+        },
+        {
+            "name": "TabletInputService",
+            "readableName": "Touch Keyboard and Handwriting Panel Service",
+            "description": "Reboot required",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-touch-screen', 'desktop']"
+        },
+        {
+            "name": "FrameServer",
+            "readableName": "Windows Camera Frame Server",
+            "description": "Required for Webcamera",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'security', 'no-webcam']"
+        },
+        {
+            "name": "icssvc",
+            "readableName": "Windows Mobile Hotspot Service",
+            "description": "",
+            "defaultState": "manual",
+            "recommendation": "['vm', 'security', 'no-hotspot']"
+        },
+        {
+            "name": "spectrum",
+            "readableName": "Windows Perception Service",
+            "description": "Required for holographic devices",
+            "defaultState": "manual",
+            "recommendation": "['vm', 'security', 'no-holographic']"
+        },
+        {
+            "name": "RmSvc",
+            "readableName": "Radio Management service",
+            "description": "Required for radio services. Reboot Required",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'security', 'no-radio']"
+        },
+        {
+            "name": "SSDPSRV",
+            "readableName": "SSDP finder",
+            "description": "UPnP (Universal Plug and Play) is a network protocol that allows apps and devices to open and close ports automatically in order to connect with each other.",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-UpNP', 'no-ssdp']"
+        },
+        {
+            "name": "SstpSvc",
+            "readableName": "Secure Socket Tunneling Protocol",
+            "description": "Requiref for VPN. Reboot Required!",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-vpn']"
+        },
+        {
+            "name": "RasMan",
+            "readableName": "Remote Access Connection Manager",
+            "description": "Requiref for VPN. Manages dial-up and virtual private network (VPN) connections from this computer to the Internet or other remote networks. If this service is disabled, any services that explicitly depend on it will fail to start.",
+            "defaultState": "automatic",
+            "recommendation": "['VM', 'no-vpn']"
+        },
+        {
+            "name": "netprofm",
+            "readableName": "Network list Service",
+            "description": "Required for Windows update functionality. Reboot Required",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-winupdate', 'unsecure', 'not-recommended']"
+        },
+        {
+            "name": "WdiSystemHost",
+            "readableName": "System Diagnostic Manager",
+            "description": "The Diagnostic System Host is used by the Diagnostic Policy Service to host diagnostics that need to run in a Local System context. If this service is stopped, any diagnostics that depend on it will no longer function.",
+            "defaultState": "manual",
+            "recommendation": "['do-not-disable']"
+        },
+        {
+            "name": "WwanSvc",
+            "readableName": "WWMA Automatic Configuration",
+            "description": "This service manages mobile broadband (GSM & CDMA) data card/embedded module adapters and connections by auto-configuring the networks. It is strongly recommended that this service be kept running for best user experience of mobile broadband devices.",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'security', 'no-gsm', 'no-cdma']"
+        },
+        {
+            "name": "MixedRealityOpenXRSvc",
+            "readableName": "Windows Mixed Reality OpenXR Service",
+            "description": "Enables Mixed Reality OpenXR runtime functionality",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'all', 'no-mixed-reality']"
+        },
+        {
+            "name": "perceptionsimulation",
+            "readableName": "Windows detection simulation service",
+            "description": "Enables spatial perception simulation, virtual camera management and spatial input simulation.",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'all', 'no-virtual-camera']"
+        },
+        {
+            "name": "SDRSVC",
+            "readableName": "Windows Backup Service",
+            "description": "Provides Windows Backup and Restore capabilities.",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'decrease-diskOP']"
+        },
+        {
+            "name": "StorSvc",
+            "readableName": "Storage Service",
+            "description": "Provides enabling services for storage settings and external storage expansion",
+            "defaultState": "automatic",
+            "recommendation": "['VM', 'no-external-drive']"
+        },
+        {
+            "name": "NcbService",
+            "readableName": "Network Connection Manager",
+            "description": "Brokers connections that allow Microsoft Store Apps to receive notifications from the internet.",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-store-app-receiving-notification']"
+        },
+        {
+            "name": "LanmanServer",
+            "readableName": "Lanman Server",
+            "description": "Supports file, print, and named-pipe sharing over the network for this computer. If this service is stopped, these functions will be unavailable. If this service is disabled, any services that explicitly depend on it will fail to start.",
+            "defaultState": "automatic",
+            "recommendation": "['VM', 'no-file-sharing', 'no-print-sharing', 'no-named-pipe-sharing']"
+        },
+        {
+            "name": "TokenBroker",
+            "readableName": "Web Account Manager",
+            "description": "This service is used by Web Account Manager to provide single-sign-on to apps and services.",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-sso']"
+        },
+        {
+            "name": "CDPSvc",
+            "readableName": "Connected Device Platform",
+            "description": "This service is used for Connected Devices and Universal Glass scenarios",
+            "defaultState": "automatic",
+            "recommendation": "['VM']"
+        },
+        {
+            "name": "DusmSvc",
+            "readableName": "Traffic Service",
+            "description": "Shows the *last 30 days* section in Settings / Network & Internet.",
+            "defaultState": "automatic",
+            "recommendation": "['VM', 'no-traffic-network', 'no-mobile-data']"
+        },
+        {
+            "name": "bits",
+            "readableName": "Intelligent Transfer Background Service",
+            "description": "Transfers files in the background using idle network bandwidth. If the service is disabled, then any applications that depend on BITS, such as Windows Update or MSN Explorer, will be unable to automatically download programs and other information",
+            "defaultState": "manual",
+            "recommendation": "['VM']"
+        },
+        {
+            "name": "ShellHWDetection",
+            "readableName": "Shell HardWare Detection",
+            "description": "Provides notifications for AutoPlay hardware events.",
+            "defaultState": "automatic",
+            "recommendation": "['VM']"
+        },
+        {
+            "name": "SCardSvr", ####
+            "readableName": "Intelligent Card",
+            "description": "Manages access to smart cards read by this computer. If this service is stopped, this computer will be unable to read smart cards. If this service is disabled, any services that explicitly depend on it will fail to start.",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-smart-card']"
+        },
+        {
+            "name": "CertPropSvc",
+            "readableName": "Certificate Distribution",
+            "description": "Copies user certificates and root certificates from smart cards into the current user's certificate store, detects when a smart card is inserted into a smart card reader, and if needed, installs the smart card Plug and Play minidriver.",
+            "defaultState": "manual",
+            "recommendation": "['VM','no-smart-card']"
+        },
+        {
+            "name": "SysMain",
+            "readableName": "Superfetch",
+            "description": "Maintains and improves system performance over time.",
+            "defaultState": "automatic",
+            "recommendation": "['VM', 'performance', 'old-pc']"
+        },
+        {
+            "name": "lmhosts",
+            "readableName": "TCP/IP NetBIOS suppoer Service",
+            "description": "Provides support for the NetBIOS over TCP/IP (NetBT) service and NetBIOS name resolution for clients on the network, therefore enabling users to share files, print, and log on to the network. If this service is stopped, these functions might be unavailable. If this service is disabled, any services that explicitly depend on it will fail to start.",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'security']"
+        },
+        {
+            "name": "FontCache",
+            "readableName": "Windows Font Cache Service",
+            "description": "Optimizes performance of applications by caching commonly used font data. Applications will start this service if it is not already running. It can be disabled, though doing so will degrade application performance.",
+            "defaultState": "automatic",
+            "recommendation": "['VM', 'performance', 'old-pc']"
+        },
+        {
+            "name": "LicenseManager",
+            "readableName": "License Manager for Microsoft Store applications",
+            "description": "Provides infrastructure support for the Microsoft Store. This service is started on demand and if disabled then content acquired through the Microsoft Store will not function properly.",
+            "defaultState": "manual",
+            "recommendation": "['VM', 'no-store-app']"
         },
         {
             "name": "",
+            "readableName": "",
             "description": "",
             "defaultState": "",
             "recommendation": ""
-        }
+        },
+        {
+            "name": "",
+            "readableName": "",
+            "description": "",
+            "defaultState": "",
+            "recommendation": ""
+        },
+        {
+            "name": "",
+            "readableName": "",
+            "description": "",
+            "defaultState": "",
+            "recommendation": ""
+        },
     ]
 }
