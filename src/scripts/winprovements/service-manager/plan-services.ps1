@@ -42,3 +42,16 @@ foreach ($service in $services) {
     Write-Output "Trying to disable $service"
     Get-Service -Name $service | Set-Service -StartupType Disabled
 }
+
+###
+## KÉRDÉSE SZOLGÁLTATÁSOK:
+
+AppReadiness
+    - Első indításkor használja
+    - performance?
+ALG
+    - security?
+WiaRpc
+    - ?
+wbengine
+    - Kell-e ha a backup tiltva van?
