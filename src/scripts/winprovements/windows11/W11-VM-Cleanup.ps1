@@ -8,6 +8,22 @@
 #05# Spotify? Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\IrisService\Cache
 
 
+# REDUCE DISK FOOTRPINT 
+# SRC: https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize-your-device/reduce-disk-footprint
+
+# RDF-01: Clean up Component Store
+# https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize-your-device/reduce-disk-footprint
+# SRC: https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/iot-ent-optimize-images?view=windows-11#clean-up-component-store
+# Dism.exe /online /Cleanup-Image /StartComponentCleanup
+# Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
+
+# RDF-02: Disable Hibernation
+# Powercfg.exe /hibernate off
+
+
+
+# Dism.exe /Online /NoRestart /Disable-Feature /FeatureName:Microsoft-Windows-win32calc /PackageName:@Package
+
 # /Get-DefaultAppAssociations
 # + Export & Import DefaultAppAssoc
 
