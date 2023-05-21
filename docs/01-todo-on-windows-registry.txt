@@ -5,8 +5,9 @@
     - SERVICES
     - APPLICATIONS
     - START MENU
-    
-    
+
+# https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize-your-device/services    
+# https://gist.github.com/Aldaviva/0eb62993639da319dc456cc01efa3fe5
 # VIRTUAL MACHINE OPTIMIZATIONS
 
 ## Disable Defrag scheduled task ## [ ✅ WORK ON 22H2 ]
@@ -17,13 +18,13 @@ schtasks /Change /DISABLE /TN "\Microsoft\Windows\Defrag\ScheduledDefrag"
 
 # REGISTRY HKLM HKCU:
 
-## Resize Recycle Bin ## ✅ WORK!
-Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\BitBucket\Volume\{2e6af5e9-0000-0000-0000-100000000000}\" -Name "MaxCapacity" -Type DWord -Value 512
+## Resize Recycle Bin ## ✅ W10!
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\BitBucket\Volume\*\" -Name "MaxCapacity" -Type DWord -Value 512
 
-## Disable News and Interests on Tray ## ✅ WORK!
+## Disable News and Interests on Tray ## ✅ W10
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds\" -Name "ShellFeedsTaskbarViewMode" -Type DWord -Value 2
 
-## Remove One Drive from explorer ## ✅ WORK!
+## Remove One Drive from explorer ## ✅ WORK! > Not required when remove with winget
 New-PSDrive -PSProvider "Registry" -Root "HKEY_CLASSES_ROOT" -Name "HKCR"
 mkdir -Force "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}"
 # 🚧 NOT TESTED: Whats for this??? WTF ??? 🚧
