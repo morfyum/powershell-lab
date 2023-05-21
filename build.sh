@@ -6,5 +6,5 @@ this_version="0.2"
 podman build --no-cache --tag powershell-dev-env:$this_version .
 
 
-echo "**** DONE - LIST IMAGES ****"
+echo "*** DONE - LIST IMAGES ***"
 podman images

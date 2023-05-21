@@ -5,24 +5,26 @@
     - SERVICES
     - APPLICATIONS
     - START MENU
-    
-    
+
+# https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize-your-device/services    
+# https://gist.github.com/Aldaviva/0eb62993639da319dc456cc01efa3fe5
 # VIRTUAL MACHINE OPTIMIZATIONS
 
 ## Disable Defrag scheduled task ## [ ✅ WORK ON 22H2 ]
+# On SSD: FsTrim, On HDD: Defrag - Disable ON VM!
 ## Get-ScheduledTask to query tasks
 schtasks /Change /DISABLE /TN "\Microsoft\Windows\Defrag\ScheduledDefrag"
 
 
 # REGISTRY HKLM HKCU:
 
-## Resize Recycle Bin ## ✅ WORK!
-Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\BitBucket\Volume\{2e6af5e9-0000-0000-0000-100000000000}\" -Name "MaxCapacity" -Type DWord -Value 512
+## Resize Recycle Bin ## ✅ W10!
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\BitBucket\Volume\*\" -Name "MaxCapacity" -Type DWord -Value 512
 
-## Disable News and Interests on Tray ## ✅ WORK!
+## Disable News and Interests on Tray ## ✅ W10
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds\" -Name "ShellFeedsTaskbarViewMode" -Type DWord -Value 2
 
-## Remove One Drive from explorer ## ✅ WORK!
+## Remove One Drive from explorer ## ✅ WORK! > Not required when remove with winget
 New-PSDrive -PSProvider "Registry" -Root "HKEY_CLASSES_ROOT" -Name "HKCR"
 mkdir -Force "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}"
 # 🚧 NOT TESTED: Whats for this??? WTF ??? 🚧
@@ -136,49 +138,13 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimi
 Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching" "SearchOrderConfig" 0
 
 
-# SERVICES 
-# Get-Service |select starttype, status, name, displayName
-
-## Stop and disable Diagnostics Tracking Service
-## Get-Service -Name "*spoo*" |select Name, Starttype
-
-Stop-Service "Spooler"
-Set-Service -Name "Spooler" -StartupType Disabled
-
-Stop-Service "DiagTrack"
-Set-Service "DiagTrack" -StartupType Disabled
-
-## Stop and Disable EventLog 
-Stop-Service -Name eventlog -Force
-Set-Service -Name eventlog -StartupType Disabled
 
 
-$services = @(
-    "diagnosticshub.standardcollector.service" # Manual - Microsoft (R) Diagnostics Hub Standard Collector Service
-    "DiagTrack"                                # stopped - Diagnostics Tracking Service
-    "dmwappushservice"                         # manual - WAP Push Message Routing Service (see known issues)
-    "lfsvc"                                    # manual - Geolocation Service
-    "MapsBroker"                               # auto - Downloaded Maps Manager
-    "NetTcpPortSharing"                        # disabled - Net.Tcp Port Sharing Service
-    "RemoteAccess"                             # disabled - Routing and Remote Access
-    # "RemoteRegistry"                         # Remote Registry
-    "SharedAccess"                             # Manual - Internet Connection Sharing (ICS)
-    "TrkWks"                                   # auto - Distributed Link Tracking Client
-    # "WbioSrvc"                               # Windows Biometric Service (required for Fingerprint reader / facial detection)
-    #"WlanSvc"                                 # WLAN AutoConfig
-    "WMPNetworkSvc"                            # Windows Media Player Network Sharing Service
-    #"wscsvc"                                  # Windows Security Center Service
-    #"WSearch"                                 # Windows Search
-    "XblAuthManager"                           # manual - Xbox Live Auth Manager
-    "XblGameSave"                              # manual - Xbox Live Game Save Service
-    "XboxNetApiSvc"                            # manual - Xbox Live Networking Service
-    "ndu"                                      # auto - Windows Network Data Usage Monitor
-)
 
-foreach ($service in $services) {
-    Write-Output "Trying to disable $service"
-    Get-Service -Name $service | Set-Service -StartupType Disabled
-}
+
+
+
+
 
 
 

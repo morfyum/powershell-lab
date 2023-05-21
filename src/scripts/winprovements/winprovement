@@ -5,6 +5,34 @@
 # - Disable cortana for save privacy and resources
 
 
+# SCHEDULED TASK
+# Get-ScheduledTask
+
+# Do not disable! 
+# schtasks /Change /TN "\Microsoft\Windows\DiskCleanup\SilentCleanup" /Disable
+
+# Disable-ScheduledTask -TaskPath "" -TaskName ""
+Disable-ScheduledTask -TaskPath "\Microsoft\XblGameSave\" -TaskName "XblGameSaveTask"
+Disable-ScheduledTask -TaskPath "\Microsoft\Windows\AppListBackup\" -TaskName "Backup"
+Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Autochk\" -TaskName "Proxy"
+Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Chkdsk\" -TaskName "ProactiveScan"
+Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Customer Experience Improvement Program\" -TaskName "Consolidator"
+
+# On SSD: FsTrim, On HDD: Defrag - Disable ON VM!  
+Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Defrag\" -TaskName "ScheduledDefrag"
+
+# Required for Open EventLog! ALWAY ENABLE!
+#Enable-ScheduledTask -TaskPath "\Microsoft\Windows\Diagnosis\" -TaskName "RecommendedTroubleshootingScanner"
+#Enable-ScheduledTask -TaskPath "\Microsoft\Windows\Diagnosis\" -TaskName "Scheduled"
+
+Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Maps\" -TaskName "MapsToastTask"
+Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Printing\" -TaskName "EduPrintProv"
+Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Printing\" -TaskName "PrinterCleanupTask"
+Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Shell\" -TaskName "FamilySafetyMonitor"
+Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Shell\" -TaskName "FamilySafetyRefreshTask"
+Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Shell\" -TaskName "ThemesSyncedImageDownload"
+
+
 ### SECURITY ###
 {   
     echo "Disable calling legacy WCM policies"
@@ -43,63 +71,13 @@
 }
 #################
 
-# Elo csempe
+# Elo csempe > run-without-fear
 echo "Disable Live Tiles push notifications [ DEBLOATWARE ]"
 reg add "HKCU\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications" /v "NoTileApplicationNotification" /t REG_DWORD /d 1 /f
 
-echo "Opt out from Windows privacy consent"
-reg add "HKCU\SOFTWARE\Microsoft\Personalization\Settings" /v "AcceptedPrivacyPolicy" /t REG_DWORD /d 0 /f
-
-echo "Disable Customer Experience Improvement (CEIP/SQM)"
-reg add "HKLM\Software\Policies\Microsoft\SQMClient\Windows" /v "CEIPEnable" /t REG_DWORD /d "0" /f
-# + 
-echo "Disable sending information to Customer Experience Improvement Program"
-schtasks /change /TN "Microsoft\Windows\Application Experience\ProgramDataUpdater" /disable
-
-echo "Disable Application Impact Telemetry (AIT)"
-reg add "HKLM\Software\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d "0" /f
-# + 
-echo "Disable Application Impact Telemetry Agent task"
-schtasks /change /TN "Microsoft\Windows\Application Experience\AitAgent" /disable
-
-echo "Disable ad customization with Advertising ID"
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f 
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo" /v "DisabledByGroupPolicy" /t REG_DWORD /d "1" /f
-
-echo "Disable "Disable apps to improve performance" reminder"
-schtasks /change /TN "Microsoft\Windows\Application Experience\StartupAppTask" /disable
-
-echo "Disable Customer Experience Improvement Program"
-schtasks /change /TN "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator" /DISABLE
-schtasks /change /TN "\Microsoft\Windows\Customer Experience Improvement Program\KernelCeipTask" /DISABLE
-schtasks /change /TN "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip" /DISABLE
-
-echo "Disable telemetry in data collection policy"
-reg add "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /d 0 /t REG_DWORD /f
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "LimitEnhancedDiagnosticDataWindowsAnalytics" /t REG_DWORD /d 0 /f
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f 
-
-echo "Do not let Microsoft try features on this build"
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" /v "EnableExperimentation" /t REG_DWORD /d 0 /f
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" /v "EnableConfigFlighting" /t REG_DWORD /d 0 /f
-reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\System\AllowExperimentation" /v "value" /t "REG_DWORD" /d 0 /f
-echo "Disable getting preview builds of Windows"
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" /v "AllowBuildPreview" /t REG_DWORD /d 0 /f
-echo "Remove 'Windows Insider Program' from Settings"
-reg add "HKLM\SOFTWARE\Microsoft\WindowsSelfHost\UI\Visibility" /v "HideInsiderPage" /t "REG_DWORD" /d "1" /f
-
-echo "Disable feedback on write (sending typing info)"
-reg add "HKLM\SOFTWARE\Microsoft\Input\TIPC" /v "Enabled" /t REG_DWORD /d 0 /f
-reg add "HKCU\SOFTWARE\Microsoft\Input\TIPC" /v "Enabled" /t REG_DWORD /d 0 /f
-
-echo "Disable Activity Feed"
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v "EnableActivityFeed" /d "0" /t REG_DWORD /f
-
 
 ########
-# EDGE #
+# EDGE # [ VM ] [] 
 ########
 echo "Disable Edge usage and crash-related data reporting (shows Your browser is managed) [ VM ] [ PRIVACY ]"
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v "MetricsReportingEnabled" /t REG_DWORD /d 0 /f
@@ -107,7 +85,7 @@ echo "Disable live tile data collection"
 reg add "HKCU\Software\Policies\Microsoft\MicrosoftEdge\Main" /v "PreventLiveTileDataCollection" /t REG_DWORD /d 1 /f
 echo "Disable MFU tracking"
 reg add "HKCU\Software\Policies\Microsoft\Windows\EdgeUI" /v "DisableMFUTracking" /t REG_DWORD /d 1 /f
-echo Turn off backtracking
+echo "Turn off backtracking"
 reg add "HKCU\Software\Policies\Microsoft\Windows\EdgeUI" /v "TurnOffBackstack" /t REG_DWORD /d 1 /f
 echo "Disable Search Suggestions in Edge [ FEATURE-BREAKER ]"
 reg add "HKLM\SOFTWARE\Policies\Microsoft\MicrosoftEdge\SearchScopes" /v "ShowSearchSuggestionsGlobal" /t REG_DWORD /d 0 /f
@@ -133,7 +111,7 @@ reg add "HKLM\Software\Microsoft\Windows\Windows Error Reporting" /v "DontSendAd
 reg add "HKLM\Software\Microsoft\Windows\Windows Error Reporting" /v "LoggingDisabled" /t REG_DWORD /d "1" /f
 schtasks /Change /TN "Microsoft\Windows\ErrorDetails\EnableErrorDetailsUpdate" /Disable
 schtasks /Change /TN "Microsoft\Windows\Windows Error Reporting\QueueReporting" /Disable
-## Get-Serice: wersvc :: DISABLE THIS! > :: SERVICES
+## Get-Service: wersvc :: DISABLE THIS! > :: SERVICES
 
 echo "Disable devicecensus.exe (telemetry) task"
 # scheduled task
@@ -237,15 +215,16 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "BingSearchEn
 echo "Disable recent apps"
 reg add "HKCU\Software\Policies\Microsoft\Windows\EdgeUI" /v "DisableRecentApps" /t REG_DWORD /d 1 /f
 
-echo "Remove Meet Now icon from taskbar"
+echo "Remove Meet Now icon from taskbar" [W10-22H2 WORK ✅ (after reboot)]
 reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "HideSCAMeetNow" /t REG_DWORD /d 1 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "HideSCAMeetNow" /t REG_DWORD /d 1 /f
 
 echo "Do not keep history of recently opened documents"
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoRecentDocsHistory" /t REG_DWORD /d 1 /f
 echo "Clear history of recently opened documents on exit"
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "ClearRecentDocsOnExit" /t REG_DWORD /d 1 /f
 
-echo "Hide 3D Objects in Explorer?"
+echo "Hide 3D Objects in Explorer?" # No 3D objs in W10-22H2
 reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{31C0DD25-9439-4F12-BF41-7FF4EDA38722}\PropertyBag" /v "ThisPCPolicy" /t REG_SZ /d "Hide" /f
 reg add "HKLM\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{31C0DD25-9439-4F12-BF41-7FF4EDA38722}\PropertyBag" /v "ThisPCPolicy" /t REG_SZ /d "Hide" /f
 
@@ -281,26 +260,18 @@ reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\Experience\AllowCortana" 
 
 echo --- Disable apps and Cortana to activate with voice
 reg add "HKCU\Software\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps" /v "AgentActivationEnabled" /t REG_DWORD /d 0 /f
-:: Using GPO (re-activation through GUI is not possible)
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" /v "LetAppsActivateWithVoice" /t REG_DWORD /d 2 /f
+## Using GPO (re-activation through GUI is not possible)
+#reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" /v "LetAppsActivateWithVoice" /t REG_DWORD /d 2 /f
 
-echo "Disable apps and Cortana to activate with voice when sytem is locked"
-reg add "HKCU\Software\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps" /v "AgentActivationOnLockScreenEnabled" /t REG_DWORD /d 0 /f
-:: Using GPO (re-activation through GUI is not possible)
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" /v "LetAppsActivateWithVoiceAboveLock" /t REG_DWORD /d 2 /f
-echo "Opt out from Cortana consent"
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "CortanaConsent" /t REG_DWORD /d 0 /f
-echo "Do not allow Cortana to be enabled"
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "CanCortanaBeEnabled" /t REG_DWORD /d 0 /f
-echo "Disable Cortana (Internet search results in start menu)"
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "CortanaEnabled" /t REG_DWORD /d 0 /f 
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "CortanaEnabled" /t REG_DWORD /d 0 /f 
 
+# Windows 10 ONLY!
 echo "Remove the Cortana taskbar icon"
 reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v "ShowCortanaButton" /t REG_DWORD /d 0 /f
 
 echo "Disable Cortana in ambient mode"
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "CortanaInAmbientMode" /t REG_DWORD /d 0 /f
+
+# [ W11-22H2 FAIL🔥 ]
 echo "Prevent Cortana from displaying history"
 reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "HistoryViewEnabled" /t REG_DWORD /d 0 /f
 echo "Prevent Cortana from using device history"
@@ -312,17 +283,33 @@ reg add "HKLM\Software\Microsoft\Speech_OneCore\Preferences" /v "VoiceActivation
 echo "Disable Cortana listening to commands on Windows key + C"
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "VoiceShortcut" /t REG_DWORD /d 0 /f
 
-echo "Disable using Cortana even when device is locked"
-reg add "HKCU\Software\Microsoft\Speech_OneCore\Preferences" /v "VoiceActivationEnableAboveLockscreen" /t REG_DWORD /d 0 /f
 
 echo "Disable automatic update of Speech Data"
 reg add "HKCU\Software\Microsoft\Speech_OneCore\Preferences" /v "ModelDownloadAllowed" /t REG_DWORD /d 0 /f
 
+# Test required for new users 
 echo "Disable Cortana voice support during Windows setup"
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE" /v "DisableVoice" /t REG_DWORD /d 1 /f
 
+# [ W11-22H2: 🚧 / FAIL🔥 ]
 echo "Disable Cortana speech interaction while the system is locked"
 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortanaAboveLock" /t REG_DWORD /d 0 /f
+echo "Disable using Cortana even when device is locked"
+reg add "HKCU\Software\Microsoft\Speech_OneCore\Preferences" /v "VoiceActivationEnableAboveLockscreen" /t REG_DWORD /d 0 /f
+echo "Disable apps and Cortana to activate with voice when sytem is locked"
+reg add "HKCU\Software\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps" /v "AgentActivationOnLockScreenEnabled" /t REG_DWORD /d 0 /f
+
+
+## Using GPO (re-activation through GUI is not possible)
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" /v "LetAppsActivateWithVoiceAboveLock" /t REG_DWORD /d 2 /f
+echo "Opt out from Cortana consent"
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "CortanaConsent" /t REG_DWORD /d 0 /f
+echo "Do not allow Cortana to be enabled"
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "CanCortanaBeEnabled" /t REG_DWORD /d 0 /f
+echo "Disable Cortana (Internet search results in start menu)"
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "CortanaEnabled" /t REG_DWORD /d 0 /f 
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "CortanaEnabled" /t REG_DWORD /d 0 /f 
+
 
 ############
 # + ?

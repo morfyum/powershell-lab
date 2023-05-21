@@ -12,7 +12,7 @@ dism /Online /Disable-Feature /FeatureName:"LegacyComponents" /NoRestart
 dism /Online /Disable-Feature /FeatureName:"MediaPlayback" /NoRestart
 dism /Online /Disable-Feature /FeatureName:"ScanManagementConsole" /NoRestart
 dism /Online /Disable-Feature /FeatureName:"FaxServicesClientPackage" /NoRestart
-dism /Online /Disable-Feature /FeatureName:"WindowsMediaPlayer" /NoRestart
+dism /Online /Disable-Feature /FeatureName:"WindowsMediaPlayer" /NoRestart /Remove
 dism /Online /Disable-Feature /FeatureName:"SearchEngine-Client-Package" /NoRestart
 dism /Online /Disable-Feature /FeatureName:"TelnetClient" /NoRestart
 dism /Online /Disable-Feature /FeatureName:"WCF-TCP-PortSharing45" /NoRestart
@@ -52,6 +52,7 @@ Get-WindowsCapability -Online -Name 'App.StepsRecorder*' | Remove-WindowsCapabil
 Get-WindowsCapability -Online -Name 'App.Support.QuickAssist*' | Remove-WindowsCapability -Online"
 Get-WindowsCapability -Online -Name 'Print.Management.Console*' | Remove-WindowsCapability -Online"
 Get-WindowsCapability -Online -Name 'Browser.InternetExplorer*' | Remove-WindowsCapability -Online
+
 
 
 echo "Clear volume backups (shadow copies)"
