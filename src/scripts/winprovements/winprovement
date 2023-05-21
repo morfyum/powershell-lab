@@ -31,7 +31,6 @@ Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Printing\" -TaskName "Printe
 Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Shell\" -TaskName "FamilySafetyMonitor"
 Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Shell\" -TaskName "FamilySafetyRefreshTask"
 Disable-ScheduledTask -TaskPath "\Microsoft\Windows\Shell\" -TaskName "ThemesSyncedImageDownload"
-Disable-ScheduledTask -TaskPath "" -TaskName ""
 
 
 ### SECURITY ###
