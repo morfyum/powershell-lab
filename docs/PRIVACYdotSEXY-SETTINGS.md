@@ -1,11 +1,15 @@
-:: PRIVACY.SEXY SETTINGS
-:: SRC: https://privacy.sexy/
+# Merged to > src/scripts/winprovements/ 
+
+> This is the original file. "winprovements" files contain all information what this file can.
+
+## PRIVACY.SEXY SETTINGS
+## SRC: https://privacy.sexy/
 
 
-:: OS DATA COLLECTION
-:: Absolute not required for data collection
+## OS DATA COLLECTION
+## Absolute not required for data collection
 
-:: Move to > winprovements 
+
 
 
 
