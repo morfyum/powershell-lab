@@ -1,0 +1,51 @@
+﻿{
+    "developer": "morfyum",
+    "File": {
+        "Name": "appx-list.json",
+        "Version": "0.1"
+    },
+    "packages": [
+        {
+            "package_name": "Microsoft.MicrosoftSolitaireCollection",
+            "type": "game",
+            "category": "adware",
+            "description": "Microsoft Card Game"
+        },
+        {
+            "package_name": "Microsoft.SkypeApp",
+            "type": "app",
+            "category": "app",
+            "description": "Skype"
+        },
+        {
+            "package_name": "Microsoft.Office.OneNote",
+            "type": "app",
+            "category": "app",
+            "description": "One Note"
+        },
+        {
+            "package_name": "Microsoft.3DBuilder",
+            "type": "app",
+            "category": "app",
+            "description": "3D Builder"
+        },
+        {
+            "package_name": "Microsoft.Microsoft3DViewer",
+            "type": "app",
+            "category": "app",
+            "description": "3D Viewer"
+        },
+        {
+            "package_name": "",
+            "type": "app",
+            "category": "app",
+            "description": "?"
+        },
+        {
+            "package_name": "-",
+            "type": "app",
+            "category": "app",
+            "description": "-"
+        }
+    ]
+}

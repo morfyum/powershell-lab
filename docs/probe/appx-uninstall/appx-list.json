@@ -1,0 +1,23 @@
+﻿{
+   "FileName":"appx-list.json",
+   "AppXPackages":{
+        "MicrosoftSolitaireCollection":{
+            "Name":"Microsoft.MicrosoftSolitaireCollection",
+            "Type":"Game",
+            "Category":"Adware",
+            "Description":"Microsoft Card Game"
+        },
+        "Dummy":{
+            "Name":"Dummy",
+            "Type":"test",
+            "Category":"test-entry",
+            "Description":"Test Entry"
+        },
+        "SampleApp":{
+            "Name":"SampleApp",
+            "Type":"App",
+            "Category":"Sample",
+            "Description":"Sample Application"
+        }
+   }
+}
