@@ -2,7 +2,8 @@ Write-Host "test Adm1nistrator in Powershell" -ForegroundColor Gray
 $current_dir = pwd
 $current_policy = Get-ExecutionPolicy
 
-Write-Host "Current dir: [ $current_dir ] Policy: [ $current_policy ]"
+Write-Host "Current dir: [ $current_dir ]"
+Write-Host "Policy:      [ $current_policy ]"
 
 # $test_this_path = 
 # C:\Program Files\WindowsApps\

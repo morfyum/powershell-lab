@@ -12,8 +12,8 @@ $execute_this = ".\test_root_external_powershell.ps1"
 Write-Host "Current directroy: [ $current_dir ]"
 #Get-ExecutionPolicy
 Start-Process powershell.exe -Verb runAs -ArgumentList "
-    cd $current_dir;
-    powershell.exe $execute_this;" -Wait
+cd $current_dir
+powershell.exe $execute_this" -Wait
 echo "wait for process..."
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Restricted -Force
 #Get-ExecutionPolicy
