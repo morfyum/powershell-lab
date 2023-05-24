@@ -8,10 +8,10 @@ if errorlevel 1 (
     echo "Wait for connection..."
     GOTO AGAIN
 ) else (
-    echo "Most fasza" 
-    goto CPT_BATCH
+    echo "Connection Established" 
+    goto FUNCTION
 )
 
-:CPT_BATCH
+:FUNCTION
 echo "DOWNLOAD STUFF"
 pause
