@@ -95,12 +95,13 @@ Microsoft.MicrosoftStickyNotes
 Microsoft.MicrosoftOfficeHub
 
 
-
 #04# OTHER DISM FEATURES
 ## Drivers: C:\Windows\System32\
-    # \drivers\         : 115 MB    115MB
-    # \DriverStore\     : 378 MB    201MB
-    # C:\Windows\INF\   : 46,6 MB   41,2MB
+# Path              Before      After
+# -----------       --------    -----
+# \drivers\         115 MB      115MB
+# \DriverStore\     378 MB      201MB
+# C:\Windows\INF\   46,6 MB     41,2MB
 
 
     # DRIVER CAPABILITIES
