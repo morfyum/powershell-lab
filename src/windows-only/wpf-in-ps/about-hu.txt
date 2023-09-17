@@ -1,0 +1,59 @@
+# Rólam
+
+> Morfyum vagyok egy autodidakta fejlesztő,
+rendszegazda és kutató.
+
+A programot magamnak és mindenki másnak csináltam, 
+tanulás céljából, hogy mélyrehatóbb ismeretekre tegyek szert.
+
+https://github.com/morfyum
+
+--------------------------------------------------------------------------------------------------------------115--
+# Az alkamazás
+
+> Avagy a natív PowerShell élmény.
+
+A szoftver a következőkre nyújt megoldást:
+    - Rendszer tisztítás, tisztán tartása
+    - Rendszer gyorsítása vagy legalább ne lassítsuk azt.
+    - A Windows a felhasználóké legyen, ne a Micro$ofté.
+    - Telemetria kikapcsolás
+    - Virtuális gépek optimalizálása
+    - sok-sok más
+
+
+Az alkalmazás felhasználói felületet nyújt a githubon megtalálható PowerShell-Lab projektemből stabil 
+kiadást elérő megoldások számára.
+
+A PowerShell-Lab jelenlegi (2023) különlegessége, hogy
+100%-ban kompatibilis a windows 7-ig visszamenőleg, a gyári, beépített PowerShellel.
+Továbbá konténerizálva szállít megoldást MacOS és Linux környezetben való fejlesztésre.
+
+
+BACKEND:   PowerShell alapú eszközkészlet.
+API:       Jelenleg JSON "adatbázist" használunk.
+FRONT-END: A WPF nyújtotta előnyöket kihasználó felület.
+--------------------------------------------------------------------------------------------------------------115--
+
+## Backend
+
+## Frontend:
+Tisztában vagyok vele, hogy a PowerShell nem a felhasználói felületek készítésére készült, 
+de szeretném kihozni a maximumot ebblő a keretrendszerből. 
+Mivel meghívható a WPF assembly kód, így lehetőség van közvetlenül, fordítás nélkül grafikus környezetet fejleszteni.
+
+Felmerülhet a kérdés, hogy miért?
+
+Tapasztalataim szerint a vállalati megoldások esetén nincs lehetőség a megújulásra.
+Ugyanakkor néha szükség van a modern rendszerekkel való stabil kapcsolat kialakítására.
+A mai napig évtizedes lemaradásban vannak a vállalati rendszerek, 
+amelyek modernizálására valamilyen oknál fogva nincs mód.
+
+
+I develope this to myself, and for everyone.
+I'm tired of confusing, unoptimized softwares.
+I want to .keep my system clean and fast
+
+
+❤️-et készítve! 
+
