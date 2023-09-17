@@ -5,6 +5,9 @@
 # DefaultLAyout C:\Users\mars\AppData\local\Microsoft\Windows\Shell
 
 
+# DOESNT WORK!
+#New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "PreviewBuilds"
+#Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds" -Name " AllowBuildPreview" -Type DWord -Value 0
 
 ## ✅ W11
 ## Show known file extensions
