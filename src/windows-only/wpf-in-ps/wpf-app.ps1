@@ -1,6 +1,8 @@
 ﻿[System.Reflection.Assembly]::LoadWithPartialName("PresentationFramework") | Out-Null
 
 $selfLocation = (pwd).Path
+$selfBackground = "background.jpg"
+$selfLanguage = ""
 
 function Import-Welcome {
 	[xml]$xaml = Get-Content -Path $selfLocation\welcome.xaml
@@ -26,6 +28,10 @@ $IsInstalledGit = $?
 Get-Command chrome -ErrorAction SilentlyContinue | Out-Null
 $IsInstalledChrome =$?
 
+
+# Page / About
+$showPageAboutDetail = (Get-Content -Path "$selfLocation\about-hu.txt" -Encoding UTF8) -join "`n"
+
 Write-Output "Git:             $IsInstalledGit"
 Write-Output "Chrome:          $IsInstalledChrome"
 
@@ -50,6 +56,17 @@ $Window = Import-Xaml
 ################################################################
 # Own functionality for application.                           #
 ################################################################
+$AppBackground = $Window.FindName("AppBackground")
+$AppBackground.Source = "$selfLocation\$selfBackground"
+
+# Page 1 / Overveiw
+# Page 2 / App
+# Page 3 / VMSettings
+
+# PAge 4 / About
+$aboutContent = $Window.FindName("AboutContent")
+$aboutContent.Text = "$showPageAboutDetail"
+
 
 $InstalledGit = $Window.FindName("InstalledGit")
 $InstalledChrome = $Window.FindName("InstalledChrome")
@@ -80,10 +97,10 @@ $TextBlock_ShowExecutionPolicy = $Window.FindName("ShowExecutionPolicy")
 $TextBlock_ShowExecutionPolicy.Content = $showExecutionPolicy
 
 
-$Page1 = $Window.FindName("Page1")
-$Page2 = $Window.FindName("Page2")
-$Page3 = $Window.FindName("Page3")
-$Page4 = $Window.FindName("Page4")
+$Overview = $Window.FindName("Overview")
+$App = $Window.FindName("App")
+$VMSettings = $Window.FindName("VMSettings")
+$About = $Window.FindName("About")
 
 $Button1 = $Window.FindName('Button1')
 $Button2 = $Window.FindName('Button2')
@@ -97,35 +114,35 @@ $Button.add_Click({
 })
 #>
 $Button1.add_Click({
-    $Page1.Visibility = "Visible"
-    $Page2.Visibility = "Hidden"
-    $Page3.Visibility = "Hidden"
-    $Page4.Visibility = "Hidden"
-    $Page1.Background = "#80000000"
+    $Overview.Visibility = "Visible"
+    $App.Visibility = "Hidden"
+    $VMSettings.Visibility = "Hidden"
+    $About.Visibility = "Hidden"
+    $Overview.Background = "#80000000"
 })
 
 $Button2.add_Click({
-    $Page1.Visibility = "Hidden"
-    $Page2.Visibility = "Visible"
-    $Page3.Visibility = "Hidden"
-    $Page4.Visibility = "Hidden"
-    $Page2.Background = "#80000000"
+    $Overview.Visibility = "Hidden"
+    $App.Visibility = "Visible"
+    $VMSettings.Visibility = "Hidden"
+    $About.Visibility = "Hidden"
+    $App.Background = "#80000000"
 })
 
 $Button3.add_Click({
-    $Page1.Visibility = "Hidden"
-    $Page2.Visibility = "Hidden"
-    $Page3.Visibility = "Visible"
-    $Page4.Visibility = "Hidden"
-    $Page3.Background = "#80000000"
+    $Overview.Visibility = "Hidden"
+    $App.Visibility = "Hidden"
+    $VMSettings.Visibility = "Visible"
+    $About.Visibility = "Hidden"
+    $VMSettings.Background = "#80000000"
 })
 
 $Button4.add_Click({
-    $Page1.Visibility = "Hidden"
-    $Page2.Visibility = "Hidden"
-    $Page3.Visibility = "Hidden"
-    $Page4.Visibility = "Visible"
-    $Page4.Background = "#AADDDDDD"
+    $Overview.Visibility = "Hidden"
+    $App.Visibility = "Hidden"
+    $VMSettings.Visibility = "Hidden"
+    $About.Visibility = "Visible"
+    #$About.Background = "#AADDDDDD"
 })
 
 ################################################################
