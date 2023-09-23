@@ -30,7 +30,8 @@ $IsInstalledChrome =$?
 
 
 # Page / About
-$showPageAboutDetail = (Get-Content -Path "$selfLocation\about-hu.txt" -Encoding UTF8) -join "`n"
+#$showPageAboutDetail = (Get-Content -Path "$selfLocation\about-hu.txt" -Encoding UTF8) -join "`n"
+$showPageAboutDetail = (Get-Content -Path "$selfLocation\about-hu.txt" -Encoding UTF8 -Raw)
 
 Write-Output "Git:             $IsInstalledGit"
 Write-Output "Chrome:          $IsInstalledChrome"
@@ -71,6 +72,7 @@ $aboutContent.Text = "$showPageAboutDetail"
 $InstalledGit = $Window.FindName("InstalledGit")
 $InstalledChrome = $Window.FindName("InstalledChrome")
 
+
 if ($IsInstalledGit -eq $true) {
     $InstalledGit.Background = "#55FF55"
     $InstalledGit.Content = "🔧 Remove Git"
@@ -101,23 +103,42 @@ $Overview = $Window.FindName("Overview")
 $App = $Window.FindName("App")
 $VMSettings = $Window.FindName("VMSettings")
 $About = $Window.FindName("About")
+$LayoutTest = $Window.FindName("LayoutTest")
 
 $Button1 = $Window.FindName('Button1')
 $Button2 = $Window.FindName('Button2')
 $Button3 = $Window.FindName('Button3')
 $Button4 = $Window.FindName('Button4')
+$Button5 = $Window.FindName('Button5')
 
-<#
-$Button.add_Click({
-    $Label.Text = "$example_code"
-    $Label.Background = "#80000000"
+$BtnSwitch = $Window.FindName('Switch')
+$SwitchArea = $Window.FindName('SwitchArea')
+
+$BtnSwitch.Add_MouseLeftButtonDown({
+
+    if ($BtnSwitch.HorizontalAlignment -eq "Left") {
+        $BtnSwitch.HorizontalAlignment="Right"
+        $BtnSwitch.Background = "#164549"
+        $SwitchArea.Background="#2B9199"
+        $SwitchArea.BorderBrush="#2B9199"
+    } else {
+        $BtnSwitch.HorizontalAlignment="Left"
+        $BtnSwitch.Background = "#2B9199"
+        $SwitchArea.Background="#DDDDDD"
+        $SwitchArea.BorderBrush="#DDDDDD"
+    }
+    
+
 })
-#>
+
+
+
 $Button1.add_Click({
     $Overview.Visibility = "Visible"
     $App.Visibility = "Hidden"
     $VMSettings.Visibility = "Hidden"
     $About.Visibility = "Hidden"
+    $LayoutTest.Visibility = "Hidden"
     $Overview.Background = "#80000000"
 })
 
@@ -126,6 +147,7 @@ $Button2.add_Click({
     $App.Visibility = "Visible"
     $VMSettings.Visibility = "Hidden"
     $About.Visibility = "Hidden"
+    $LayoutTest.Visibility = "Hidden"
     $App.Background = "#80000000"
 })
 
@@ -134,6 +156,7 @@ $Button3.add_Click({
     $App.Visibility = "Hidden"
     $VMSettings.Visibility = "Visible"
     $About.Visibility = "Hidden"
+    $LayoutTest.Visibility = "Hidden"
     $VMSettings.Background = "#80000000"
 })
 
@@ -142,6 +165,16 @@ $Button4.add_Click({
     $App.Visibility = "Hidden"
     $VMSettings.Visibility = "Hidden"
     $About.Visibility = "Visible"
+    $LayoutTest.Visibility = "Hidden"
+    #$About.Background = "#AADDDDDD"
+})
+
+$Button5.add_Click({
+    $Overview.Visibility = "Hidden"
+    $App.Visibility = "Hidden"
+    $VMSettings.Visibility = "Hidden"
+    $About.Visibility = "Hidden"
+    $LayoutTest.Visibility = "Visible"
     #$About.Background = "#AADDDDDD"
 })
 
