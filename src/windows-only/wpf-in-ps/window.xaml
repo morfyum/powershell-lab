@@ -60,7 +60,7 @@
                     <Button Content="Gomb 2" Width="170" Height="Auto" Margin="2.5" Padding="5"/>
                     <Button Content="Gomb 3" Width="170" Height="Auto" Margin="2.5" Padding="5"/-->
                     
-                    <Grid  Width="Auto">
+                    <Grid  Width="Auto" MinWidth="170" Margin="0, 0, 20, 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -69,13 +69,13 @@
                             <TextBox Text="Show file extensions" Width="Auto" Background="Transparent" Foreground="#FFFFFF" Height="30" Margin="2.5" Padding="5"/>
                         </Grid>
                         <Grid Grid.Column="1" Width="60" Margin="2.5">
-                            <Border Name="SwitchArea" Width="60" Height="30" CornerRadius="7" BorderBrush="#DDDDDD" Background="#DDDDDD" BorderThickness="15"/>
-                            <Border Name="Switch" Width="24" Height="24" Margin="4" CornerRadius="15" BorderBrush="#2B9199" BorderThickness="0" Background="#2B9199" HorizontalAlignment="Left">
+                            <Border Name="SwitchAreaHideFileExt" Width="60" Height="30" CornerRadius="7" BorderBrush="#DDDDDD" Background="#DDDDDD" BorderThickness="15"/>
+                            <Border Name="SwitchHideFileExt" Width="24" Height="24" Margin="4" CornerRadius="15" BorderBrush="#2B9199" BorderThickness="0" Background="#2B9199" HorizontalAlignment="Left">
                             </Border>
                         </Grid>
                     </Grid>
 
-                    <Grid  Width="Auto">
+                    <Grid  Width="Auto" MinWidth="170" Margin="0, 0, 20, 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -84,8 +84,8 @@
                             <TextBox Text="Show hidden files" Width="Auto" Background="Transparent" Foreground="#FFFFFF" Height="30" Margin="2.5" Padding="5"/>
                         </Grid>
                         <Grid Grid.Column="1" Width="60" Margin="2.5">
-                            <Border Name="SwitchArea2" Width="60" Height="30" CornerRadius="7" BorderBrush="#DDDDDD" Background="#DDDDDD" BorderThickness="15"/>
-                            <Border Name="Switch2" Width="24" Height="24" Margin="4" CornerRadius="15" BorderBrush="#2B9199" BorderThickness="0" Background="#2B9199" HorizontalAlignment="Left">
+                            <Border Name="SwitchAreaShowHiddenFiles" Width="60" Height="30" CornerRadius="7" BorderBrush="#DDDDDD" Background="#DDDDDD" BorderThickness="15"/>
+                            <Border Name="SwitchShowHiddenFiles" Width="24" Height="24" Margin="4" CornerRadius="15" BorderBrush="#2B9199" BorderThickness="0" Background="#2B9199" HorizontalAlignment="Left">
                             </Border>
                         </Grid>
                     </Grid>

@@ -13,6 +13,12 @@ function Import-Welcome {
 }
 $WelcomeWindow = Import-Welcome
 $WelcomeWindow.Show()
+
+
+function Switch-ClearSwitch {
+    # TODO
+}
+
 ##################################################################
 # Put here the code what you want to load before your app start. #
 ##################################################################
@@ -28,6 +34,9 @@ $IsInstalledGit = $?
 Get-Command chrome -ErrorAction SilentlyContinue | Out-Null
 $IsInstalledChrome =$?
 
+# Page / Overview
+$ShowFileExtensionState = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt").HideFileExt
+$HiddenFileState = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden").Hidden
 
 # Page / About
 #$showPageAboutDetail = (Get-Content -Path "$selfLocation\about-hu.txt" -Encoding UTF8) -join "`n"
@@ -40,7 +49,20 @@ Write-Output "showDate:        $showDate"
 Write-Output "showHome:        $showHome"
 
 # Dummy waiter
-Start-Sleep -Seconds 1
+#Start-Sleep -Seconds 1
+
+
+
+function Background-Process {
+    while ($True ) {
+        $showDate = Get-Date
+        Start-Sleep -Seconds 1
+    }
+}
+
+
+#Start-Job -ScriptBlock ${Function:Background-Process}
+    
 ################################################################
 # Start the real application after everything else is loaded.  #
 ################################################################
@@ -111,24 +133,83 @@ $Button3 = $Window.FindName('Button3')
 $Button4 = $Window.FindName('Button4')
 $Button5 = $Window.FindName('Button5')
 
-$BtnSwitch = $Window.FindName('Switch')
-$SwitchArea = $Window.FindName('SwitchArea')
 
-$BtnSwitch.Add_MouseLeftButtonDown({
+#Overview / [ ShowHiddenFiles ] $HiddenFileState
+$BtnSwitchShowHiddenFiles = $Window.FindName('SwitchShowHiddenFiles')
+$SwitchAreaShowHiddenFiles = $Window.FindName('SwitchAreaShowHiddenFiles')
 
-    if ($BtnSwitch.HorizontalAlignment -eq "Left") {
-        $BtnSwitch.HorizontalAlignment="Right"
-        $BtnSwitch.Background = "#164549"
-        $SwitchArea.Background="#2B9199"
-        $SwitchArea.BorderBrush="#2B9199"
+if ($HiddenFileState -eq 1 ) {
+    # ENABLED
+    $BtnSwitchShowHiddenFiles.HorizontalAlignment="Right"
+    $BtnSwitchShowHiddenFiles.Background = "#164549"
+    $SwitchAreaShowHiddenFiles.Background="#2B9199"
+    $SwitchAreaShowHiddenFiles.BorderBrush="#2B9199"
+} else {
+    # DISABLED
+    $BtnSwitchShowHiddenFiles.HorizontalAlignment="Left"
+    $BtnSwitchShowHiddenFiles.Background = "#2B9199"
+    $SwitchAreaShowHiddenFiles.Background="#DDDDDD"
+    $SwitchAreaShowHiddenFiles.BorderBrush="#DDDDDD"
+}
+
+$BtnSwitchShowHiddenFiles.Add_MouseLeftButtonDown({
+    if ($BtnSwitchShowHiddenFiles.HorizontalAlignment -eq "Left") {
+        # Enable
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden" -Type DWord -Value 1
+        $HiddenFileState = 1
+        $BtnSwitchShowHiddenFiles.HorizontalAlignment="Right"
+        $BtnSwitchShowHiddenFiles.Background = "#164549"
+        $SwitchAreaShowHiddenFiles.Background="#2B9199"
+        $SwitchAreaShowHiddenFiles.BorderBrush="#2B9199"
     } else {
-        $BtnSwitch.HorizontalAlignment="Left"
-        $BtnSwitch.Background = "#2B9199"
-        $SwitchArea.Background="#DDDDDD"
-        $SwitchArea.BorderBrush="#DDDDDD"
+        # Disable
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden" -Type DWord -Value 0
+        $HiddenFileState = 0
+        $BtnSwitchShowHiddenFiles.HorizontalAlignment="Left"
+        $BtnSwitchShowHiddenFiles.Background = "#2B9199"
+        $SwitchAreaShowHiddenFiles.Background="#DDDDDD"
+        $SwitchAreaShowHiddenFiles.BorderBrush="#DDDDDD"
     }
-    
+})
 
+
+# Overview / [ HideFileExt ] $ShowFileExtensionState
+$BtnSwitchHideFileExt = $Window.FindName('SwitchHideFileExt')
+$SwitchAreaHideFileExt = $Window.FindName('SwitchAreaHideFileExt')
+
+if ($ShowFileExtensionState -eq 0 ) {
+    # ENABLED
+    $BtnSwitchHideFileExt.HorizontalAlignment="Right"
+    $BtnSwitchHideFileExt.Background = "#164549"
+    $SwitchAreaHideFileExt.Background="#2B9199"
+    $SwitchAreaHideFileExt.BorderBrush="#2B9199"
+} else {
+    # DISABLED
+    $BtnSwitchHideFileExt.HorizontalAlignment="Left"
+    $BtnSwitchHideFileExt.Background = "#2B9199"
+    $SwitchAreaHideFileExt.Background="#DDDDDD"
+    $SwitchAreaHideFileExt.BorderBrush="#DDDDDD"
+}
+
+$BtnSwitchHideFileExt.Add_MouseLeftButtonDown({
+
+    if ($BtnSwitchHideFileExt.HorizontalAlignment -eq "Left") {
+        # Enable
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Type DWord -Value 0
+        $ShowFileExtensionState = 0
+        $BtnSwitchHideFileExt.HorizontalAlignment="Right"
+        $BtnSwitchHideFileExt.Background = "#164549"
+        $SwitchAreaHideFileExt.Background="#2B9199"
+        $SwitchAreaHideFileExt.BorderBrush="#2B9199"
+    } else {
+        # Disable
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Type DWord -Value 1
+        $ShowFileExtensionState = 1
+        $BtnSwitchHideFileExt.HorizontalAlignment="Left"
+        $BtnSwitchHideFileExt.Background = "#2B9199"
+        $SwitchAreaHideFileExt.Background="#DDDDDD"
+        $SwitchAreaHideFileExt.BorderBrush="#DDDDDD"
+    }
 })
 
 
