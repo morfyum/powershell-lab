@@ -52,15 +52,6 @@ Write-Output "showHome:        $showHome"
 #Start-Sleep -Seconds 1
 
 
-
-function Background-Process {
-    while ($True ) {
-        $showDate = Get-Date
-        Start-Sleep -Seconds 1
-    }
-}
-
-
 #Start-Job -ScriptBlock ${Function:Background-Process}
     
 ################################################################
@@ -116,6 +107,7 @@ $FooterContent1 = $Window.FindName("FooterContent1")
 $FooterContent1.Text = "[ $showDate ]"
 $FooterContent2 = $Window.FindName("FooterContent2")
 $FooterContent2.Text = "[ Home:","[ $showHome ]"
+
 
 $TextBlock_ShowExecutionPolicy = $Window.FindName("ShowExecutionPolicy")
 $TextBlock_ShowExecutionPolicy.Content = $showExecutionPolicy
