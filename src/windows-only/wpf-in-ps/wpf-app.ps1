@@ -19,6 +19,7 @@ function Switch-ClearSwitch {
     # TODO
 }
 
+
 ##################################################################
 # Put here the code what you want to load before your app start. #
 ##################################################################
@@ -29,10 +30,14 @@ $example_code = Get-CimClass
 $showDate = Get-Date
 $showHome = $HOME
 $showExecutionPolicy = Get-ExecutionPolicy
+
 Get-Command git -ErrorAction SilentlyContinue | Out-Null
 $IsInstalledGit = $? 
+
 Get-Command chrome -ErrorAction SilentlyContinue | Out-Null
-$IsInstalledChrome =$?
+$IsInstalledChrome = $?
+
+Check-VSCode-IsInstalled
 
 # Page / Overview
 $ShowFileExtensionState = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt").HideFileExt
@@ -44,6 +49,7 @@ $showPageAboutDetail = (Get-Content -Path "$selfLocation\about-hu.txt" -Encoding
 
 Write-Output "Git:             $IsInstalledGit"
 Write-Output "Chrome:          $IsInstalledChrome"
+Write-Output "VSCODE:          $IsInstalledVSCode"
 
 Write-Output "showDate:        $showDate"
 Write-Output "showHome:        $showHome"
@@ -75,23 +81,17 @@ $AppBackground.Source = "$selfLocation\$selfBackground"
 
 # Page 1 / Overveiw
 # Page 2 / App
-# Page 3 / VMSettings
-
-# PAge 4 / About
-$aboutContent = $Window.FindName("AboutContent")
-$aboutContent.Text = "$showPageAboutDetail"
-
 
 $InstalledGit = $Window.FindName("InstalledGit")
 $InstalledChrome = $Window.FindName("InstalledChrome")
-
+$InstalledVSCode = $Window.FindName("InstalledVSCode")
 
 if ($IsInstalledGit -eq $true) {
     $InstalledGit.Background = "#55FF55"
     $InstalledGit.Content = "🔧 Remove Git"
 } else {
     $InstalledGit.Background = "#FF5555"
-    $InstalledGit.Content = "Remove Git"
+    $InstalledGit.Content = "Install Git"
 }
 
 if ($IsInstalledChrome -eq $true) {
@@ -101,6 +101,44 @@ if ($IsInstalledChrome -eq $true) {
     $InstalledChrome.Background = "#FF5555"
     $InstalledChrome.Content = "✅ Install Chrome"
 }
+
+
+function Check-VSCode-IsInstalled {
+    Get-Package "*Microsoft Visual Studio Code*" -ErrorAction SilentlyContinue | Out-Null
+    $IsInstalledVSCode = $?
+    if ($IsInstalledVSCode -eq $true) {
+        $InstalledVSCode.Background = "#55FF55"
+        $InstalledVSCode.Content = "Remove VSCode"
+    } else {
+        $InstalledVSCode.Background = "#FF5555"
+        $InstalledVSCode.Content = "✅ Install VSCode"
+    }
+}
+
+
+$InstalledVSCode.add_Click({
+    if ($IsInstalledVSCode -eq $true) {
+        $InstalledVSCode.Background = "#55FF55"
+        $InstalledVSCode.Content = "Remove VSCode"
+        winget uninstall vscode --disable-interactivity
+        Check-VSCode-IsInstalled
+    } else {
+        winget install vscode --disable-interactivity
+        Check-VSCode-IsInstalled
+        $InstalledVSCode.Background = "#FF5555"
+        $InstalledVSCode.Content = "✅ Install VSCODE"
+
+    }
+})
+
+
+# Page 3 / VMSettings
+
+# PAge 4 / About
+$aboutContent = $Window.FindName("AboutContent")
+$aboutContent.Text = "$showPageAboutDetail"
+
+
 
 
 $FooterContent1 = $Window.FindName("FooterContent1")
@@ -250,6 +288,8 @@ $Button5.add_Click({
     $LayoutTest.Visibility = "Visible"
     #$About.Background = "#AADDDDDD"
 })
+
+
 
 ################################################################
 # Show Application Window                                      #

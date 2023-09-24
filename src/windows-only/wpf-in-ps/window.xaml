@@ -121,9 +121,9 @@
             <TextBlock Grid.Row="0" Text="App." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
 
             <WrapPanel Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                    <Button Name="InstalledGit" Content="Install Git" Width="170" Height="Auto" Margin="2.5" Padding="5"/>
+                    <Button Name="InstalledGit" Content="Install Git"        Width="170" Height="Auto" Margin="2.5" Padding="5"/>
                     <Button Name="InstalledChrome" Content="Install Chrome"  Width="170" Height="Auto" Margin="2.5" Padding="5"/>
-                    <Button Content="Gomb 3" Width="170" Height="Auto" Margin="2.5" Padding="5"/>
+                    <Button Name="InstalledVSCode" Content="VSCode"          Width="170" Height="Auto" Margin="2.5" Padding="5"/>
             </WrapPanel>
  
             <TextBlock Grid.Row="2" Text="Todo" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
