@@ -19,6 +19,11 @@ function Switch-ClearSwitch {
     # TODO
 }
 
+function Check-VSCode-IsInstalled {
+    Get-Package "*Microsoft Visual Studio Code*" -ErrorAction SilentlyContinue | Out-Null
+    $IsInstalledVSCode = $?
+}
+
 
 ##################################################################
 # Put here the code what you want to load before your app start. #
@@ -38,6 +43,7 @@ Get-Command chrome -ErrorAction SilentlyContinue | Out-Null
 $IsInstalledChrome = $?
 
 Check-VSCode-IsInstalled
+$IsInstalledVSCode = $?
 
 # Page / Overview
 $ShowFileExtensionState = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt").HideFileExt
@@ -80,7 +86,8 @@ $AppBackground = $Window.FindName("AppBackground")
 $AppBackground.Source = "$selfLocation\$selfBackground"
 
 # Page 1 / Overveiw
-# Page 2 / App
+
+### ### #### Page 2 / App ### ### ####
 
 $InstalledGit = $Window.FindName("InstalledGit")
 $InstalledChrome = $Window.FindName("InstalledChrome")
@@ -102,19 +109,13 @@ if ($IsInstalledChrome -eq $true) {
     $InstalledChrome.Content = "✅ Install Chrome"
 }
 
-
-function Check-VSCode-IsInstalled {
-    Get-Package "*Microsoft Visual Studio Code*" -ErrorAction SilentlyContinue | Out-Null
-    $IsInstalledVSCode = $?
-    if ($IsInstalledVSCode -eq $true) {
-        $InstalledVSCode.Background = "#55FF55"
-        $InstalledVSCode.Content = "Remove VSCode"
-    } else {
-        $InstalledVSCode.Background = "#FF5555"
-        $InstalledVSCode.Content = "✅ Install VSCode"
-    }
+if ($IsInstalledVSCode -eq $true) {
+    $InstalledVSCode.Background = "#55FF55"
+    $InstalledVSCode.Content = "Remove VSCode"
+} else {
+    $InstalledVSCode.Background = "#FF5555"
+    $InstalledVSCode.Content = "✅ Install VSCode"
 }
-
 
 $InstalledVSCode.add_Click({
     if ($IsInstalledVSCode -eq $true) {
@@ -132,9 +133,9 @@ $InstalledVSCode.add_Click({
 })
 
 
-# Page 3 / VMSettings
+### ### #### Page 3 / VMSettings ### ### ####
 
-# PAge 4 / About
+### ### #### PAge 4 / About ### ### ####
 $aboutContent = $Window.FindName("AboutContent")
 $aboutContent.Text = "$showPageAboutDetail"
 
@@ -156,12 +157,14 @@ $App = $Window.FindName("App")
 $VMSettings = $Window.FindName("VMSettings")
 $About = $Window.FindName("About")
 $LayoutTest = $Window.FindName("LayoutTest")
+#$AutoRender = $Window.FindName("AutoRender")
 
 $Button1 = $Window.FindName('Button1')
 $Button2 = $Window.FindName('Button2')
 $Button3 = $Window.FindName('Button3')
 $Button4 = $Window.FindName('Button4')
 $Button5 = $Window.FindName('Button5')
+#$Button6 = $Window.FindName('Button6')
 
 
 #Overview / [ ShowHiddenFiles ] $HiddenFileState
@@ -250,7 +253,7 @@ $Button1.add_Click({
     $VMSettings.Visibility = "Hidden"
     $About.Visibility = "Hidden"
     $LayoutTest.Visibility = "Hidden"
-    $Overview.Background = "#80000000"
+    $AutoRender.Visibility = "Hidden"
 })
 
 $Button2.add_Click({
@@ -259,7 +262,7 @@ $Button2.add_Click({
     $VMSettings.Visibility = "Hidden"
     $About.Visibility = "Hidden"
     $LayoutTest.Visibility = "Hidden"
-    $App.Background = "#80000000"
+    $AutoRender.Visibility = "Hidden"
 })
 
 $Button3.add_Click({
@@ -268,7 +271,7 @@ $Button3.add_Click({
     $VMSettings.Visibility = "Visible"
     $About.Visibility = "Hidden"
     $LayoutTest.Visibility = "Hidden"
-    $VMSettings.Background = "#80000000"
+    $AutoRender.Visibility = "Hidden"
 })
 
 $Button4.add_Click({
@@ -277,7 +280,7 @@ $Button4.add_Click({
     $VMSettings.Visibility = "Hidden"
     $About.Visibility = "Visible"
     $LayoutTest.Visibility = "Hidden"
-    #$About.Background = "#AADDDDDD"
+    $AutoRender.Visibility = "Hidden"
 })
 
 $Button5.add_Click({
@@ -286,10 +289,21 @@ $Button5.add_Click({
     $VMSettings.Visibility = "Hidden"
     $About.Visibility = "Hidden"
     $LayoutTest.Visibility = "Visible"
-    #$About.Background = "#AADDDDDD"
+    $AutoRender.Visibility = "Hidden"
 })
 
 
+$AutoRender = $Window.FindName("AutoRender")
+$Button6 = $Window.FindName('Button6')
+
+$Button6.add_Click({
+    $Overview.Visibility = "Hidden"
+    $App.Visibility = "Hidden"
+    $VMSettings.Visibility = "Hidden"
+    $About.Visibility = "Hidden"
+    $LayoutTest.Visibility = "Hidden"
+    $AutoRender.Visibility = "Visible"
+})
 
 ################################################################
 # Show Application Window                                      #

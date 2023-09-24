@@ -1,0 +1,3 @@
+<Border Name="DynamicBorder" Background="LightBlue" CornerRadius="5">
+    <TextBlock Name="DynamicTextBlock" Text="" Foreground="Black"/>
+</Border>

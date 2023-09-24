@@ -5,6 +5,7 @@
         Background="#2E3436"
         Title="com.morfyum.OverPower - v0.1"
         WindowStartupLocation="CenterScreen"
+
         >
 
     <Window.Resources>
@@ -37,7 +38,7 @@
         <Button Name="Button3" Content="VM-Settings" Width="100" Height="30" Margin="5, 5, 0, 0"/>
         <Button Name="Button4" Content="About"       Width="100" Height="30" Margin="5, 5, 0, 0"/>
         <Button Name="Button5" Content="Layout Test" Width="100" Height="30" Margin="5, 5, 0, 0"/>
-        <Button Name="Button6" Content="Coming Soon" Width="100" Height="30" Margin="5, 5, 0, 0"/>
+        <Button Name="Button6" Content="Auto Render" Width="100" Height="30" Margin="5, 5, 0, 0"/>
         <Button Name="Button7" Content="Coming Soon" Width="100" Height="30" Margin="5, 5, 0, 0"/>
         </StackPanel>
 
@@ -375,6 +376,17 @@
                         <Button Content="Gomb 3" Width="200" Height="Auto" Margin="5" Padding="5"/>
             </WrapPanel>
 
+
+        </Grid>
+        </ScrollViewer>
+        </Border>
+
+        <!-- Page / Auto Render -->
+        <Border Name="AutoRender" Visibility="Hidden" Margin="5, 40, 5, 30" Background="#80000000" CornerRadius="10">
+        <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
+        <Grid>
+
+            <TextBlock Text="Auto Render" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
 
         </Grid>
         </ScrollViewer>

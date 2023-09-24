@@ -1,0 +1,36 @@
+<!-- BTN SWITCH TEST FOR AUTO RENDER 
+    VARIABLES:
+    
+    Border / Name = "Page-Name"     - > Name, Visibility
+    TODO: TextBlok ...
+    TODO: Grid.ColumnDefinitions
+    TextBox / Text = "Switch text"  - > Text
+    Border / Name = "SwitchArea"    - > Name, BorderBrush, Background
+    Border / Name = "Switch"        - > Name, BorderBrush, Background, HorizontalAlignment
+
+-->
+
+<Border Name="DynamicBorder" Visibility="Hidden" Margin="5, 40, 5, 30" Background="#80000000" CornerRadius="10">
+<ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
+<Grid>
+
+    <TextBlock Name="DynamicTextBlock" Text="Auto Render" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
+
+    <Grid  Width="Auto" MinWidth="170" Margin="0, 0, 20, 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <TextBox Text="Show file extensions" Width="Auto" Background="Transparent" Foreground="#FFFFFF" Height="30" Margin="2.5" Padding="5"/>
+        </Grid>
+        <Grid Grid.Column="1" Width="60" Margin="2.5">
+            <Border Name="SwitchArea" Width="60" Height="30" CornerRadius="7" BorderBrush="#DDDDDD" Background="#DDDDDD" BorderThickness="15"/>
+            <Border Name="Switch" Width="24" Height="24" Margin="4" CornerRadius="15" BorderBrush="#2B9199" BorderThickness="0" Background="#2B9199" HorizontalAlignment="Left">
+            </Border>
+        </Grid>
+    </Grid>
+
+</Grid>
+</ScrollViewer>
+</Border>
