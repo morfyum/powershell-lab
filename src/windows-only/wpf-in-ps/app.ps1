@@ -1,6 +1,6 @@
 ﻿[System.Reflection.Assembly]::LoadWithPartialName("PresentationFramework") | Out-Null
 
-$selfLocation = (pwd).Path
+$selfLocation = (Get-Location).Path
 $selfBackground = "background.jpg"
 $selfLanguage = ""
 
@@ -135,13 +135,12 @@ $InstalledVSCode.add_Click({
 
 ### ### #### Page 3 / VMSettings ### ### ####
 
-### ### #### PAge 4 / About ### ### ####
+### ### #### Page 4 / About ### ### ####
 $aboutContent = $Window.FindName("AboutContent")
 $aboutContent.Text = "$showPageAboutDetail"
 
 
-
-
+### ### #### Footer ### ### ####
 $FooterContent1 = $Window.FindName("FooterContent1")
 $FooterContent1.Text = "[ $showDate ]"
 $FooterContent2 = $Window.FindName("FooterContent2")
@@ -157,14 +156,14 @@ $App = $Window.FindName("App")
 $VMSettings = $Window.FindName("VMSettings")
 $About = $Window.FindName("About")
 $LayoutTest = $Window.FindName("LayoutTest")
-#$AutoRender = $Window.FindName("AutoRender")
+$AutoRender = $Window.FindName("AutoRender")
 
 $Button1 = $Window.FindName('Button1')
 $Button2 = $Window.FindName('Button2')
 $Button3 = $Window.FindName('Button3')
 $Button4 = $Window.FindName('Button4')
 $Button5 = $Window.FindName('Button5')
-#$Button6 = $Window.FindName('Button6')
+$Button6 = $Window.FindName('Button6')
 
 
 #Overview / [ ShowHiddenFiles ] $HiddenFileState
@@ -245,8 +244,6 @@ $BtnSwitchHideFileExt.Add_MouseLeftButtonDown({
     }
 })
 
-
-
 $Button1.add_Click({
     $Overview.Visibility = "Visible"
     $App.Visibility = "Hidden"
@@ -291,10 +288,6 @@ $Button5.add_Click({
     $LayoutTest.Visibility = "Visible"
     $AutoRender.Visibility = "Hidden"
 })
-
-
-$AutoRender = $Window.FindName("AutoRender")
-$Button6 = $Window.FindName('Button6')
 
 $Button6.add_Click({
     $Overview.Visibility = "Hidden"
