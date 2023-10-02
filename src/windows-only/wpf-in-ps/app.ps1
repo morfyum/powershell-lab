@@ -165,6 +165,16 @@ $Button4 = $Window.FindName('Button4')
 $Button5 = $Window.FindName('Button5')
 $Button6 = $Window.FindName('Button6')
 
+$AutoRGrid = $Window.FindName("AutoRGrid")
+$testArray = 0..50
+foreach ($item in $testArray) {
+    $AutoButton = New-Object Windows.Controls.Button
+    $AutoButton.Content = $item
+    $AutoButton.width = "170"
+    $AutoButton.Margin = "2.5"
+    $AutoButton.Padding = "5"
+    $AutoRGrid.Children.Add($AutoButton)
+}
 
 #Overview / [ ShowHiddenFiles ] $HiddenFileState
 $BtnSwitchShowHiddenFiles = $Window.FindName('SwitchShowHiddenFiles')

@@ -111,7 +111,7 @@
         <!-- #### #### #### Page / App ### #### ####-->
         <Border Name="App" Visibility="Hidden" Margin="5, 40, 5, 30" Background="#80000000" CornerRadius="10">
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <Grid Visibility="Visible">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -135,34 +135,7 @@
                 <Button Content="321 3123 1233" MinWidth="110" Width="auto" Height="Auto" Margin="5" Padding="5"/>
                 <Button Content="321 3123 1233" MinWidth="110" Width="auto" Height="Auto" Margin="5" Padding="5"/>
             </WrapPanel>
-            
-
-            <!--Grid Background="#00DDDDDD" Width="200"
-                HorizontalAlignment="Left"
-                >
-
-                <WrapPanel>
-                    <Button Content="Gomb 1" Width="200" Height="Auto" Margin="5"/>
-                    <Button Content="Gomb 2" Width="200" Height="Auto" Margin="5"/>
-                    <Button Content="Gomb 3" Width="200" Height="Auto" Margin="5"/>
-
-                    <Button Name="InstalledGit" Content="Install Git" 
-                        Height="30" Margin="5, 5, 5, 0"
-                        Background="#DDDDDD"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Top"
-                    />
-                
-                    <Button Name="InstalledChrome" Content="Install Chrome" 
-                        Height="30" Margin="5, 45, 5, 0"
-                        Background="#DDDDDD"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Top"
-                    />
-                </WrapPanel>
-
-            </Grid-->
-
+        
         </Grid>
         </ScrollViewer>
         </Border>
@@ -385,8 +358,28 @@
         <Border Name="AutoRender" Visibility="Hidden" Margin="5, 40, 5, 30" Background="#80000000" CornerRadius="10">
         <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <TextBlock Text="Auto Render" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
+            <TextBlock Grid.Row="0" Text="App." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
+
+            <WrapPanel Name="AutoRGrid" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                <!-- AUTO RENDERED BUTTONS -->
+            </WrapPanel>
+ 
+            <TextBlock Grid.Row="2" Text="Todo" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
+            <WrapPanel Grid.Row="4" Height="240" VerticalAlignment="Bottom" Margin="5, 5, 5, 5">
+                <Button Content="321 3123 1233" MinWidth="110" Width="auto" Height="Auto" Margin="5" Padding="5"/>
+                <Button Content="321 3123 1233" MinWidth="110" Width="auto" Height="Auto" Margin="5" Padding="5"/>
+                <Button Content="321 3123 1233" MinWidth="110" Width="auto" Height="Auto" Margin="5" Padding="5"/>
+                <Button Content="321 3123 1233" MinWidth="110" Width="auto" Height="Auto" Margin="5" Padding="5"/>
+                <Button Content="321 3123 1233" MinWidth="110" Width="auto" Height="Auto" Margin="5" Padding="5"/>
+            </WrapPanel>
+       
 
         </Grid>
         </ScrollViewer>
