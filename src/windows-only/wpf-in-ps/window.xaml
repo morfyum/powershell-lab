@@ -352,8 +352,8 @@
  
             <TextBlock Grid.Row="2" Text="Automata: Switch" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
             <WrapPanel Name="AutoGridSwitches" Grid.Row="4" MinHeight="240" VerticalAlignment="Bottom" Margin="5, 5, 5, 5">
-                
-                <Grid MinWidth="300" Margin="0, 0, 20, 0">
+                <!-- AUTO RENDERED SWITCHES BY THE FOLLOWING TEMPLATE -->
+                <!--Grid MinWidth="300" Margin="0, 0, 20, 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -366,8 +366,7 @@
                         <Border Name="a_SwitchHideFileExt" Width="24" Height="24" Margin="4" CornerRadius="15" BorderBrush="#2B9199" BorderThickness="0" Background="#2B9199" HorizontalAlignment="Left">
                         </Border>
                     </Grid>
-                </Grid>
-            
+                </Grid-->
             </WrapPanel>
        
 

@@ -186,19 +186,19 @@ foreach ($item in $testArray) {
 # JSON adatok
 $jsonData = @"
 [
-    { "Name": "Element1", "Text": "Show file extensions" },
-    { "Name": "Element2", "Text": "Another text" },
-    { "Name": "Element3", "Text": "Yet another text" },
-    { "Name": "Element1", "Text": "Show file extensions" },
-    { "Name": "Element2", "Text": "Another text" },
-    { "Name": "Element3", "Text": "Yet another text" },
-    { "Name": "Element1", "Text": "Show file extensions" },
-    { "Name": "Element2", "Text": "Another text" },
-    { "Name": "Element3", "Text": "Yet another text" },
-    { "Name": "Element1", "Text": "Show file extensions" },
-    { "Name": "Element2", "Text": "Another text" },
-    { "Name": "Element3", "Text": "Yet another text" },
-    { "Name": "Element4", "Text": "4th another text service" }
+    { "Name": "Element1", "Text": "1 Show file extensions" },
+    { "Name": "Element2", "Text": "2 Another text" },
+    { "Name": "Element3", "Text": "3 Yet another text" },
+    { "Name": "Element4", "Text": "4 Show file extensions" },
+    { "Name": "Element5", "Text": "5 Another text" },
+    { "Name": "Element6", "Text": "6 Yet another text" },
+    { "Name": "Element7", "Text": "7 Show file extensions" },
+    { "Name": "Element8", "Text": "8 Another text" },
+    { "Name": "Element9", "Text": "9 Yet another text" },
+    { "Name": "Element10", "Text": "10 Show file extensions" },
+    { "Name": "Element11", "Text": "11 Another text" },
+    { "Name": "Element12", "Text": "12 Yet another text" },
+    { "Name": "Element13", "Text": "13 th another text service" }
 ]
 "@
 
@@ -211,16 +211,17 @@ $AutoGridSwitches = $Window.FindName("AutoGridSwitches")
 foreach ($obj in $objects) {
     Write-Host "NAME: ", $obj.Name, "Text:", $obj.Text
     
-    $MainGrid = New-Object Windows.Controls.Grid
-    $MainGrid.MinWidth = 300 # 170
-    $MainGrid.Margin = New-Object Windows.Thickness(0, 0, 20, 0)
-    #$MainGrid.Background = [Windows.Media.Brushes]::Red
+    $mainGrid = New-Object Windows.Controls.Grid
+    $mainGrid.MinWidth = 300 # 170
+    $mainGrid.Margin = New-Object Windows.Thickness(0, 0, 20, 0)
+    #$mainGrid.Background = [Windows.Media.Brushes]::Red
 
-    #$MainGrid.RowDefinitions.Add((New-Object Windows.Controls.RowDefinition))
-    $MainGrid.ColumnDefinitions.Add((New-Object Windows.Controls.ColumnDefinition))
-    $MainGrid.ColumnDefinitions.Add((New-Object Windows.Controls.ColumnDefinition))
+    #$mainGrid.RowDefinitions.Add((New-Object Windows.Controls.RowDefinition))
+    $mainGrid.ColumnDefinitions.Add((New-Object Windows.Controls.ColumnDefinition))
+    $mainGrid.ColumnDefinitions.Add((New-Object Windows.Controls.ColumnDefinition))
      
     $TextGrid = New-Object Windows.Controls.Grid
+    #$TextGrid.SetValue([Windows.Controls.Grid]::RowProperty, 0)
     $TextGrid.SetValue([Windows.Controls.Grid]::ColumnProperty, 0)
     $TextGrid.HorizontalAlignment = [Windows.HorizontalAlignment]::Left
     
@@ -235,10 +236,7 @@ foreach ($obj in $objects) {
 
     $TextGrid.Children.Add($textBlock)
 
-    $MainGrid.Children.Add($TextGrid)
-
-    #$textBlock.SetValue([Windows.Controls.Grid]::RowProperty, 0)
-    #$textBlock.SetValue([Windows.Controls.Grid]::ColumnProperty, 0)
+    $mainGrid.Children.Add($TextGrid)
 
     $switchGrid = New-Object Windows.Controls.Grid
     $switchGrid.Width = 60
@@ -247,7 +245,7 @@ foreach ($obj in $objects) {
     $switchGrid.HorizontalAlignment = [Windows.HorizontalAlignment]::Right
 
     $border1 = New-Object Windows.Controls.Border
-    $border1.Name = "${Obj.Name}_SwitchAreaHideFileExt"
+    $border1.Name = $obj.Name+"_SwitchArea"
     $border1.Width = 60
     $border1.Height = 30
     $border1.CornerRadius = New-Object Windows.CornerRadius(7)
@@ -256,7 +254,7 @@ foreach ($obj in $objects) {
     $border1.BorderThickness = New-Object Windows.Thickness(15)
     
     $border2 = New-Object Windows.Controls.Border
-    $border2.Name = "${Obj.Name}_SwitchHideFileExt"
+    $border2.Name = "${obj.Name}_SwitchBtn"
     $border2.Width = 24
     $border2.Height = 24
     $border2.Margin = New-Object Windows.Thickness(4)
@@ -269,9 +267,9 @@ foreach ($obj in $objects) {
     $switchGrid.Children.Add($border1)
     $switchGrid.Children.Add($border2)
 
-    $MainGrid.Children.Add($switchGrid)
+    $mainGrid.Children.Add($switchGrid)
 
-    $AutoGridSwitches.Children.Add($MainGrid)
+    $AutoGridSwitches.Children.Add($mainGrid)
 }
 
 
