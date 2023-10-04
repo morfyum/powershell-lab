@@ -5,28 +5,27 @@
         Background="#2E3436"
         Title="com.morfyum.OverPower - v0.1"
         WindowStartupLocation="CenterScreen"
-
         >
 
     <Window.Resources>
-    <Style x:Key="RoundedButtonStyle" TargetType="Button">
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
         <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border 
-                        CornerRadius="10" 
-                        Background="LightBlue" 
-                        BorderThickness="1" 
-                        BorderBrush="Gray">
-                        <ContentPresenter 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center" 
-                        />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
+        <Setter.Value>
+        <ControlTemplate TargetType="Button">
+            <Border 
+                CornerRadius="10" 
+                Background="LightBlue" 
+                BorderThickness="1" 
+                BorderBrush="Gray">
+                <ContentPresenter 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                />
+            </Border>
+        </ControlTemplate>
+        </Setter.Value>
         </Setter>
-    </Style>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -55,11 +54,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="Overview." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
-
             <WrapPanel Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                    <!--Button Content="Gomb 1" Width="170" Height="Auto" Margin="2.5" Padding="5"/>
-                    <Button Content="Gomb 2" Width="170" Height="Auto" Margin="2.5" Padding="5"/>
-                    <Button Content="Gomb 3" Width="170" Height="Auto" Margin="2.5" Padding="5"/-->
                     
                     <Grid  Width="Auto" MinWidth="170" Margin="0, 0, 20, 0">
                         <Grid.ColumnDefinitions>
@@ -90,7 +85,6 @@
                             </Border>
                         </Grid>
                     </Grid>
-
 
             </WrapPanel>
  
@@ -208,57 +202,42 @@
                         <Button Content="Str Gomb 1" MinWidth="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Str Gomb 2" MinWidth="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Str Gomb 3" MinWidth="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
-
                         <Button Content="Gomb 1" Width="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Gomb 2" Width="125" Height="Auto" Margin="5" Padding="5"/>
                         <Button Content="Gomb 3" Width="125" Height="Auto" Margin="5" Padding="5"/>
-
                         <Button Content="Gomb 1" Width="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Gomb 2" Width="125" Height="Auto" Margin="5" Padding="5"/>
-
                         <Button Content="Gomb 3" Width="200" Height="Auto" Margin="5" Padding="5"/>
-
-
                         <Button Content="Str Gomb 1" MinWidth="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Str Gomb 2" MinWidth="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Str Gomb 3" MinWidth="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
-
                         <Button Content="Gomb 1" Width="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Gomb 2" Width="125" Height="Auto" Margin="5" Padding="5"/>
                         <Button Content="Gomb 3" Width="125" Height="Auto" Margin="5" Padding="5"/>
-
                         <Button Content="Gomb 1" Width="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Gomb 2" Width="125" Height="Auto" Margin="5" Padding="5"/>
-
                         <Button Content="Gomb 3" Width="200" Height="Auto" Margin="5" Padding="5"/>
 
             </WrapPanel>
-
             
             <TextBlock Grid.Row="2" Text="Grid Row 2 - Next is Grid Row 4" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
-
             <WrapPanel Grid.Row="3" Background="Yellow" VerticalAlignment="Top" Margin="5" HorizontalAlignment="Stretch">
 
                         <Button Content="Gomb 1" Width="200" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Gomb 2" Width="200" Height="Auto" Margin="5" Padding="5"/>
                         <Button Content="Gomb 3" Width="200" Height="Auto" Margin="5" Padding="5"/>
-
                         <Button Content="Gomb 1" Width="200" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Gomb 2" Width="200" Height="Auto" Margin="5" Padding="5"/>
                         <Button Content="Gomb 3" Width="200" Height="Auto" Margin="5" Padding="5"/>
-
                         <Button Content="Gomb 1" Width="200" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Gomb 2" Width="200" Height="Auto" Margin="5" Padding="5"/>
                         <Button Content="Gomb 3" Width="200" Height="Auto" Margin="5" Padding="5"/>
-
                         <Button Content="Str Gomb 1" MinWidth="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Str Gomb 2" MinWidth="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Str Gomb 3" MinWidth="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
-
                         <Button Content="Gomb 1" Width="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Gomb 2" Width="125" Height="Auto" Margin="5" Padding="5"/>
                         <Button Content="Gomb 3" Width="125" Height="Auto" Margin="5" Padding="5"/>
-
                         <Button Content="Gomb 1" Width="125" Height="Auto" Margin="5" Padding="5" HorizontalAlignment="Stretch"/>
                         <Button Content="Gomb 2" Width="125" Height="Auto" Margin="5" Padding="5"/>
 
@@ -365,19 +344,30 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="App." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
+            <TextBlock Grid.Row="0" Text="Automata: Buttons." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
 
-            <WrapPanel Name="AutoRGrid" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <WrapPanel Name="AutoGridButtons" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch">
                 <!-- AUTO RENDERED BUTTONS -->
             </WrapPanel>
  
-            <TextBlock Grid.Row="2" Text="Todo" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
-            <WrapPanel Grid.Row="4" Height="240" VerticalAlignment="Bottom" Margin="5, 5, 5, 5">
-                <Button Content="321 3123 1233" MinWidth="110" Width="auto" Height="Auto" Margin="5" Padding="5"/>
-                <Button Content="321 3123 1233" MinWidth="110" Width="auto" Height="Auto" Margin="5" Padding="5"/>
-                <Button Content="321 3123 1233" MinWidth="110" Width="auto" Height="Auto" Margin="5" Padding="5"/>
-                <Button Content="321 3123 1233" MinWidth="110" Width="auto" Height="Auto" Margin="5" Padding="5"/>
-                <Button Content="321 3123 1233" MinWidth="110" Width="auto" Height="Auto" Margin="5" Padding="5"/>
+            <TextBlock Grid.Row="2" Text="Automata: Switch" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="White"/>
+            <WrapPanel Name="AutoGridSwitches" Grid.Row="4" MinHeight="240" VerticalAlignment="Bottom" Margin="5, 5, 5, 5">
+                
+                <Grid MinWidth="300" Margin="0, 0, 20, 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <TextBox Text="Show file extensions" Background="Transparent" Foreground="#FFFFFF" Height="30" Margin="2.5" Padding="5" MinWidth="240"/>
+                    </Grid>
+                    <Grid Grid.Column="1" Width="60" Margin="2.5">
+                        <Border Name="a_SwitchAreaHideFileExt" Width="60" Height="30" CornerRadius="7" BorderBrush="#DDDDDD" Background="#DDDDDD" BorderThickness="15"/>
+                        <Border Name="a_SwitchHideFileExt" Width="24" Height="24" Margin="4" CornerRadius="15" BorderBrush="#2B9199" BorderThickness="0" Background="#2B9199" HorizontalAlignment="Left">
+                        </Border>
+                    </Grid>
+                </Grid>
+            
             </WrapPanel>
        
 
