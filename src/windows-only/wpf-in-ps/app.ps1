@@ -302,16 +302,16 @@ if ($HiddenFileState -eq 1 ) {
 $BtnSwitchShowHiddenFiles.Add_MouseLeftButtonDown({
     if ($BtnSwitchShowHiddenFiles.HorizontalAlignment -eq "Left") {
         # Enable
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden" -Type DWord -Value 1
         $HiddenFileState = 1
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden" -Type DWord -Value $HiddenFileState
         $BtnSwitchShowHiddenFiles.HorizontalAlignment="Right"
         $BtnSwitchShowHiddenFiles.Background = "#164549"
         $SwitchAreaShowHiddenFiles.Background="#2B9199"
         $SwitchAreaShowHiddenFiles.BorderBrush="#2B9199"
     } else {
         # Disable
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden" -Type DWord -Value 0
         $HiddenFileState = 0
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden" -Type DWord -Value $HiddenFileState
         $BtnSwitchShowHiddenFiles.HorizontalAlignment="Left"
         $BtnSwitchShowHiddenFiles.Background = "#2B9199"
         $SwitchAreaShowHiddenFiles.Background="#DDDDDD"
@@ -342,16 +342,16 @@ $BtnSwitchHideFileExt.Add_MouseLeftButtonDown({
 
     if ($BtnSwitchHideFileExt.HorizontalAlignment -eq "Left") {
         # Enable
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Type DWord -Value 0
         $ShowFileExtensionState = 0
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Type DWord -Value $ShowFileExtensionState
         $BtnSwitchHideFileExt.HorizontalAlignment="Right"
         $BtnSwitchHideFileExt.Background = "#164549"
         $SwitchAreaHideFileExt.Background="#2B9199"
         $SwitchAreaHideFileExt.BorderBrush="#2B9199"
     } else {
         # Disable
-        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Type DWord -Value 1
         $ShowFileExtensionState = 1
+        Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Type DWord -Value $ShowFileExtensionState
         $BtnSwitchHideFileExt.HorizontalAlignment="Left"
         $BtnSwitchHideFileExt.Background = "#2B9199"
         $SwitchAreaHideFileExt.Background="#DDDDDD"
