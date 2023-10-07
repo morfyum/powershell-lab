@@ -5,6 +5,11 @@
 # - Disable cortana for save privacy and resources
 
 
+# VM TOOLS FOR WINDOWS :
+# spice-space for QXL drvier 
+# https://spice-space.org/
+# Windows Binaries: https://www.spice-space.org/download.html
+
 # SCHEDULED TASK
 # Get-ScheduledTask
 
