@@ -2,7 +2,14 @@
 
 $selfLocation = (Get-Location).Path
 $selfBackground = "background.jpg"
-$selfLanguage = ""
+$selfLanguage = "en"
+
+# TODO: Multi-language implementation
+switch ($selfLanguage) {
+    en { $selfLanguage = "en" }
+    hu { $selfLanguage = "hu" }
+    Default {$selfLanguage = "en"}
+}
 
 # Instead of Import-Module. ## using module doesnt work.
 . $selfLocation\functions\test.ps1
@@ -23,10 +30,11 @@ function Switch-ClearSwitch {
     # TODO
 }
 
+<#
 function Check-VSCode-IsInstalled {
     Get-Package "*Microsoft Visual Studio Code*" -ErrorAction SilentlyContinue | Out-Null
     $IsInstalledVSCode = $?
-}
+}#>
 
 
 ##################################################################
@@ -34,7 +42,7 @@ function Check-VSCode-IsInstalled {
 ##################################################################
 Write-Output "Starting Application..."
 Write-Output "selfLocation:    [ $selfLocation ]"
-$example_code = Get-CimClass
+#$example_code = Get-CimClass
 
 $showDate = Get-Date
 $showHome = $HOME
