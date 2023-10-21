@@ -4,6 +4,18 @@ $selfLocation = (Get-Location).Path
 $selfBackground = "background.jpg"
 $selfLanguage = "en"
 
+
+$selfServicesLocation = "$selfLocation\functions\services\services.json"
+
+try {
+    Test-Path $selfServicesLocation
+}
+catch {
+    Write-Debug "[FAIL] Missing component: $selfServicesLocation"
+    Exit 1
+}
+
+
 # TODO: Multi-language implementation
 switch ($selfLanguage) {
     en { $selfLanguage = "en" }
@@ -30,12 +42,11 @@ function Switch-ClearSwitch {
     # TODO
 }
 
-<#
 function Check-VSCode-IsInstalled {
     Get-Package "*Microsoft Visual Studio Code*" -ErrorAction SilentlyContinue | Out-Null
     $IsInstalledVSCode = $?
-}#>
-
+    return $IsInstalledVSCode
+}
 
 ##################################################################
 # Put here the code what you want to load before your app start. #
@@ -191,6 +202,13 @@ foreach ($item in $testArray) {
 
 #### AUTOMATA SWITCHES ####
 
+$jsonServiceList = Get-Content -Raw $selfServicesLocation | ConvertFrom-Json
+
+Write-Host "JSON: $jsonServiceList"
+Write-Host "OK: ", $jsonServiceList.service.Name[0] -ForegroundColor Green
+
+
+
 # JSON adatok
 $jsonData = @"
 [
@@ -211,13 +229,13 @@ $jsonData = @"
 "@
 
 # Átalakítjuk a JSON-t PowerShell objektumokká
-$objects = $jsonData | ConvertFrom-Json
-
+#$objects = $jsonData | ConvertFrom-Json
+$objects = $jsonServiceList
 
 # A JSON adatokon iterálva létrehozzuk a Grid elemeket
 $AutoGridSwitches = $Window.FindName("AutoGridSwitches")
 foreach ($obj in $objects) {
-    Write-Host "NAME: ", $obj.Name, "Text:", $obj.Text
+    Write-Host "NAME: ", $obj.service.name, "Text:", $obj.service.description
     
     $mainGrid = New-Object Windows.Controls.Grid
     $mainGrid.MinWidth = 300 # 170

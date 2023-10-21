@@ -1,5 +1,5 @@
 {
-    "file": "service-list.json",
+    "file": "services.json",
     "service": [
         {
             "name": "vss",
@@ -366,9 +366,9 @@
             "recommendation": "['VM', 'security', 'no-sd-card']"
         },
         {
-            "name": "TabletInputService", ## Needed by Windows Terminal (at least in Windows 11).
+            "name": "TabletInputService",
             "readableName": "Touch Keyboard and Handwriting Panel Service",
-            "description": "Reboot required",
+            "description": "Reboot required. ## TODO Needed by Windows Terminal (at least in Windows 11).",
             "defaultState": "manual",
             "recommendation": "['VM', 'no-touch-screen', 'desktop']"
         },
@@ -394,9 +394,9 @@
             "recommendation": "['vm', 'security', 'no-holographic']"
         },
         {
-            "name": "RmSvc", # TEST: wifi and bluetooth
+            "name": "RmSvc",
             "readableName": "Radio Management service",
-            "description": "Required for radio services. Reboot Required",
+            "description": "Required for radio services. Reboot Required. # TODO TEST: wifi and bluetooth",
             "defaultState": "manual",
             "recommendation": "['VM', 'security', 'no-radio']"
         },
@@ -422,9 +422,9 @@
             "recommendation": "['VM', 'no-vpn']"
         },
         {
-            "name": "netprofm", ###
+            "name": "netprofm", 
             "readableName": "Network list Service",
-            "description": "Required for Windows update functionality. Reboot Required",
+            "description": "Required for Windows update functionality! Reboot Required!",
             "defaultState": "manual",
             "recommendation": "['VM', 'no-winupdate', 'unsecure', 'not-recommended']"
         },
@@ -492,9 +492,9 @@
             "recommendation": "['VM', 'no-sso']"
         },
         {
-            "name": "CDPSvc", ## Required for Night Light?
+            "name": "CDPSvc",
             "readableName": "Connected Device Platform",
-            "description": "This service is used for Connected Devices and Universal Glass scenarios",
+            "description": "This service is used for Connected Devices and Universal Glass scenarios.  ## Required for Night Light?",
             "defaultState": "automatic",
             "recommendation": "['VM']"
         },
