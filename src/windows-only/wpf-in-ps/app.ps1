@@ -160,7 +160,8 @@ $InstalledVSCode.add_Click({
 
 ### ### #### Page 3 / VMSettings ### ### ####
 
-### ### #### Page 4 / About ### ### ####
+
+# Page / About
 #$aboutContent = $Window.FindName("AboutContent")
 #$aboutContent.Text = "$showPageAboutDetail"
 try {
