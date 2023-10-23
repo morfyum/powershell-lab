@@ -5,7 +5,7 @@ $selfBackground = "background.jpg"
 $selfLanguage = "en"
 
 
-$selfServicesLocation = "$selfLocation\functions\services\services.json"
+$global:selfServicesLocation = "$selfLocation\functions\services\services.json"
 
 try {
     Test-Path $selfServicesLocation
@@ -203,13 +203,48 @@ foreach ($item in $testArray) {
 #### AUTOMATA SWITCHES ####
 
 $jsonServiceList = Get-Content -Raw $selfServicesLocation | ConvertFrom-Json
+$jsonServiceListLength = ($jsonServiceList.service).length
+
+# Model (Business Logic)
+class ServiceListModel {
+    [string] $Name
+    [string] $ReadableName
+    [string] $Description
+    [string] $DefaultState
+    [string] $Recommendation
+
+    [string] $ServiceListLocation
+    [string] $ServiceList
+    [int] $JsonServiceListLength
+
+    ServiceListModel() {
+        $this.ServiceListLocation = $global:selfServicesLocation
+        $this.ServiceList = Get-Content -Raw $this.ServiceListLocation | ConvertFrom-Json
+        $this.JsonServiceListLength = ($this.ServiceList.service).length
+
+        #$this.Name = $this.ServiceList.service.Name[$objIndex]
+
+    }
+
+    [string] GetName() {
+        return $this.Name
+    }
+}
+
 
 Write-Host "JSON: $jsonServiceList"
-Write-Host "OK: ", $jsonServiceList.service.Name[0] -ForegroundColor Green
-
-
+Write-Host "Length        : ", $jsonServiceListLength
+for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
+    Write-Host "Name           : ", $jsonServiceList.service.Name[$objIndex] -ForegroundColor Green
+    Write-Host "Readable Name  : ", $jsonServiceList.service.readableName[$objIndex] -ForegroundColor Green
+    Write-Host "Description    : ", $jsonServiceList.service.description[$objIndex] -ForegroundColor Green
+    Write-Host "Default State  : ", $jsonServiceList.service.defaultState[$objIndex] -ForegroundColor Green
+    Write-Host "Recommendation : ", $jsonServiceList.service.recommendation[$objIndex] -ForegroundColor Green
+    Write-Host "---"
+}
 
 # JSON adatok
+<#
 $jsonData = @"
 [
     { "Name": "Element1", "Text": "1 Show file extensions" },
@@ -227,15 +262,15 @@ $jsonData = @"
     { "Name": "Element13", "Text": "13 th another text service" }
 ]
 "@
-
+#>
 # Átalakítjuk a JSON-t PowerShell objektumokká
 #$objects = $jsonData | ConvertFrom-Json
-$objects = $jsonServiceList
+#$objects = $jsonServiceList
 
 # A JSON adatokon iterálva létrehozzuk a Grid elemeket
 $AutoGridSwitches = $Window.FindName("AutoGridSwitches")
-foreach ($obj in $objects) {
-    Write-Host "NAME: ", $obj.service.name, "Text:", $obj.service.description
+for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
+    #Write-Host "NAME: ", $obj.service.name, "Text:", $obj.service.description
     
     $mainGrid = New-Object Windows.Controls.Grid
     $mainGrid.MinWidth = 300 # 170
@@ -252,7 +287,7 @@ foreach ($obj in $objects) {
     $TextGrid.HorizontalAlignment = [Windows.HorizontalAlignment]::Left
     
     $textBlock = New-Object Windows.Controls.TextBox
-    $textBlock.Text = $obj.Text
+    $textBlock.Text = $jsonServiceList.service.Name[$objIndex]                   #####
     $textBlock.Background = [Windows.Media.Brushes]::Transparent
     $textBlock.Foreground = "#FFFFFF"
     $textBlock.Height = 30
@@ -271,24 +306,24 @@ foreach ($obj in $objects) {
     $switchGrid.HorizontalAlignment = [Windows.HorizontalAlignment]::Right
 
     $border1 = New-Object Windows.Controls.Border
-    $border1.Name = $obj.Name+"_SwitchArea"
+    $border1.Name = $jsonServiceList.service.Name[$objIndex]+"_SwitchArea"                             #####
     $border1.Width = 60
     $border1.Height = 30
     $border1.CornerRadius = New-Object Windows.CornerRadius(7)
-    $border1.BorderBrush = "#DDDDDD"
+    $border1.BorderBrush = "#DDDDDD"  # Left: #DDDDDD | Right: 
     $border1.Background = "#DDDDDD"
     $border1.BorderThickness = New-Object Windows.Thickness(15)
     
     $border2 = New-Object Windows.Controls.Border
-    $border2.Name = "${obj.Name}_SwitchBtn"
+    $border2.Name = $jsonServiceList.service.Name[$objIndex]+"_SwitchBtn"                                     #####
     $border2.Width = 24
     $border2.Height = 24
     $border2.Margin = New-Object Windows.Thickness(4)
     $border2.CornerRadius = New-Object Windows.CornerRadius(15)
     $border2.BorderBrush = "#2B9199"
     $border2.BorderThickness = New-Object Windows.Thickness(0)
-    $border2.Background = "#2B9199"
-    $border2.HorizontalAlignment = [Windows.HorizontalAlignment]::Left
+    $border2.Background = "#2B9199"  # Left: #2B9199 | Right: 
+    $border2.HorizontalAlignment = [Windows.HorizontalAlignment]::Right  # Left/Right
 
     $switchGrid.Children.Add($border1)
     $switchGrid.Children.Add($border2)
