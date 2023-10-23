@@ -1,8 +1,8 @@
 ﻿[System.Reflection.Assembly]::LoadWithPartialName("PresentationFramework") | Out-Null
 
-$selfLocation = (Get-Location).Path
-$selfBackground = "background.jpg"
-$selfLanguage = "en"
+$global:selfLocation = (Get-Location).Path
+$global:selfBackground = "background.jpg"
+$global:selfLanguage = "en"
 
 
 $global:selfServicesLocation = "$selfLocation\functions\services\services.json"
@@ -71,6 +71,9 @@ $IsInstalledVSCode = $?
 # Page / Overview
 $ShowFileExtensionState = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt").HideFileExt
 $HiddenFileState = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden").Hidden
+
+# TODO: Admin Privilege request
+#$ShowBitlockerState = (Get-BitLockerVolume -MountPoint C:).ProtectionStatus
 
 # Page / About
 #$showPageAboutDetail = (Get-Content -Path "$selfLocation\about-hu.txt" -Encoding UTF8) -join "`n"
@@ -276,7 +279,6 @@ for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
     $mainGrid.MinWidth = 300 # 170
     $mainGrid.Margin = New-Object Windows.Thickness(0, 0, 20, 0)
     #$mainGrid.Background = [Windows.Media.Brushes]::Red
-
     #$mainGrid.RowDefinitions.Add((New-Object Windows.Controls.RowDefinition))
     $mainGrid.ColumnDefinitions.Add((New-Object Windows.Controls.ColumnDefinition))
     $mainGrid.ColumnDefinitions.Add((New-Object Windows.Controls.ColumnDefinition))
@@ -287,7 +289,7 @@ for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
     $TextGrid.HorizontalAlignment = [Windows.HorizontalAlignment]::Left
     
     $textBlock = New-Object Windows.Controls.TextBox
-    $textBlock.Text = $jsonServiceList.service.Name[$objIndex]                   #####
+    $textBlock.Text = $jsonServiceList.service.Name[$objIndex]  #### OBJ ####
     $textBlock.Background = [Windows.Media.Brushes]::Transparent
     $textBlock.Foreground = "#FFFFFF"
     $textBlock.Height = 30
@@ -306,7 +308,7 @@ for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
     $switchGrid.HorizontalAlignment = [Windows.HorizontalAlignment]::Right
 
     $border1 = New-Object Windows.Controls.Border
-    $border1.Name = $jsonServiceList.service.Name[$objIndex]+"_SwitchArea"                             #####
+    $border1.Name = $jsonServiceList.service.Name[$objIndex]+"_SwitchArea"  #### OBJ ####
     $border1.Width = 60
     $border1.Height = 30
     $border1.CornerRadius = New-Object Windows.CornerRadius(7)
@@ -315,7 +317,7 @@ for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
     $border1.BorderThickness = New-Object Windows.Thickness(15)
     
     $border2 = New-Object Windows.Controls.Border
-    $border2.Name = $jsonServiceList.service.Name[$objIndex]+"_SwitchBtn"                                     #####
+    $border2.Name = $jsonServiceList.service.Name[$objIndex]+"_SwitchBtn" #### OBJ ####
     $border2.Width = 24
     $border2.Height = 24
     $border2.Margin = New-Object Windows.Thickness(4)
