@@ -1,20 +1,22 @@
 ﻿[System.Reflection.Assembly]::LoadWithPartialName("PresentationFramework") | Out-Null
 
+# VARIABLES
 $global:selfLocation = (Get-Location).Path
 $global:selfBackground = "background.jpg"
 $global:selfLanguage = "en"
-
-
 $global:selfServicesLocation = "$selfLocation\functions\services\services.json"
 
+# IMPORTS
+# Instead of Import-Module.
+. $selfLocation\functions\ErrorHandler.ps1  # ErrorHandler("Input")
+
 try {
-    Test-Path $selfServicesLocation
+    Test-Path $selfServicesLocation | Out-Null
 }
 catch {
-    Write-Debug "[FAIL] Missing component: $selfServicesLocation"
+    ErrorHandler("Missing component: $selfServicesLocation")
     Exit 1
 }
-
 
 # TODO: Multi-language implementation
 switch ($selfLanguage) {
@@ -22,10 +24,6 @@ switch ($selfLanguage) {
     hu { $selfLanguage = "hu" }
     Default {$selfLanguage = "en"}
 }
-
-# Instead of Import-Module. ## using module doesnt work.
-. $selfLocation\functions\test.ps1
-Get-ChildItem -Path Function:\TestFunction
 
 function Import-Welcome {
 	[xml]$xaml = Get-Content -Path $selfLocation\welcome.xaml
@@ -237,14 +235,14 @@ class ServiceListModel {
 
 Write-Host "JSON: $jsonServiceList"
 Write-Host "Length        : ", $jsonServiceListLength
-for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
+<#for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
     Write-Host "Name           : ", $jsonServiceList.service.Name[$objIndex] -ForegroundColor Green
     Write-Host "Readable Name  : ", $jsonServiceList.service.readableName[$objIndex] -ForegroundColor Green
     Write-Host "Description    : ", $jsonServiceList.service.description[$objIndex] -ForegroundColor Green
     Write-Host "Default State  : ", $jsonServiceList.service.defaultState[$objIndex] -ForegroundColor Green
     Write-Host "Recommendation : ", $jsonServiceList.service.recommendation[$objIndex] -ForegroundColor Green
     Write-Host "---"
-}
+}#>
 
 # JSON adatok
 <#
