@@ -161,9 +161,14 @@ $InstalledVSCode.add_Click({
 ### ### #### Page 3 / VMSettings ### ### ####
 
 ### ### #### Page 4 / About ### ### ####
-$aboutContent = $Window.FindName("AboutContent")
-$aboutContent.Text = "$showPageAboutDetail"
-
+#$aboutContent = $Window.FindName("AboutContent")
+#$aboutContent.Text = "$showPageAboutDetail"
+try {
+. $selfLocation\Page\about.ps1
+}
+catch {
+    ErrorHandler("Not found: [$selfLocation\Page\about.ps1]")
+}
 
 ### ### #### Footer ### ### ####
 $FooterContent1 = $Window.FindName("FooterContent1")
