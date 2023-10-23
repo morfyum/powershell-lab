@@ -111,6 +111,7 @@ $AppBackground.Source = "$selfLocation\$selfBackground"
 
 # Page 1 / Overveiw
 
+
 ### ### #### Page 2 / App ### ### ####
 
 $InstalledGit = $Window.FindName("InstalledGit")
@@ -310,8 +311,8 @@ for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
     $border1.Width = 60
     $border1.Height = 30
     $border1.CornerRadius = New-Object Windows.CornerRadius(7)
-    $border1.BorderBrush = "#DDDDDD"  # Left: #DDDDDD | Right: 
-    $border1.Background = "#DDDDDD"
+    $border1.BorderBrush = "#2B9199"  # Left: #DDDDDD | Right: #2B9199
+    $border1.Background = "#2B9199"  # Left: #DDDDDD | Right: #2B9199
     $border1.BorderThickness = New-Object Windows.Thickness(15)
     
     $border2 = New-Object Windows.Controls.Border
@@ -322,7 +323,7 @@ for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
     $border2.CornerRadius = New-Object Windows.CornerRadius(15)
     $border2.BorderBrush = "#2B9199"
     $border2.BorderThickness = New-Object Windows.Thickness(0)
-    $border2.Background = "#2B9199"  # Left: #2B9199 | Right: 
+    $border2.Background = "#164549"  # Left: #2B9199 | Right: 164549
     $border2.HorizontalAlignment = [Windows.HorizontalAlignment]::Right  # Left/Right
 
     $switchGrid.Children.Add($border1)
