@@ -158,7 +158,7 @@ $InstalledVSCode.add_Click({
 })
 
 
-### ### #### Page 3 / VMSettings ### ### ####
+# Page / VMSettings ### ### ####
 
 
 # Page / About
@@ -275,11 +275,16 @@ $jsonData = @"
 #$objects = $jsonData | ConvertFrom-Json
 #$objects = $jsonServiceList
 
+
+. $selfLocation\templates\clearSwitchTemplate.ps1
 # A JSON adatokon iterálva létrehozzuk a Grid elemeket
-$AutoGridSwitches = $Window.FindName("AutoGridSwitches")
+#$AutoGridSwitches = $Window.FindName("AutoGridSwitches")
 for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
     #Write-Host "NAME: ", $obj.service.name, "Text:", $obj.service.description
+
+    ClearSwitchTemplate -IsEnabled 1
     
+    <#
     $mainGrid = New-Object Windows.Controls.Grid
     $mainGrid.MinWidth = 300 # 170
     $mainGrid.Margin = New-Object Windows.Thickness(0, 0, 20, 0)
@@ -337,7 +342,9 @@ for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
 
     $mainGrid.Children.Add($switchGrid)
 
-    $AutoGridSwitches.Children.Add($mainGrid)
+    #>
+    #$AutoGridSwitches.Children.Add($mainGrid)
+    
 }
 
 
