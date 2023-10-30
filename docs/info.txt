@@ -1,2 +1,19 @@
 # dotnet instal
 winget install Microsoft.DotNet.SDK.6
+
+# PowerShell scripting performance considerations:
+https://learn.microsoft.com/en-us/powershell/scripting/dev-cross-plat/performance/script-authoring-considerations?view=powershell-7.3
+
+## TOOLS:
+	> Benchmarking scropt blocks with Measure-Command
+	Measure-Command { Get-FileHash .\file.txt }
+
+# Security considerations
+https://learn.microsoft.com/en-us/powershell/scripting/dev-cross-plat/security/preventing-script-injection?view=powershell-7.3
+
+# PowerShell module in C#
+https://powershellmagazine.com/2014/03/18/writing-a-powershell-module-in-c-part-1-the-basics/
+
+# C# / dotnet / .NET / asp.Net
+> dotnet console color
+https://stackoverflow.com/questions/2743260/is-it-possible-to-write-to-the-console-in-colour-in-net
