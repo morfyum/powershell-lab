@@ -1,10 +1,9 @@
-# msync
-
+# msync.ps1 # DEV: morfyum # github.com/morfyum
 [CmdletBinding()]
 param (
     [ValidateSet( "help", "sync", "verify", "diff", "makeSum")]
     [string] $Mode,
-    #[Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$true)]
     [string] $Path,
     #[Parameter(Mandatory=$true)]
     [string] $Destination,
@@ -21,39 +20,58 @@ if ($Mode -eq "help") {
             - When the source (PATH) and DESTINATION file are similar, program do nothing
             - When the source (PATH) and DESTINATION file are different, msync overwrite destination path 
             - TODO: No overwrite WHEN Destination is NEWER, and Add -Force option to overwrite 
+
+            ## EXAMPLE
+            
+                msync.ps1 -Mode sync -Path ./ -Destination ./other/folder/
+
         verify
             ## verify mode check differences between source (PATH) and checksum file elements.
             - Show different elements
+
+            ## EXAMPLE
+
+            msync.ps1 -Mode verify -Path ./folder/ ???
+            VAGY
+            msync.ps1 -Mode verify -Source ./folder/summary.csv -Destination ./folder/
+
         diff 
-            ## diff show only differences between souurce (PATH) and DESTINATION
+            ## Show only differences between source (PATH) and DESTINATION
+
+            msync.ps1 -Mode diff -Source ./original/ -Destination ./other/folder/
+
         makeSum
-            ## Create checksum file with MD5 checksums and files
+            ## Create checksum file with MD5 checksums and files to
     " -ForegroundColor Green
     Exit 0
 }
+
 # Default Mode when not set
-if (!$Mode) {$Mode = "sync"}
-if ($Path -eq $Destination -and $Mode) { #  -and $Path -ne "" -and $Destination -ne "" 
+if (!$Mode -and $Destination -ne "") {$Mode = "sync"}
+if (!$Mode -and $Destination -eq "") {$Mode = "makeSum"}
+if ($Path -eq $Destination) { #  -and $Path -ne "" -and $Destination -ne "" 
     Write-Host "WARNING: Path and Destination are same => Switch to makeSum mode!" -ForegroundColor Yellow
     $Mode = "makeSum"
 }
 
+Write-Host "### MODE: [$Mode] # PATH: [$Path] # Destination [$Destination] # SUM: [$SaveSumFile] ###" -ForegroundColor Cyan
 
-Write-Host "### MODE: [$Mode] # FROM: [$Path] # PathTo [$Destination] # SUM: [$SaveSumFile] ###" -ForegroundColor Cyan
-
-##################
-### COMPONENTS ###
-##################
-
+##############################
+###       COMPONENTS       ###
+##############################
 #$fileInfoArray
 #$fileInfoArray | Format-Table
+
+function GetCurrentDate {
+    $CurrentDate = Get-Date -Format "yyyyMMdd-HHmm"
+    Return $CurrentDate
+}
 
 function sync {
     # In sync mode requires Destination source!
     param(
-        [Parameter(Mandatory=$true)]
-        [ValidateScript({Test-Path $_})]
-        [string] $Destination
+        #[Parameter(Mandatory=$true)]
+        #[string] $Destination
     )
     Write-Host "Call: sync()"
 
@@ -68,24 +86,45 @@ function verify {
 }
 
 function makeSum {
-    $Destination = $Path
+    param (
+        [string] $Source = $Path,
+        [string] $OutFile = "summary.csv",
+        [switch] $Force     # TODO: Replace Y/n question to auto-exit when -Force not $true ?
+    )
+    <#
+    foreach ($element in $fileInfoArray) {
+        Write-Host " - ",$element.MD5Sum, "|", $element.LastWriteTime "|", $element.FullName
+    }#>
+
+    if ( (Test-Path "$Path/summary.csv") -eq $true) {
+        $Input = Read-Host "WARNING: summary.csv exist, do you want to Overwrie? [Y/n]"
+        if ($Input.ToLower() -eq "y") {
+
+            $selectedPropertiesArray = $fileInfoArray | ForEach-Object {
+                if ($_.Name -ne $OutFile) {
+                    [PSCustomObject]@{
+                        MD5Sum = $_.MD5Sum
+                        FileName = $_.FullName
+                        LastWriteTime = $_.LastWriteTime
+                    }
+                }
+            }
+            #$selectedPropertiesArray | Export-Csv -Path "$Path/summary-$(GetCurrentDate).csv" -NoTypeInformation
+            $selectedPropertiesArray | Export-Csv -Path "$Path/summary.csv" -NoTypeInformation
+
+        } else {
+            Write-Host "Abort. Exit"
+            Exit 0
+        }
+    }
 }
 
-##################
-###### CODE ######
-##################
+##############################
+###          CODE          ###
+##############################
 $fileInfoArray = @()
 
 Get-ChildItem -Path $Path -Recurse | ForEach-Object {
-    Write-Host "$Mode : $_" -ForegroundColor Green
-
-    switch ($Mode) {
-        sync     {sync}
-        verify   {verify}
-        diff     {diff}
-        makeSum  {makeSum}
-
-    }
 
     $fileInfo = [PSCustomObject]@{
         Name = $_.Name
@@ -96,5 +135,31 @@ Get-ChildItem -Path $Path -Recurse | ForEach-Object {
         MD5Sum = (Get-FileHash -Path $_.FullName -Algorithm MD5).Hash
     }
 
+    # Mode prompt config
+    switch ($Mode) {
+        sync     {}
+        verify   {}
+        diff     {}
+        makeSum  {
+            $ModeParameters = "$($fileInfo.MD5Sum) $($fileInfo.LastWriteTime)"
+        }
+    }
+
+    $cmdLetString = "$Mode : $ModeParameters $_"
+    Write-Host $cmdLetString -ForegroundColor Green
+
+
     $fileInfoArray += $fileInfo
+
+}
+
+
+switch ($Mode) {
+    sync     {sync}
+    verify   {verify}
+    diff     {diff}
+    makeSum  {
+        Write-Host "- Call: makeSum"
+        $(makeSum -Force)
+    }
 }
