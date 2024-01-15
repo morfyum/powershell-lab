@@ -35,6 +35,10 @@ if ($Mode -eq "help") {
             VAGY
             msync.ps1 -Mode verify -Source ./folder/summary.csv -Destination ./folder/
 
+            ## TODO in the future?
+            msync.ps1 -Mode verify -Source ./folder/                                # Ez lesz a makeSum
+            msync.ps1 -Mode verify -Source ./summary.csv -Destination ./folder/     # Ez pedig a verify by file
+
         diff 
             ## Show only differences between source (PATH) and DESTINATION
 
@@ -69,11 +73,31 @@ function GetCurrentDate {
 
 function sync {
     # In sync mode requires Destination source!
+    <# TESTS:
+        ## Destination does not exists: [./asd/]
+        .\msync.ps1 sync -Path ./ -Destination ./asd/
+    #>
     param(
-        #[Parameter(Mandatory=$true)]
-        #[string] $Destination
+        [Parameter(Mandatory=$true)]
+        [string] $Destination = $Destination
     )
-    Write-Host "Call: sync()"
+    #Write-Host "Call: sync()"
+
+    # TODO: Handle recurse issue: When -Destination foldr inside the -Source folder
+    if ((Test-Path $Destination) -eq $true) {
+        if ((Test-Path $Destination$($fileInfo.Name)) -eq $false) {
+            Write-Host "$($fileInfo.Name) => [$Destination$($fileInfo.Name)]"
+            #Copy-Item
+        }
+    } else {
+        Write-Host "Failed: Destination does not exists: $Destination" -ForegroundColor Red
+        Exit 1
+    }
+    
+
+    # TODO: Iter over filetree?
+    #       or Iter over fileInfoArray and use $_.DirectoryName
+    #$fileInfoArray | ForEach-Object {} 
 
 }
 
@@ -135,19 +159,27 @@ Get-ChildItem -Path $Path -Recurse | ForEach-Object {
         MD5Sum = (Get-FileHash -Path $_.FullName -Algorithm MD5).Hash
     }
 
-    # Mode prompt config
+    # Directories has no Checksum!
+    if ($fileInfo.MD5Sum -eq $null) {
+        $fileInfo.MD5Sum = "Directory"
+    }
+
+    # Mode prompt config PER ROUND
     switch ($Mode) {
-        sync     {}
+        sync     {
+            $ModeParameters = "to [$Destination$($fileInfo.Name)] <="
+            $cmdLetString = "$Mode : $ModeParameters $($fileInfo.Name)"
+            Write-Host $cmdLetString -ForegroundColor Green
+            $(sync -Destination $Destination)
+        }
         verify   {}
         diff     {}
         makeSum  {
             $ModeParameters = "$($fileInfo.MD5Sum) $($fileInfo.LastWriteTime)"
+            $cmdLetString = "$Mode : $ModeParameters $($fileInfo.Name)"
+            Write-Host $cmdLetString -ForegroundColor Green
         }
     }
-
-    $cmdLetString = "$Mode : $ModeParameters $_"
-    Write-Host $cmdLetString -ForegroundColor Green
-
 
     $fileInfoArray += $fileInfo
 
@@ -155,7 +187,9 @@ Get-ChildItem -Path $Path -Recurse | ForEach-Object {
 
 
 switch ($Mode) {
-    sync     {sync}
+    sync    {
+                #pass
+            }
     verify   {verify}
     diff     {diff}
     makeSum  {
