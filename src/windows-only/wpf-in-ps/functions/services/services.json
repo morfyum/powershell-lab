@@ -142,9 +142,9 @@
             "recommendation": "['VM', 'all']"
         },
         {
-            "name": "diagnosticshub.standardcollector.service",
+            "name": "diagnosticshub_BUG_standardcollector_BUG_Bservice",
             "readableName": "Microsoft Diagnostics Hub Standard Collector Service",
-            "description": "If you doesn't need windows logs, and Troubleshooting tools",
+            "description": "If you doesn't need windows logs, and Troubleshooting tools - Correct name: diagnosticshub.standardcollector.service",
             "defaultState": "manual",
             "recommendation": "['vm', 'all', 'no-troubleshoot', 'no-logging']"
         },
