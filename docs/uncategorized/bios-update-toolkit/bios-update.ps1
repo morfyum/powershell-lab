@@ -104,12 +104,21 @@ Write-Host "FILE/BIOSVersion   : $($CurrentBIOSFileInfo.BIOSVersion)"
 Write-Host "FILE/Baseboard     : $($CurrentBIOSFileInfo.SSID)"
 Write-Host "FILE/MD5Checksum   : $($CurrentBIOSFileInfo.MD5Sum)"
 
+
+
 Write-Host "Extra Check: ($($CurrentDevice.SSID)=$($CurrentBIOSFileInfo.SSID) ?)" -ForegroundColor Yellow
 if ($CurrentDevice.SSID -eq $CurrentBIOSFileInfo.SSID) {
     Write-Host "OK" -ForegroundColor Green
 } else {
     Write-Host "WARNING: Computer BaseBoard Code (SSID) not equal with BIOS File SSID!" -ForegroundColor Yellow
+    $stillContinue = Read-Host "Do you want to conitune? [Y/n]"
+    if ($stillContinue.ToLower() -eq "y") {
+        # Continue
+    } else {
+        Write-Host "Cancelled. Exit"
+    }
 }
+Write-Host "Check MD5SumDatabase..." -ForegroundColor Cyan
 
 <#
 Write-Host "TEST: DeviceInfo as CurrentDevice" -ForegroundColor Yellow
