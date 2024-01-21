@@ -24,9 +24,10 @@ function Copy-WithExplorerUI([string]$source, [string]$destination) {
     $objFolder.CopyHere($source)
 }
 
-$time_start = (date).DateTime
+# date replaced with Get-Date => Replace with (Get-Date).Date ? 
+$time_start = (Get-Date).DateTime
 Copy-WithExplorerUI $source $destination
-$time_end = (date).DateTime
+$time_end = (Get-Date).DateTime
 
 if ($? -eq $true ){
     Write-Host "✅ Copy done. -> Check hash..." -ForegroundColor Green
