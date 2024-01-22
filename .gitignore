@@ -1,0 +1,8 @@
+# example files for bios update
+csv_example.csv
+summaryDatabase.csv
+
+# src/ => Test files for msync
+src/scripts/msync/2.txt
+src/scripts/msync/summary.csv
+src/scripts/msync/syncTo/
