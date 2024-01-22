@@ -87,7 +87,6 @@ Write-Output "showHome:        $showHome"
 # Dummy waiter
 #Start-Sleep -Seconds 1
 
-
 #Start-Job -ScriptBlock ${Function:Background-Process}
     
 ################################################################
@@ -108,6 +107,7 @@ $Window = Import-Xaml
 ################################################################
 $AppBackground = $Window.FindName("AppBackground")
 $AppBackground.Source = "$selfLocation\$selfBackground"
+
 
 # Page 1 / Overveiw
 
@@ -239,7 +239,6 @@ class ServiceListModel {
     }
 }
 
-
 Write-Host "JSON: $jsonServiceList"
 Write-Host "Length        : ", $jsonServiceListLength
 <#for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
@@ -278,13 +277,13 @@ $jsonData = @"
 
 . $selfLocation\templates\clearSwitchTemplate.ps1
 # A JSON adatokon iterálva létrehozzuk a Grid elemeket
-#$AutoGridSwitches = $Window.FindName("AutoGridSwitches")
+$AutoGridSwitches = $Window.FindName("AutoGridSwitches")
 for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
     #Write-Host "NAME: ", $obj.service.name, "Text:", $obj.service.description
 
-    ClearSwitchTemplate -IsEnabled 1
+    #ClearSwitchTemplate -IsEnabled 1
     
-    <#
+    #<#
     $mainGrid = New-Object Windows.Controls.Grid
     $mainGrid.MinWidth = 300 # 170
     $mainGrid.Margin = New-Object Windows.Thickness(0, 0, 20, 0)
@@ -337,14 +336,16 @@ for ($objIndex = 0; $objIndex -lt $jsonServiceListLength; $objIndex++) {
     $border2.Background = "#164549"  # Left: #2B9199 | Right: 164549
     $border2.HorizontalAlignment = [Windows.HorizontalAlignment]::Right  # Left/Right
 
+    
+
     $switchGrid.Children.Add($border1)
     $switchGrid.Children.Add($border2)
 
     $mainGrid.Children.Add($switchGrid)
 
-    #>
-    #$AutoGridSwitches.Children.Add($mainGrid)
     
+    $AutoGridSwitches.Children.Add($mainGrid)
+    #>
 }
 
 
