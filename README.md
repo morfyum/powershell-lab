@@ -15,11 +15,17 @@ This repository is a collection of PowerShell `modules` and `scripts.`
 ├── pwsh.sh
 ├── README.md
 ├── run.sh
-└── src
-    ├── modules
+├── docs/
+└── src/
+    ├── components/
+    │   └── component.ps1
+    ├── LAB/
+    │   └── research-1/
+    │       └── research1.ps1
+    ├── modules/
     │   └── module1
     │       └── module1.psm
-    └── scripts
+    └── scripts/
         └── ps-app-1
             └── src
                 └── modules
@@ -32,10 +38,18 @@ Dockerfile : Basic description of new docker image.
 pwsh.sh    : A simple interactive powershell environment.
 README.md  : This file
 run.sh     : Run interactive shell. (Need to build first!)
+docs/      : Documentations, todos, research informations
 src/       : Collection of scirpts and modules
 ```
 
 > Note: `build.sh` and `run.sh` is contain name and version numbers! You can change it to build and run custom versions.
+
+### ./src/components/
+Independent components for any projecs.
+Components has no active effect on the systems.
+
+### ./src/LAB/
+Research library with experimental projects.
 
 ### ./src/modules/
 Collection of different modules. 
@@ -51,8 +65,8 @@ Script directory contain independent scripts in own folder,
 which is example, and/or solution for individual problems.
 
 ```
-ps-app-1/       : The main folder of one powershell scritp.
-ps-app-1/src/   : The source library of the script. (script functionality)
+ps-app-1/              : The main folder of one powershell scritp.
+ps-app-1/src/          : The source library of the script. (script functionality)
 ps-app-1/src/modules   : Snapshot of Required modules from root directory.
 ```
 
