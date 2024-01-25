@@ -16,5 +16,7 @@ if ($? -eq $true ) {
     Write-Host "[FAIL] Cant escalate" -ForegroundColor Red
 }
 
+Get-BitLockerVolume
+
 pause
 exit
