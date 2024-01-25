@@ -1,7 +1,7 @@
 # SRC / Create-Menu 2: https://community.spiceworks.com/scripts/show/4785-create-menu-2-0-arrow-key-driven-powershell-menu-for-scripts
 # SRC / Create-Menu  : https://community.spiceworks.com/scripts/show/4656-powershell-create-menu-easily-add-arrow-key-driven-menu-to-scripts
 
-Function Create-Menu () {
+function New-Menu () {
     #Start-Transcript "C:\_RRC\MenuLog.txt"
     Param(
         [Parameter(Mandatory = $True)][String]$MenuTitle,
