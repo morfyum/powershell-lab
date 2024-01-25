@@ -6,7 +6,7 @@
 
 Write-Host "[PASS] Elevate to Administrator..." -ForegroundColor Green
 
-$current_dir = pwd
+$current_dir = (Get-Location).Path
 $execute_this = ".\test_root_external_powershell.ps1"
 
 Write-Host "Current directroy: [ $current_dir ]"
@@ -15,6 +15,6 @@ Start-Process powershell.exe -Verb runAs -ArgumentList "
 cd $current_dir
 powershell.exe $execute_this" -Wait
 echo "wait for process..."
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Restricted -Force
+#Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Restricted -Force
 #Get-ExecutionPolicy
 exit
