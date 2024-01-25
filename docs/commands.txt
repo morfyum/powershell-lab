@@ -1,0 +1,9 @@
+## Cleanup && RestoreHealth
+dism /online /cleanup-image /restorehealth
+
+## Disk Clean-up
+cleanmgr.exe
+
+## Set Date and Time
+Set-Date -Date "22/01/2024"
+Set-Date -Adjust -0:45:0
