@@ -21,15 +21,16 @@ $biosVersionValue = $biosVersion -replace '\D', ''
 $windowsProduct = (Get-WmiObject -class Win32_OperatingSystem).Caption
 $windowsBuildNumber = (Get-WmiObject -class Win32_OperatingSystem).BuildNumber
 
-$IPv4Address = (Get-NetIPConfiguration).IPv4Address.IPAddress
-$ethernetMacAddress = (Get-NetAdapter -Name "Ethernet").MacAddress
+#$IPv4Address = (Get-NetIPConfiguration).IPv4Address.IPAddress
+#$ethernetMacAddress = (Get-NetAdapter -Name "Ethernet").MacAddress
 
 function selfDebug {
     # pass
 }
-
+#<#
 function Show-Menu {
-    Clear-Host
+    #Clear-Host # REPLACED for improve performance! + ~0.02-0,06 ms
+    [Console]::Clear()
     generateRow -Width $width -StartChar $startChar$FillChar -EndChar $headerEnd -FillChar $fillChar
     generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "Q  : Quit | $lastCommand" -Padding
     generateRow -Width $width -StartChar $footerStart -EndChar $footerEnd -FillChar $fillChar
@@ -47,11 +48,11 @@ function Show-Menu {
     generateRow -Width $width -StartChar $footerStart -EndChar $footerEnd -FillChar $fillChar
 
     generateRow -Width $width -StartChar $startChar$FillChar -EndChar $headerEnd -FillChar $fillChar
-    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "[ $(Get-ExecutionPolicy) ][ 💻$(getSerialNumber) ] [$biosVersion]                                  [🛜$(getWifiPercentage)][🔋$(getBatteryPercentage)][ $($currentDate) ]"
-    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "[ $selfWidth x $selfHeight ] [$(getGPUs)]"
-    generateRow -Width $width -StartChar $footerStart -EndChar $footerEnd -FillChar $fillChar
-    generateRow -EndChar " " -Content "Performance: $performanceResult"
-}
+    #generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "[ $(Get-ExecutionPolicy) ][ 💻$(getSerialNumber) ] [$biosVersion]                                  [🛜$(getWifiPercentage)][🔋$(getBatteryPercentage)][ $($currentDate) ]"
+    #generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "[ $selfWidth x $selfHeight ] [$(getGPUs)]"
+    #generateRow -Width $width -StartChar $footerStart -EndChar $footerEnd -FillChar $fillChar
+    generateRow -EndChar " " -Content "Performance: $performanceResult1 | $performanceResult2"
+}#>
 
 
 <#function Show-Menu {
@@ -76,7 +77,8 @@ Write-Host "  Q  : Quit | $lastCommand" -ForegroundColor DarkGreen
 "----------------------------------------------------------------------------------------------------"
 }#>
 
-<#function Show-Menu {
+<#
+function Show-Menu {
     Clear-Host
     Write-Host "┌──────────────────────────────────────────────────────────────────────────────────────────────────┐"
     Write-Host "  Q  : Quit | $lastCommand" -ForegroundColor DarkGreen
@@ -94,6 +96,7 @@ Write-Host "  Q  : Quit | $lastCommand" -ForegroundColor DarkGreen
     Write-Host "----------------------------------------------------------------------------------------------------"
     Write-Host "[ $($selfConfig.appName) v$($selfConfig.appVersion) ][ $($currentDate) ][ $(Get-ExecutionPolicy) ] []"
     Write-Host "[ $selfWidth x $selfHeight ]"
+    Write-Host "Performance: $performanceResult1 | $performanceResult2"
     #selfDebug
     Write-Host "----------------------------------------------------------------------------------------------------"
 }#>
@@ -174,9 +177,10 @@ function SetCurrentUserExecutionPolicy {
     return Get-ExecutionPolicy
 }
 
-$performanceResult = (Measure-Command {Show-Menu}).TotalSeconds
+$performanceResult1 = (Measure-Command {Show-Menu}).TotalSeconds
 
 do {
+    $performanceResult2 = (Measure-Command {Show-Menu}).TotalSeconds
     Show-Menu
     $shellInput = Read-Host "Input"
     while ($shellInput -eq "") {
