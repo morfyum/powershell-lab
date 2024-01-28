@@ -1,4 +1,4 @@
-$host.UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size(60, 14)
+#$host.UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size(60, 14)
 
 Write-Host "============================================================"
 Write-Host "             Show Storage Encryption Percentage             " -ForegroundColor Green
