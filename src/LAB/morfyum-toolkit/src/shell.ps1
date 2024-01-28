@@ -3,7 +3,7 @@
 . .\core-utils.ps1
 
 # SELF CONFIGURATION AND VARIABLES 
-$selfLocation = (Get-Location).path
+$selfLocation = (Get-Location).Path
 $selfConfig = Get-Content -Path "$selfLocation\shell-config.json" | Out-String | ConvertFrom-Json
 $selfWidth = $host.UI.RawUI.WindowSize.Width
 $selfHeight = $host.UI.RawUI.WindowSize.Height
@@ -11,6 +11,7 @@ $host.UI.RawUI.WindowTitle = "$($selfConfig.appName)"
 $host.UI.RawUI.foregroundColor = $($selfConfig.fontColor)
 $currentDate = Get-Date -Format "yyyy-MM-dd"
 $lastCommand = ""
+$width = 100
 
 
 # EXTERNAL
@@ -20,11 +21,11 @@ $biosVersionValue = $biosVersion -replace '\D', ''
 $windowsProduct = (Get-WmiObject -class Win32_OperatingSystem).Caption
 $windowsBuildNumber = (Get-WmiObject -class Win32_OperatingSystem).BuildNumber
 
+$IPv4Address = (Get-NetIPConfiguration).IPv4Address.IPAddress
+$ethernetMacAddress = (Get-NetAdapter -Name "Ethernet").MacAddress
 
 function selfDebug {
-"┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ $selfWidth x $selfHeight                                                       │
-└──────────────────────────────────────────────────────────────────────────────────────────────────┘"
+    # pass
 }
 
 function Show-Menu {
@@ -145,6 +146,7 @@ function getSerialNumber {
 }
 
 function getWifiPercentage {
+    # TODO - > netsh slow => Performance-test for Get-NetAdapter -Name "Wi-Fi"
     $wifiPercentage = (netsh wlan show interfaces) -Match '^\s+Signal' -Replace '^\s+Signal\s+:\s+',''
     if ($wifiPercentage -eq $false) {
         $wifiPercentage = "N/A"
