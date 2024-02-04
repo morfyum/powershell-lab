@@ -1,6 +1,7 @@
-$array= @(".  ", ":  ", ":. ", ":: ", "::.", ":::")
+#$array= @(".  ", ":  ", ":. ", ":: ", "::.", ":::")
 #$array= @("|", "/", "-", "\")
 #$array= @(". ", ": ", ":.", "::")
+$array= @(".  ", ":  ", ":. ", ":: ", "::.", ":::", "::.", ":: ", ":. ", ":  ", ".  ", "   ")
 
 #array=("." ".." "...")
 #array=("." ":" ":." "::" ":." ":" ".")
@@ -8,11 +9,13 @@ $array= @(".  ", ":  ", ":. ", ":: ", "::.", ":::")
 
 function showLoading {
     foreach ($currentItemName in $array) {
-        Clear-Host
-        Write-Output "[$currentItemName] Progress..."
-        #Write-Verbose "[$currentItemName] Progress..."
+        #Clear-Host
+        [Console]::Clear()
+        #Write-Output "[$currentItemName] Progress..."
+        [Console]::WriteLine("[$currentItemName] Progress...")
         Start-Sleep -Seconds 1
-    }    
+        #Start-Sleep -Milliseconds 150
+    }
 }
 
 while ($true) {
