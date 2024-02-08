@@ -1,5 +1,73 @@
 {
     "appName": "MORFYUM-toolkit",
     "appVersion": "0.0.1",
-    "fontColor": "Gray"
+    "fontColor": "Gray",
+    "menu": [
+        {
+            "name": "option 0",
+            "filePath": "option0",
+            "file": "option0.ps1",
+            "adminRequest": "no"
+        },
+        {
+            "name": "option 1",
+            "filePath": "option0",
+            "file": "option0.ps1",
+            "adminRequest": "no"
+        },
+        {
+            "name": "option 2",
+            "filePath": "option0",
+            "file": "option0.ps1",
+            "adminRequest": "no"
+        },
+        {
+            "name": "option 3",
+            "filePath": "option0",
+            "file": "option0.ps1",
+            "adminRequest": "no"
+        },
+        {
+            "name": "option 4",
+            "filePath": "option0",
+            "file": "option0.ps1",
+            "adminRequest": "no"
+        },
+        {
+            "name": "option 5",
+            "filePath": "option0",
+            "file": "option0.ps1",
+            "adminRequest": "no"
+        },
+        {
+            "name": "option 6",
+            "filePath": "option0",
+            "file": "option0.ps1",
+            "adminRequest": "no"
+        },
+        {
+            "name": "option 7 sadasd da da dada dadasdasdsadsadsadsa dsad",
+            "filePath": "option0",
+            "file": "option0.ps1",
+            "adminRequest": "no"
+        },
+        {
+            "name": "option 8",
+            "filePath": "option0",
+            "file": "option0.ps1",
+            "adminRequest": "no"
+        },
+        {
+            "name": "option 9",
+            "filePath": "option0",
+            "file": "option0.ps1",
+            "adminRequest": "no"
+        },
+        {
+            "name": "PCI-Express-powersavinggggggg",
+            "filePath": "option1",
+            "file": "option1.ps1",
+            "adminRequest": "no"
+        }
+    ]
 }
