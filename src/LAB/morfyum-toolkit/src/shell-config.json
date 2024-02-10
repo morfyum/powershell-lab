@@ -4,15 +4,21 @@
     "fontColor": "Gray",
     "menu": [
         {
-            "name": "option 0",
-            "filePath": "option0",
-            "file": "option0.ps1",
+            "name": "hello",
+            "filePath": "extensions/hello",
+            "file": "hello.ps1",
             "adminRequest": "no"
         },
         {
             "name": "option 1",
             "filePath": "option0",
             "file": "option0.ps1",
+            "adminRequest": "no"
+        },
+        {
+            "name": "2",
+            "filePath": "",
+            "file": "missing.ps1",
             "adminRequest": "no"
         },
         {
@@ -52,7 +58,7 @@
             "adminRequest": "no"
         },
         {
-            "name": "option 8",
+            "name": "option 8 asdasd ds dad ggf gdfgdfg gfd",
             "filePath": "option0",
             "file": "option0.ps1",
             "adminRequest": "no"
