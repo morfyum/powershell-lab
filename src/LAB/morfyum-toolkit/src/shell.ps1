@@ -10,7 +10,7 @@ $selfWidth = $host.UI.RawUI.WindowSize.Width
 $selfHeight = $host.UI.RawUI.WindowSize.Height
 $host.UI.RawUI.WindowTitle = "$($selfConfig.appName)"
 $host.UI.RawUI.foregroundColor = $($selfConfig.fontColor)
-$currentDate = Get-Date -Format "yyyy-MM-dd"
+#$currentDate = Get-Date -Format "yyyy-MM-dd"
 $lastCommand = "show available commands: getHelp"
 $width = 100  #100
 $promptName = "Input"  # (Get-Location).Path | Split-Path -Leaf
@@ -109,10 +109,10 @@ function Show-Menu {
     #generateRow -EndChar " " -Content "Performance: $performanceResult1 ms | $performanceResult2 ms"
 
     #generateRow -Width $width -StartChar $headerStart$FillChar -EndChar $headerEnd -FillChar $fillChar
-    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "[ $(Get-ExecutionPolicy) ][ 💻$(getSerialNumber) ] [$biosVersion]                                 [🛜$(getWifiPercentage)][🔋$(getBatteryPercentage)][ $($currentDate) ]"
+    #generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "[ $(Get-ExecutionPolicy) ][ 💻$(getSerialNumber) ] [$biosVersion]                                 [🛜$(getWifiPercentage)][🔋$(getBatteryPercentage)][ $($currentDate) ]"
     generateRow -Width $width -StartChar $pipeChar -EndChar "$pipeChar" -Content "Performance: $performanceResult1 ms | $performanceResult2 ms"
-    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "[ $selfWidth x $selfHeight ] [$(getGPUs)]"
-    generateRow -Width $width -StartChar $footerStart -EndChar $footerEnd -FillChar $fillChar
+    #generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "[ $selfWidth x $selfHeight ] [$(getGPUs)]"
+    #generateRow -Width $width -StartChar $footerStart -EndChar $footerEnd -FillChar $fillChar
 
 }#>
 
@@ -165,7 +165,7 @@ function Show-Menu {
 function getHelp {
     "
     ********************************************************************************
-    Help : helpp
+    getHelp : Show this menu
         SYNPOS: Show This menu
 
     Quit : Q, q, 00
@@ -222,7 +222,7 @@ function getWifiPercentage {
 
 function getBatteryPercentage {
     $batteryPercentage = (Get-WmiObject -Class win32_Battery).estimatedChargeRemaining
-    if ($batteryPercentage -eq $null) {
+    if ($null -eq $batteryPercentage) {
         $batteryPercentage = "N/A"
     } else {
         $batteryPercentage = "$batteryPercentage%"
@@ -287,7 +287,7 @@ do {
                 $execFullPath = "$execPath/$execFile"
             }
 
-            $lastCommand = $lastCommand+": 0 path: [$execFullPAth])"
+            $lastCommand = $lastCommand+": 0 path: [$execFullPath])"
             #if ((Test-Path -Path $execFullPath) -eq $true) {
             #. $execFullPath
             #exitApp
@@ -305,7 +305,7 @@ do {
         9  {$lastCommand = $lastCommand+': Check-Bitlocker-Status'; windowsAdminRequest -RequestFor "$selfLocation\extensions\get-bitlocker-status\get-bitlocker-status.ps1" }
         10 {$lastCommand = $lastCommand+': 🔥 TODO -> Not implemented'}
         11 {$lastCommand = $lastCommand+': 🔥 TODO -> Not implemented'}
-        '00' { Write-Host "Exit, Goodbye"; Exit 0}
+        #'00' { Write-Host "Exit, Goodbye"; Exit 0}
         #'showhelp' {$lastCommand = $lastCommand+': Help'; showHelp }
     }
 } until ($shellInput -eq 'q')
