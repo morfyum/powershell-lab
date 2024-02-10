@@ -2,7 +2,7 @@ $fillChar = [char]9472      # ─
 $headerStart = [char]0x250C   # ┌
 $headerEnd = [char]0x2510   # ┐
 $pipeChar = [char]0x2502    # │
-#$pipeChar = "|"    # │
+#$pipeChar = "|"    # |
 $footerStart = [char]0x2514 # └
 $footerEnd = [char]0x2518   # ┘
 
@@ -25,9 +25,15 @@ function generateRow {
         [string] $StartChar = "",
         [string] $EndChar = "",
         [string] $FillChar = " ",
+        [string] $Index,
         [string] $Content,
         [switch] $Padding
     )
+
+    if ($Index.Length -lt 2 -and $Index.Length -ne 0) {
+        $Index = "$index "
+    }
+    $Content = $Index+$Content
 
     if ($Padding -eq $true) {
         $Content = " $Content "
@@ -40,16 +46,16 @@ function generateRow {
         $Content = Get-ShortenedString -InputString $Content -MaxLength ($Width-(2*($StartChar.Length+$EndChar.Length)))
     }
 
-    $contentWidth = [int]$Content.Length
+    #$contentWidth = [int]$Content.Length
     #Write-Host "CONTENT-W:      $($contentWidth) + $($startChar.Length) + $($EndChar.Length) (start/end-chars)"
-    $fillRequired = [int]$Width - ($contentWidth+$($startChar.Length)+$($EndChar.Length))
+    #$fillRequired = [int]$Width - ($contentWidth+$($startChar.Length)+$($EndChar.Length))
     #Write-Host "FILL REQUIRED:  $fillRequired"
-    $summary = $fillRequired + $contentWidth
+    #$summary = $fillRequired + $contentWidth
     #Write-Host "SUM:            $summary"
 
 
     $fillNeedValue = $Width-($StartChar.Length+$Content.Length+$EndChar.Length)
-    $cutContentValue = $Width
+    #$cutContentValue = $Width
     
     
 
@@ -106,40 +112,24 @@ function generateContent {
     return $content
 }
 
-function lengthTest {
-    param (
-        [string] $String,
-        [int] $ExceptedValue
-    )
-    if ($String.Length -eq $ExceptedValue ) { Write-Host "PASS.......... $ExceptedValue" -ForegroundColor Green } 
-    else { Write-Host "FAIL.......... $($String.Length) Not equal $ExceptedValue" -ForegroundColor Red}
-}
+function Show-OldMenu {
+    generateRow -Width $width -StartChar $headerStart$FillChar -EndChar $headerEnd -FillChar $fillChar -Content $selfConfig.appName -Padding
+    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "0  : Analyze-system-health   | 10  : Windows 10 Activator      | 20  :                           " -Padding
+    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "1  : -                       | 11  : Windows 11 Activator      | 21  :                           " -Padding
+    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "2  : -                       | 12  : -                         | 22  :                           " -Padding
+    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "3  : -                       | 13  : -                         | 23  :                           " -Padding
+    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "4  : Policy status           | 14  : -                         | 24  :                           " -Padding
+    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "5  : -                       | 15  : -                         | 25  :                           " -Padding
+    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "6  : -                       | 16  : -                         | 26  :                           " -Padding
+    #Write-Host "----------------------------------------------------------------------------------------------------"
+    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "7  : -                       | 17  : -                         | 27  : 12345123451234512345-012356789dddd" -Padding
+    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "8  : Admin-Test              | 18  : -                         | 28  : Wifi-speed-test           " -Padding
+    generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "9  : Check-Bitlocker-Status  | 19  : -                         | 29  : PCI-Express-powersaving  dddd" -Padding
+    generateRow -Width $width -StartChar $footerStart -EndChar $footerEnd -FillChar $fillChar
 
-#<#
-$isTen = Get-ShortenedString -InputString "0123456789aaaaa" -MaxLength 10
-$isFive = Get-ShortenedString -InputString "0123456789aaaaa" -MaxLength 5
-$isTwelve = Get-ShortenedString -InputString "0123456789123333" -MaxLength 12
-lengthTest $isTen 10
-lengthTest $isFive 5
-lengthTest $isTwelve 12
-#>
-
-#(generateRow -Width 100 -StartChar $headerStart$FillChar -EndChar $headerEnd -FillChar $fillChar -Content "MARCI VAGYOK" -Padding)
-$len = (generateRow -Width 100 -StartChar $headerStart$FillChar -EndChar $headerEnd -FillChar $fillChar -Content "MARCI VAGYOK" -Padding)
-lengthTest $len 100
-
-#generateRow -Width 100 -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "6  : -                       | 16  : -                         | 26  :                           " -Padding
-$len = generateRow -Width 100 -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "6  : -                       | 16  : -                         | 26  :                           " -Padding
-lengthTest $len 100
-
-$len =  generateRow -Width 100 -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "7  : -                       | 17  : -                         | 27  : 12345123451234512345-012356789dddd" -Padding
-lengthTest $len 100
-
-$len = generateRow -Width 100 -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "8  : Admin-Test              | 18  : -                         | 28  : Wifi-speed-test           " -Padding
-lengthTest $len 100
-
-$len = generateRow -Width 100 -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "9  : Check-Bitlocker-Status  | 19  : -                         | 29  : PCI-Express-powersaving  dddd" -Padding
-lengthTest $len 100
-
-$len = generateRow -Width 100 -StartChar $footerStart -EndChar $footerEnd -FillChar $fillChar
-lengthTest $len 100
+    generateRow -Width $width -StartChar $headerStart$FillChar -EndChar $headerEnd -FillChar $fillChar
+    #generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "[ $(Get-ExecutionPolicy) ][ 💻$(getSerialNumber) ] [$biosVersion]                                  [🛜$(getWifiPercentage)][🔋$(getBatteryPercentage)][ $($currentDate) ]"
+    #generateRow -Width $width -StartChar $pipeChar -EndChar $pipeChar -FillChar " " -Content "[ $selfWidth x $selfHeight ] [$(getGPUs)]"
+    generateRow -Width $width -StartChar $footerStart -EndChar $footerEnd -FillChar $fillChar
+    #generateRow -EndChar " " -Content "Performance: $performanceResult1 ms | $performanceResult2 ms"
+}#>
