@@ -1,5 +1,5 @@
 function hello {
-    Write-Host "HELLO FROM exitApp"
+    Write-Host "*** Hello World! ***" -ForegroundColor Green
     Pause
 }
 hello
