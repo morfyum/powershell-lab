@@ -133,3 +133,49 @@ function Show-OldMenu {
     generateRow -Width $width -StartChar $footerStart -EndChar $footerEnd -FillChar $fillChar
     #generateRow -EndChar " " -Content "Performance: $performanceResult1 ms | $performanceResult2 ms"
 }#>
+
+<#function Show-Menu {
+    Clear-Host
+"┌ $($selfConfig.appName) ─────────────────────────────────────────────────────────────────────────────────┐"
+Write-Host "  Q  : Quit | $lastCommand" -ForegroundColor DarkGreen
+"└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+| 0  : Analyze-system-health   | 10  : Windows 10 Activator      | 20  :                           |
+| 1  : -                       | 11  : Windows 11 Activator      | 21  :                           |
+| 2  : -                       | 12  : -                         | 22  :                           |
+| 3  : -                       | 13  : -                         | 23  :                           |
+| 4  : Policy status           | 14  : -                         | 24  :                           |
+| 5  :                         | 15  : -                         | 25  :                           |
+| 6  :                         | 16  : -                         | 26  :                           |
+| 7  :                         | 17  : -                         | 27  :                           |
+| 8  : Admin-Test              | 18  : -                         | 28  : Wifi-speed-test           |
+| 9  : Check-Bitlocker-Status  | 19  : -                         | 29  : PCI-Express-powersaving   |"
+"----------------------------------------------------------------------------------------------------"
+"[ $($currentDate) ][ $(Get-ExecutionPolicy) ][ 🔋$(getBatteryPercentage) ][ 💻$(getSerialNumber) ] [ $biosVersion ] [ 🛜$(getWifiPercentage) ]"
+"[ $selfWidth x $selfHeight ] [$(getGPUs)]"
+#selfDebug
+"----------------------------------------------------------------------------------------------------"
+}#>
+
+<#
+function Show-Menu {
+    Clear-Host
+    Write-Host "┌──────────────────────────────────────────────────────────────────────────────────────────────────┐"
+    Write-Host "  Q  : Quit | $lastCommand" -ForegroundColor DarkGreen
+    Write-Host "└──────────────────────────────────────────────────────────────────────────────────────────────────┘"
+    Write-Host "| 0  : Analyze-system-health   | 10  : Windows 10 Activator      | 20  :                           |"
+    Write-Host "| 1  : -                       | 11  : Windows 11 Activator      | 21  :                           |"
+    Write-Host "| 2  : -                       | 12  : -                         | 22  :                           |"
+    Write-Host "| 3  : -                       | 13  : -                         | 23  :                           |"
+    Write-Host "| 4  : Policy status           | 14  : -                         | 24  :                           |"
+    Write-Host "| 5  :                         | 15  : -                         | 25  :                           |"
+    Write-Host "| 6  :                         | 16  : -                         | 26  :                           |"
+    Write-Host "| 7  : Wifi-speed-test         | 17  : -                         | 27  :                           |"
+    Write-Host "| 8  : Admin-Test              | 18  : -                         | 28  :                           |"
+    Write-Host "| 9  : Check-Bitlocker-Status  | 19  : -                         | 29  :                           |"
+    Write-Host "----------------------------------------------------------------------------------------------------"
+    Write-Host "[ $($selfConfig.appName) v$($selfConfig.appVersion) ][ $($currentDate) ][ $(Get-ExecutionPolicy) ] []"
+    Write-Host "[ $selfWidth x $selfHeight ]"
+    Write-Host "Performance: $performanceResult1 | $performanceResult2"
+    #selfDebug
+    Write-Host "----------------------------------------------------------------------------------------------------"
+}#>
