@@ -1,25 +1,26 @@
 {
     "appName": "MORFYUM-toolkit",
-    "appVersion": "0.0.1",
+    "appVersion": "0.1.1",
     "fontColor": "Gray",
+    "sha256sum": "92C322140DA050C7B6FF460D9CBE1F6F687B44D94DB0CEADB14A1FCABAFBA97A",
     "menu": [
         {
-            "name": "hello",
+            "name": "hello extension",
             "filePath": "extensions/hello",
             "file": "hello.ps1",
             "adminRequest": "no"
         },
         {
-            "name": "option 1",
+            "name": "Windows 10 Activator",
             "filePath": "option0",
             "file": "option0.ps1",
             "adminRequest": "no"
         },
         {
-            "name": "2",
-            "filePath": "",
-            "file": "missing.ps1",
-            "adminRequest": "no"
+            "name": "Bitlocker Status",
+            "filePath": "extensions/get-bitlocker-status",
+            "file": "get-bitlocker-status.ps1",
+            "adminRequest": "yes"
         },
         {
             "name": "option 2",
