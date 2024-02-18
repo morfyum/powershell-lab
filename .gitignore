@@ -1,6 +1,7 @@
 # example files for bios update
 csv_example.csv
 summaryDatabase.csv
+proc/
 
 # src/ => Test files for msync
 src/scripts/msync/2.txt
