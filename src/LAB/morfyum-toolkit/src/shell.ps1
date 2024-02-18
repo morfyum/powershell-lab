@@ -230,7 +230,6 @@ do {
             $lastCommand = "$shellInput : $($commands[$shellInput])"
         } catch {
             $lastCommand = "$shellInput : [$($commands[$shellInput])] Invalid value"
-            Pause
         }
     } 
     else {
