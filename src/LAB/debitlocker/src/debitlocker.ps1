@@ -1,4 +1,3 @@
-$host.UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size(60, 14)
 $refreshInSeconds = 3
 
 function PrintDone {
@@ -10,6 +9,10 @@ function PrintDone {
     Write-Host "DDDDDDDDDD    OOO    OOO   NNN   NNNNNN  EEEE" -ForegroundColor Green
     Write-Host "DDDDDDDD       OOOOOOOO    NNN     NNNN  EEEEEEEEEE" -ForegroundColor Green
     Write-Host ""
+}
+
+function SetCompactMode {
+    $host.UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size(60, 14)    
 }
 
 function ShowState {
