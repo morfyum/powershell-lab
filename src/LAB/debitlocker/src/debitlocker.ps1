@@ -1,3 +1,4 @@
+$host.UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size(60, 14)
 $refreshInSeconds = 3
 
 function PrintDone {
@@ -17,30 +18,35 @@ function ShowState {
         [hashtable] $VolumeList
     )
     $unlockRequire = $false
+    $greatestValue = 0
 
     foreach ($key in $VolumeList.Keys) {
         if ($VolumeList.$key -eq 0) {
             Write-Host "Unlocked:...........$key  $($VolumeList.$key)%" -ForegroundColor Green
         } else {
             $unlockRequire = $true
+            $greatestValue = $($VolumeList.$key)
             Write-Host "Locked:.............$key  $($VolumeList.$key)%" -ForegroundColor Red
         }
     }
-    PrintDone
  
     if ($unlockRequire -eq $true) {
         $inpuValue = Read-Host "Do you want Unlock all drive? [y/N]"
         if ($inpuValue -eq "y") {
             Debitlocker
-            while ($unlockRequire -eq $true) {
+            while ($greatestValue -gt 0) {
                 Clear-Host
                 $VolumeList = GetBitlockerStatus
                 foreach ($key in $VolumeList.Keys) {
                     if ($VolumeList.$key -eq 0) {
-                        $unlockRequire = $false
+                        #$unlockRequire = $false
+                        $greatestValue = $($VolumeList.$key)
                         Write-Host "Unlocked:...........$key  $($VolumeList.$key)%" -ForegroundColor Green
                     } else {
-                        $unlockRequire = $true
+                        #$unlockRequire = $true
+                        if ($($VolumeList.$key) -gt $greatestValue) {
+                            $greatestValue = $($VolumeList.$key)
+                        }
                         Write-Host "In progress:........$key  $($VolumeList.$key)%" -ForegroundColor Red
                     }
                 }
@@ -69,8 +75,3 @@ function Debitlocker {
         manage-bde.exe -off $_
     }
 }
-
-$STATES = GetBitlockerStatus
-#$STATES.Add("D:", 100)
-ShowState -VolumeList $STATES
-Pause
