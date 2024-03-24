@@ -7,3 +7,6 @@ proc/
 src/scripts/msync/2.txt
 src/scripts/msync/summary.csv
 src/scripts/msync/syncTo/
+
+# pc-summer/src/prod
+src/LAB/hp-summer/src/prod

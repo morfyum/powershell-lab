@@ -1,0 +1,18 @@
+[
+    {
+        "usbkey": "E",
+        "localSKUList": "sku-list-test.csv",
+        "localKITList": "kit-list-test.csv",
+        "localImageList": "image-lista.txt",
+        "writeToEfiBoot": "unavailable",
+        "skuQueryEnabled": "unavailable",
+        "imageQueryEnabled": "yes"
+        
+    },
+    {
+        "HeaderParameters": {
+            "APIServer": "https://pro-psurf-app.glb.inc.hp.com"
+        }
+    }
+    
+]
