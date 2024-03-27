@@ -1,6 +1,11 @@
 **hp-summer** are based on industry standards.
 This tool is built using the API standard available from Dell's public site.
 
+## Features
+You can check your Hp product public informations
+    - Hardware components
+    - Operating system and version
+
 ## Purpose of the tool:
     - Popularizing the possibilities of the industrial standards
     - Taking advantage of the benefits provided by the standard
