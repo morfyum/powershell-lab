@@ -5,7 +5,7 @@
 $config = [Config]::new()
 $data = [DataCollection]::new()
 
-$imageListFullPath = ".\prod\"+$config.imageList
+#$imageListFullPath = ".\prod\"+$config.imageList
 
 function TestCase {
     param (
@@ -72,10 +72,12 @@ Write-Host "[TODO]: TESTS / DataCollection Class" -ForegroundColor Yellow
 $data.jsonData
 
 Write-Host "*** TESTS / checkImage / Last Update, image are availabe and not***" -ForegroundColor Cyan
-$testValue = checkImage -ProductNumber "61S64EA#ABD" -FilePath $imageListFullPath
+$testValue = checkImage -ProductNumber "61S64EA#ABD" -FilePath "./this/path/does/not/exists/noexist.txt"
+TestCase -InputValue $testValue[0] -ExpectedValue "Missing file: ./this/path/does/not/exists/noexist.txt" -TestName "Missing file"
+$testValue = checkImage -ProductNumber "61S64EA#ABD" -FilePath $config.imageList
 TestCase -InputValue $testValue[0] -ExpectedValue "21-03-2024 06:26:44" -TestName "Date"
-$testValue = checkImage -ProductNumber "61S64EA#ABD" -FilePath $imageListFullPath
+$testValue = checkImage -ProductNumber "61S64EA#ABD" -FilePath $config.imageList
 TestCase -InputValue $testValue[1] -ExpectedValue $true -TestName "hasImage: TRUE"
-$testValue = checkImage -ProductNumber "A1B2C3A#ABD" -FilePath $imageListFullPath   
+$testValue = checkImage -ProductNumber "A1B2C3A#ABD" -FilePath $config.imageList
 TestCase -InputValue $testValue[1] -ExpectedValue $false -TestName "hasImage: FALSE"
 
