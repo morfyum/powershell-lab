@@ -3,7 +3,7 @@
         "usbkey": "E",
         "localSKUList": "sku-list-test.csv",
         "localKITList": "kit-list-test.csv",
-        "localImageList": "image-lista.txt",
+        "localImageList": ".\\prod\\image-lista.txt",
         "writeToEfiBoot": "unavailable",
         "skuQueryEnabled": "unavailable",
         "imageQueryEnabled": "yes"
