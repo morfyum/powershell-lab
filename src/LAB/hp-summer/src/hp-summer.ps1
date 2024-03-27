@@ -136,6 +136,12 @@ function checkImage {
     $imageList = Get-Content -Path $FilePath
     $imageName = $ProductNumber+=".rdr"
 
+    if ((Test-Path -Path $imageList) -eq $false) {
+        $dateAndImage += "Missing file"
+        $dateAndImage += "Missing file"
+        return $dateAndImage
+    } 
+
     $dateAndImage += $($imageList[0])
     $dateAndImage += $false
 
