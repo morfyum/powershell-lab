@@ -43,6 +43,15 @@ class DataCollection {
     [array]  $ComponentSerialNo = $null     # DONE
 }
 
+class ProductNumberOption {
+  [String]$DisplayName
+  [String]$ProductId
+
+  [String]ToString() {
+      Return $This.DisplayName
+  }
+}
+
 $HPSideErrorMessage = "***********************************************************
 
   # Hibas SERIAL NUMBER es/vagy PRODUCT NUMBER megadasakor lathatod ezt!

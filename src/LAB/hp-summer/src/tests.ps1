@@ -1,6 +1,7 @@
 #IMPORT
-. .\hp-summer.ps1
+Import-Module ".\PSMenu\0.2.0\PSMenu.psm1"
 . .\models.ps1
+. .\hp-summer.ps1
 
 $config = [Config]::new()
 $data = [DataCollection]::new()
