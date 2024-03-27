@@ -36,7 +36,7 @@ class DataCollection {
     [string] $OS = $null                    # DONE
     [string] $platform =$null
     [string] $platformVersion = $null       # DONE
-    [string] $hasImage = $null                # DONE
+    [string] $hasImage = $null              # DONE
     [bool] $hasKIT = $null
     [array]  $ComponentNumber = $null       # DONE
     [array]  $ComponentDescription = $null  # DONE
