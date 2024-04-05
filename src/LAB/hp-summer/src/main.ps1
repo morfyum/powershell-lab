@@ -1,10 +1,9 @@
-# IMPORT
 Write-Host "Load modules..." -ForegroundColor Gray
 . .\hp-summer.ps1
-# LOAD RESOURCES
 Write-Host "Load resources..." -ForegroundColor Gray
+# PASS
 
-# VARIABLES
+# VARS
 $config = [Config]::new()
 $data = [DataCollection]::new()
 
