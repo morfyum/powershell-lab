@@ -68,7 +68,7 @@ TestCase -InputValue $testValue -ExpectedValue "4CE1222G4H" -TestName "Valid PN:
 
 Write-Host "[TODO]: TESTS / Config Class" -ForegroundColor Yellow
 Write-Host "[TODO]: TESTS / DataCollection Class" -ForegroundColor Yellow
-#$data.jsonData
+$data.jsonData
 
 Write-Host "*** TESTS / checkImage / Last Update, image are availabe and not***" -ForegroundColor Cyan
 $testValue = checkImage -ProductNumber "61S64EA#ABD" -FilePath "./this/path/does/not/exists/noexist.txt"
