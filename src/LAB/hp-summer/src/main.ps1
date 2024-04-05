@@ -1,7 +1,6 @@
 # IMPORT
 Write-Host "Load modules..." -ForegroundColor Gray
 . .\hp-summer.ps1
-. .\models.ps1
 # LOAD RESOURCES
 Write-Host "Load resources..." -ForegroundColor Gray
 
@@ -58,7 +57,7 @@ while ($true) {
 
         # SerialNumber, Product Number, and Description(Product Name)
         $data.tattooSerialNumber  = $data.jsonData.Body.SerialNumberBOM.wwsnrsinput.serial_no
-        $data.ProductNumber = $data.jsonData.Body.SerialNumberBOM.wwsnrsinput.product_no
+        $data.ProductNumber       = $data.jsonData.Body.SerialNumberBOM.wwsnrsinput.product_no
         $data.tattooProductName   = $data.jsonData.Body.SerialNumberBOM.wwsnrsinput.user_name
 
         # Build other information from jsonData
