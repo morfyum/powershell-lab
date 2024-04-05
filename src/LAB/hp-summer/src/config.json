@@ -6,9 +6,7 @@
         "localImageList": ".\\prod\\image-lista.txt",
         "writeToEfiBoot": "unavailable",
         "skuQueryEnabled": "unavailable",
-        "imageQueryEnabled": "yes"
-    },
-    {
+        "imageQueryEnabled": "yes",
         "HeaderParameters": {
             "APIServer": "https://pro-psurf-app.glb.inc.hp.com"
         }

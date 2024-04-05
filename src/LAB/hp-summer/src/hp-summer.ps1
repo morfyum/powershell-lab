@@ -16,20 +16,10 @@ class Config {
         $userConfig = (Get-Content -Path $userConfigPath -Raw | ConvertFrom-Json)
 
         $this.usbkey = $userConfig.usbkey
-        $this.usbkey = $this.usbkey -Replace ' ', ''
-
         $this.SKUListFullPath = $userConfig.localSKUList
-        $this.SKUListFullPath = $this.SKUListFullPath -Replace ' ', ''
-
         $this.KITListFullPath = $userConfig.localKITList
-        $this.KITListFullPath = $this.KITListFullPath -Replace ' ', ''
-
         $this.imageList = $userConfig.localImageList
-        $this.imageList = $this.imageList -Replace ' ', ''
-
         $this.imageQueryEnabled = $userConfig.imageQueryEnabled
-        $this.imageQueryEnabled = $this.imageQueryEnabled -Replace ' ', ''
-
         # Headers
         $this.APIServer = $userConfig.HeaderParameters.APIServer
     }
