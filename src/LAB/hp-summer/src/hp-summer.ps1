@@ -1,6 +1,7 @@
 # hp-summer by Morfyum
 
 class Config {
+    [string] $usbkey
     [string] $invokedFile = "invokedFile.txt"
     [string] $exampleTattooFile = "exampleTattoo.tattoo"
     [string] $APIServer
@@ -14,18 +15,29 @@ class Config {
         $userConfigPath = ".\config.json"
         $userConfig = (Get-Content -Path $userConfigPath -Raw | ConvertFrom-Json)
 
-        $this.SKUListFullPath = $userConfig.localSKUList
-        $this.KITListFullPath = $userConfig.localKITList
-        $this.imageList = $userConfig.localImageList
-        $this.imageQueryEnabled = $userConfig.imageQueryEnabled
+        $this.usbkey = $userConfig.usbkey
+        $this.usbkey = $this.usbkey -Replace ' ', ''
 
+        $this.SKUListFullPath = $userConfig.localSKUList
+        $this.SKUListFullPath = $this.SKUListFullPath -Replace ' ', ''
+
+        $this.KITListFullPath = $userConfig.localKITList
+        $this.KITListFullPath = $this.KITListFullPath -Replace ' ', ''
+
+        $this.imageList = $userConfig.localImageList
+        $this.imageList = $this.imageList -Replace ' ', ''
+
+        $this.imageQueryEnabled = $userConfig.imageQueryEnabled
+        $this.imageQueryEnabled = $this.imageQueryEnabled -Replace ' ', ''
+
+        # Headers
         $this.APIServer = $userConfig.HeaderParameters.APIServer
     }
 }
 
 class DataCollection {
-    [string] $jsonLength = 0                # DONE
     [object] $jsonData = $null              # DONE
+    [int] $jsonLength = 0                # DONE
     [string] $ProductNumber = $null         # DONE
     [string] $tattooSerialNumber = $null    # DONE 1
     [string] $tattooProductNumber = $null   # DONE 3
@@ -40,9 +52,9 @@ class DataCollection {
     [string] $platformVersion = $null       # DONE
     [string] $hasImage = $null              # DONE
     [bool] $hasKIT = $null
-    [array]  $ComponentNumber = $null       # DONE
-    [array]  $ComponentDescription = $null  # DONE
-    [array]  $ComponentSerialNo = $null     # DONE
+    [array] $ComponentNumber = $null        # DONE
+    [array] $ComponentDescription = $null   # DONE
+    [array] $ComponentSerialNo = $null      # DONE
 }
 
 $HPSideErrorMessage = "***********************************************************
