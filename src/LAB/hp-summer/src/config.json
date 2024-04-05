@@ -7,12 +7,10 @@
         "writeToEfiBoot": "unavailable",
         "skuQueryEnabled": "unavailable",
         "imageQueryEnabled": "yes"
-        
     },
     {
         "HeaderParameters": {
             "APIServer": "https://pro-psurf-app.glb.inc.hp.com"
         }
     }
-    
 ]
