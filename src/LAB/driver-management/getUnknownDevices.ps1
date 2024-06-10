@@ -1,3 +1,16 @@
+# github.com/morfyum
+
+$saveLocation = "C:\"
+$computerModel = (Get-WmiObject -Class Win32_ComputerSystem).Model
+$fullSaveLocation = $saveLocation+$computerModel
+
+if ((Test-Path -Path $fullSaveLocation) -eq $false) {
+    Write-Host "Create Directoy: $computerModel on $saveLocation"
+    #mkdir $fullSaveLocation
+} else {
+    Write-Host "Directort Exists."
+}
+
 
 class UnknownDeviceModel {
     [string] $DeviceType = $null
@@ -12,8 +25,7 @@ function GenerateUnknownDeviceArray {
     Get-WmiObject Win32_PnPentity | Where-Object {$_.ConfigManagerErrorCode -ne 0} | Select-Object Status, ConfigManagerErrorCode, Name, DeviceID | ForEach-Object {
         Write-Host "Found Unknown device: $($_.DeviceID)" -ForegroundColor Yellow
         $unknownDeviceStringList += $($_.DeviceID)
-    }
-    
+    }  
     return $unknownDeviceStringList
 }
 
@@ -78,7 +90,7 @@ $unknownDevicesArray | ForEach-Object {
 $unknownDeviceList
 
 $jsonString = $unknownDeviceList | ConvertTo-Json
-$jsonString | Out-File -FilePath "unknownDeviceList.json" 
+$jsonString | Out-File -FilePath "$computerModel.json"
 
 # READ CONTENT IN THE FUTURE:
 # $jsonData = Get-Content -Path .\unknownDeviceList.json | ConvertFrom-Json
