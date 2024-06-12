@@ -1,12 +1,15 @@
 echo off
 
-echo Copy files FROM: .\src TO C:\src
-robocopy /E .\src C:\src
+set SOURCE=".\src"
+set DESTINATION="C:\src"
 
-echo cd to C:\src\ and Start
-cd C:\src\
+rem Copy files FROM: %SOURCE% TO %DESTINATION%
+robocopy /E %SOURCE% %DESTINATION%
+
+rem cd to %DESTINATION% and Start
+cd %DESTINATION%
 powershell.exe -ExecutionPolicy RemoteSigned -File .\asd.ps1
 
-echo Remove dir
+rem Remove dir
 cd C:\
-rmdir /S /Q C:\src\
+rmdir /S /Q %DESTINATION%
