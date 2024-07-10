@@ -7,6 +7,7 @@ $fullSaveLocation = $saveLocation+$computerModel
 if ((Test-Path -Path $fullSaveLocation) -eq $false) {
     Write-Host "Create Directoy: $computerModel on $saveLocation"
     #mkdir $fullSaveLocation
+    New-Item -Path $fullSaveLocation -ItemType Directory
 } else {
     Write-Host "Directort Exists."
 }
@@ -90,7 +91,13 @@ $unknownDevicesArray | ForEach-Object {
 $unknownDeviceList
 
 $jsonString = $unknownDeviceList | ConvertTo-Json
-$jsonString | Out-File -FilePath "$computerModel.json"
+
+if ($jsonString.Length -eq 0) {
+    Write-Host "All device ready to use" -ForegroundColor Green
+    New-Item -ItemType File -Name "PASS" -Force | Out-Null
+} else {
+    $jsonString | Out-File -FilePath "$computerModel.json"
+}
 
 # READ CONTENT IN THE FUTURE:
 # $jsonData = Get-Content -Path .\unknownDeviceList.json | ConvertFrom-Json
