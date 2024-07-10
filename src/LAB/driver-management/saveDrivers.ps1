@@ -2,7 +2,7 @@ Write-Host "List Installed Drivers..."
 #New-Item -Type Directory -Path C:\ -Name VMDrivers
 
 Get-WindowsDriver -Online | ForEach-Object {
-    $_.OriginalFileName, $_.Driver
+    "- $($_.Driver) -> $($_.OriginalFileName)"
 
-    pnputil.exe /export-Driver $_.Driver C:\VMDrivers
+    #pnputil.exe /export-Driver $_.Driver C:\VMDrivers
 }
