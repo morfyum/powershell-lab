@@ -4,7 +4,7 @@
 #$driverDirectory = "C:\Users\mars\Downloads\extracted-drivers\spice-guest-tools-latest"
 
 function GetUnknownDevices {
-    return Get-WmiObject Win32_PnPentity | Where-Object {$_.ConfigManagerErrorCode -ne 0}
+    return Get-WmiObject Win32_PnPentity | Where-Object {$_.ConfigManagerErrorCode -ne 0 -or $_.PNPClass -eq "Display" -and $_.Service -eq "BasicDisplay"}
     #return Get-WmiObject Win32_PnPentity | Where-Object {$_.Manufacturer -match "Red Hat"}
     #return Get-WmiObject Win32_PnPentity | Where-Object {$_.DeviceID -match $testValue}
 }
@@ -51,7 +51,8 @@ function PNPInstallProcess {
                 Write-Host " - $pattern" -ForegroundColor Green
                 if ($Install -eq $true) {
                     Write-Host "*** Install driver ***" -ForegroundColor Green
-                    Start-Sleep -Seconds 3
+                    #Start-Sleep -Seconds 3
+                    pnputil.exe /add-driver $($infFile.FullName) /install /force
                 }
             } else {
                 Write-Host " - skip: $pattern" -ForegroundColor Gray
