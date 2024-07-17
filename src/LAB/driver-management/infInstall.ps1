@@ -20,7 +20,6 @@ function CheckDeviceIDInFile {
             Write-Host "|<- $FilePath" -ForegroundColor Yellow
             Write-Host "|-> [$pattern]" -ForegroundColor Yellow
             Write-Host "$line" -ForegroundColor Green
-
             return $true
         }
     }
