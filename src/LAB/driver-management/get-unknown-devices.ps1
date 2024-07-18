@@ -1,4 +1,3 @@
-
 #$testValue = "PCI\VEN_1B36&DEV_0100&SUBSYS_11001AF4&REV_05\3&11583659&0&08"
 #$testValue = "Red Hat"
 #$driverDirectory = "C:\Users\mars\Downloads\extracted-drivers\spice-guest-tools-latest"
