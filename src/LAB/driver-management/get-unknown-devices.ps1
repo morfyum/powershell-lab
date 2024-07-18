@@ -4,15 +4,15 @@
 #$driverDirectory = "C:\Users\mars\Downloads\extracted-drivers\spice-guest-tools-latest"
 
 function GetUnknownDevices {
-    return Get-WmiObject Win32_PnPentity | Where-Object {$_.ConfigManagerErrorCode -ne 0 -or $_.PNPClass -eq "Display" -and $_.Service -eq "BasicDisplay"}
-    #return Get-WmiObject Win32_PnPentity | Where-Object {$_.Manufacturer -match "Red Hat"}
-    #return Get-WmiObject Win32_PnPentity | Where-Object {$_.DeviceID -match $testValue}
+    #return Get-WmiObject Win32_PnPentity | Where-Object {$_.ConfigManagerErrorCode -ne 0 -or ($_.PNPClass -eq "Display" -and $_.Service -eq "BasicDisplay")}
+    return Get-WmiObject Win32_PnPentity | Where-Object {$_.ConfigManagerErrorCode -ne 0 -or ($_.PNPClass -eq "Display" -and $_.Service -match "BasicDisplay")}
 }
 
 function CheckDeviceIDInFile {
     param (
         [string]$FilePath,
-        [string]$Pattern
+        [string]$Pattern,
+        [switch]$Silent
     )
     $fileContent = Get-Content -Path $FilePath
     $Pattern = [Regex]::Escape($Pattern)
@@ -20,9 +20,11 @@ function CheckDeviceIDInFile {
     foreach ($line in $FileContent) {
         $counter = $counter+1
         if ($line -match $Pattern -and $line -notmatch "^;" -and $null -ne $line) {
-            Write-Host " ! $FilePath" -ForegroundColor Yellow
-            Write-Host " ! $Pattern" -ForegroundColor Yellow
-            Write-Host " ! [$line] on line $counter." -ForegroundColor Green
+            if ($Silent -eq $false) {
+                Write-Host " ! $FilePath" -ForegroundColor Yellow
+                Write-Host " ! $Pattern" -ForegroundColor Yellow
+                Write-Host " ! [$line] on line $counter." -ForegroundColor Green
+            }
             return $true
         }
     }
@@ -59,6 +61,49 @@ function PNPInstallProcess {
             }
         }
     }
+}
+
+function SelfTestPathCheck {
+    param (
+        [string] $Path,
+        [switch] $ExitOnFail
+    )
+    if ((Test-Path -Path $Path) -eq $false) {
+        if ($ExitOnFail -eq $true) {
+            Write-Host "Missing path: [$Path]" -ForegroundColor Red
+            Exit 1
+        }
+        return "Missing path: [$Path]"
+    }
+}
+
+function SelfTestInfFiles {
+    param (
+        [array] $InfArray,
+        [switch] $ExitOnFail
+    )
+    if ($InfArray.Length -eq 0) {
+        if ($ExitOnFail -eq $true) {
+            Write-Host "Missing .inf file list. Exit" -ForegroundColor Red
+            Exit 1
+        }
+        return "Missing .inf file list. Exit"
+    }
+}
+
+function SelfTestUnknownDevices {
+    param (
+        [array] $UnknownDevices,
+        [switch] $ExitOnPass
+    )
+    if ($UnknownDevices.Length -eq 0) {
+        if ($ExitOnPass -eq $true) {
+            Write-Host "All device ready to use. Exit" -ForegroundColor Green
+            Exit 0
+        }
+        return "All device ready to use."
+    }
+    return $UnknownDevices.Length
 }
 
 <#
