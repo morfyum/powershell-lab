@@ -3,20 +3,32 @@
 ## Naming Conventions
 
 ### Variables
-    - First letter starts with lowercase, every other word comes Uppercase
+- First letter starts with lowercase, every other word comes Uppercase
 ```ps
+#
+Cmdlet      : Get-Item
+Function    : ConvertTo-Json
+Variable    : $totalCount
+Script      : Backup-Server.ps1
+Module      : UserManagement.psm1
+
+# Variable Names
 variableName = "Something"
+
+# Function names
+DescriptMyFnction
+
+# Class Names
+MyClass
 ```
 
 ### Functions
-    - Function name starts with Uppercase letter
-    - 
-```
-function DescriptFunction
+- Function name starts with Uppercase letter
+```ps
+function DescriptFunction {...}
 ```
 
-### PowerShell internal Database
-
+## PowerShell internal Database
 ```ps
 class MyModel {
     [string] $Value1
