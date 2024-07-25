@@ -1,7 +1,7 @@
 # github.com/morfyum
 # TEST ON VM: PCI\VEN_1B36&DEV_0100&SUBSYSTEM_...
-
-$driverDirectory = "C:\Users\mars\Downloads\extracted-drivers\"
+$unitModel = (Get-WmiObject -Class Win32_ComputerSystem).Model
+$driverDirectory = "C:\Users\mars\Downloads\extracted-drivers\$unitModel\"
 $infFiles = Get-ChildItem -Path $driverDirectory -Recurse -Filter *.inf
 #$testInfPath = "C:\Users\mars\Downloads\extracted-drivers\spice-guest-tools-latest\drivers\qxl\2k8R2\amd64\qxl.inf"
 
