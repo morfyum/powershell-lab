@@ -1,0 +1,16 @@
+{
+    "maintenance": false,
+    "appVersion": "0.1.0",
+    "driverLocation": "C:/Users/mars/Downloads/tests-for-pnputil/drivers",
+    "logLocation": "C:/app/LOGS/",
+    "units": [
+        {
+            "name": "Latitude 5520",
+            "isReady": true
+        },
+        {
+            "name": "Latitude 7720",
+            "isReady": false
+        }
+    ]
+}
