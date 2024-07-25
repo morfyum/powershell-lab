@@ -59,15 +59,22 @@ function PNPInstallProcess {
     Get-ChildItem -Path ".\" -Recurse -Filter *.inf
     (Get-ChildItem -Path ".\" -Recurse -Filter *.inf).FullName
     .EXAMPLE
-    PNPInstallProcess -UnknownDeviceList $testDevices -InfFiles $infFiles    
+    PNPInstallProcess -UnknownDeviceList $testDevices -InfFiles $infFiles
     .NOTES
     General notes
     #>
     param (
         [switch] $Install,
         [object] $UnknownDeviceList,
-        [object] $InfFiles
+        [object] $InfFiles,
+        [string] $ByID = ""
     )
+    if ($ByID -eq "") {
+        Write-Host "Use HardwareID by default. < HardwareID | CompatibleID >"
+        $ByID = "HardwareID"
+    } else {
+        Write-Host "Using: [$ByID]"
+    }
     if ($Install -eq $false) {
         Write-Host "=====================================================" -ForegroundColor Cyan
         Write-Host "*** Running in TEST mode. Add -Install to install ***" -ForegroundColor Cyan
@@ -76,7 +83,7 @@ function PNPInstallProcess {
     foreach ($infFile in $InfFiles) {
         Write-Host "[+] $infFile >>> $($infFile.FullName)" -ForegroundColor Cyan
         #Write-Host "[+] " -ForegroundColor Cyan
-        foreach ($pattern in $UnknownDeviceList.CompatibleID) {  #  CompatibleID | HardwareID
+        foreach ($pattern in $UnknownDeviceList.$ByID) {  #  CompatibleID | HardwareID
             #Write-Host " - $pattern" -ForegroundColor Gray
             $result = CheckDeviceIDInFile -FilePath $($infFile.FullName) -Pattern $pattern
             if ($result -eq $true) {
