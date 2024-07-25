@@ -17,6 +17,29 @@ Write-Host "List Installed Drivers..."
 #}
 
 function SaveDrivers {
+    <#
+    .SYNOPSIS
+    List or export drivers on unit.
+    .DESCRIPTION
+    SaveDrivers by default list installed drivers on unit.
+    With this tool you can save drivers from unit into one directory.
+    .PARAMETER DryRun
+    Default value. When run SaveDrivers without SaveLocation just show installed drivers.
+    You can force list installed drivers with -DryRun
+    .PARAMETER SaveLocation
+    Set location folder where you want to save your drivers.
+    C:\MyDrivers\
+    .PARAMETER CreateLocation
+    When SaveLocation does not exists, you can create folder tree with this switch
+    .EXAMPLE
+    List installed drivers
+    SaveDrivers -DryRun
+    .EXAMPLE
+    Save Drivers into new folder
+    SaveDrivers -SaveLocation C:\MyDrivers -CreateLocation
+    .NOTES
+    General notes
+    #>
     param (
         [switch] $DryRun,
         [string] $SaveLocation = $false,
@@ -69,4 +92,4 @@ function DeleteDrivers {
 }
 
 #### APP ####
-SaveDrivers -DryRun -SaveLocation C:\VMDrivers
+# SaveDrivers -DryRun -SaveLocation C:\VMDrivers
