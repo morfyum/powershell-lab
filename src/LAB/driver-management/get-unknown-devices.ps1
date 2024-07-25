@@ -14,46 +14,79 @@ function CheckDeviceIDInFile {
         [switch]$Silent
     )
     $fileContent = Get-Content -Path $FilePath
+    if ($Pattern -eq " " -or $Pattern -eq "") {
+        return $null
+    }
     $Pattern = [Regex]::Escape($Pattern)
     $counter = 0
+    #Write-Host "[i] Pattern: [$Pattern]"
     foreach ($line in $FileContent) {
         $counter = $counter+1
-        if ($line -match $Pattern -and $line -notmatch "^;" -and $null -ne $line) {
+        #if ($line -match $Pattern -and $line -notmatch "^;" -and $null -ne $line) {
+        if ($line -ne "" -and $line -notmatch "^\s*;" -and $line -match $Pattern) {
             if ($Silent -eq $false) {
-                Write-Host " ! $FilePath" -ForegroundColor Yellow
-                Write-Host " ! $Pattern" -ForegroundColor Yellow
+                Write-Host " ! Pattern  : $Pattern" -ForegroundColor Yellow
+                Write-Host " ! FilePath : $FilePath" -ForegroundColor Yellow
                 Write-Host " ! [$line] on line $counter." -ForegroundColor Green
             }
             return $true
         }
     }
-    return
+    return $null
 }
 
 
 function PNPInstallProcess {
+    <#
+    .SYNOPSIS
+    Find matching unknown device identifier ID in .inf files by using CheckDeviceIDInFile
+    .DESCRIPTION
+    PNPInstallProcess iterate on UnknownDeviceList object (This is a powershell system object),
+    and iterate on INF file list.
+    Check all inf file for matching HardwareIDs of unknown device. 
+    CheckDeviceIDinFile when found match, return with $true and PNPInstallProcess start installation when -Install parameter is set.
+    ! Use "Microsoft" instead of "Red Hat" on non linux based windows VM for testing.
+    $testDevices = Get-WmiObject Win32_PnPentity | Where-Object {$_.PNPClass -eq "Display" -and $_.Manufacturer -match "Red Hat"}
+    $infFiles = Get-ChildItem -Path ".\" -Recurse -Filter *.inf
+    PNPInstallProcess -UnknownDeviceList $testDevices -InfFiles $infFiles
+    .PARAMETER Install
+    Without -Install, PNPInstallProcess just list matching files.
+    .PARAMETER UnknownDeviceList
+    This is not a smiple ARRAY! This is an Object of Unknown devices with device parameters: .HardwareID, CompatibleID, ...etc
+    Get-WmiObject Win32_PnPentity | Where-Object {$_.PNPClass -eq "Display"}
+    .PARAMETER InfFiles
+    This is not a simple array. This is an object with file paramteters: .FullName, Name, ...etc
+    Get-ChildItem -Path ".\" -Recurse -Filter *.inf
+    (Get-ChildItem -Path ".\" -Recurse -Filter *.inf).FullName
+    .EXAMPLE
+    PNPInstallProcess -UnknownDeviceList $testDevices -InfFiles $infFiles    
+    .NOTES
+    General notes
+    #>
     param (
         [switch] $Install,
-        [string] $DefaultID = "HardwareID"
+        [object] $UnknownDeviceList,
+        [object] $InfFiles
     )
     if ($Install -eq $false) {
         Write-Host "=====================================================" -ForegroundColor Cyan
         Write-Host "*** Running in TEST mode. Add -Install to install ***" -ForegroundColor Cyan
         Write-Host "=====================================================" -ForegroundColor Cyan
     }
-    foreach ($infFile in $infFiles) {
-        Write-Host "[+] $($infFile.FullName)" -ForegroundColor Cyan
-        Write-Host "[+] $infFile" -ForegroundColor Cyan
-        
-        foreach ($pattern in $unknownDevices.$DefaultID) {  #  CompatibleID | HardwareID
+    foreach ($infFile in $InfFiles) {
+        Write-Host "[+] $infFile >>> $($infFile.FullName)" -ForegroundColor Cyan
+        #Write-Host "[+] " -ForegroundColor Cyan
+        foreach ($pattern in $UnknownDeviceList.CompatibleID) {  #  CompatibleID | HardwareID
             #Write-Host " - $pattern" -ForegroundColor Gray
             $result = CheckDeviceIDInFile -FilePath $($infFile.FullName) -Pattern $pattern
             if ($result -eq $true) {
-                Write-Host " - $pattern" -ForegroundColor Green
+                Write-Host " - Add : $pattern" -ForegroundColor Green
                 if ($Install -eq $true) {
                     Write-Host "*** Install driver ***" -ForegroundColor Green
                     #Start-Sleep -Seconds 3
                     pnputil.exe /add-driver $($infFile.FullName) /install /force
+                    $UnknownDeviceList = GetUnknownDevices
+                    return
                 }
             } else {
                 Write-Host " - skip: $pattern" -ForegroundColor Gray
