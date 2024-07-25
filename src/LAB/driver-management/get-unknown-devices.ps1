@@ -90,7 +90,6 @@ function PNPInstallProcess {
                 Write-Host " - Add : $pattern" -ForegroundColor Green
                 if ($Install -eq $true) {
                     Write-Host "*** Install driver ***" -ForegroundColor Green
-                    #Start-Sleep -Seconds 3
                     pnputil.exe /add-driver $($infFile.FullName) /install /force
                     $UnknownDeviceList = GetUnknownDevices
                     return
