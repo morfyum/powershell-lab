@@ -1,4 +1,4 @@
-. .\get-unknown-devices.ps1
+. ./src/Unknown-Device-Handler-Tools.ps1
 
 $driverDirectory = "C:\Users\mars\Downloads\extracted-drivers\spice-guest-tools-latest"
 $unknownDevices = GetUnknownDevices
