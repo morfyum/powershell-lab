@@ -1,4 +1,4 @@
-. ..\get-unknown-devices.ps1
+. ../src/Unknown-Device-Handler-Tools.ps1
 
 function TestCase {
     param (
@@ -20,7 +20,10 @@ function TestCase {
 $testDevices = Get-WmiObject Win32_PnPentity | Where-Object {$_.PNPClass -eq "Display" -and $_.Manufacturer -match "Red Hat"}
 $infFiles = Get-ChildItem -Path ".\" -Recurse -Filter *.inf
 PNPInstallProcess -UnknownDeviceList $testDevices -InfFiles $infFiles
-
+"########################################################################################################################"
+Write-Host "*** Test Config.json Availability" -ForegroundColor Cyan
+$config = Get-Content -Path "../src/Config.json" | ConvertFrom-Json
+$config
 "########################################################################################################################"
 Write-Host "*** Test get-unknown-devices.ps1 / GetUnknownDevices ***" -ForegroundColor Cyan
 $testInput = GetUnknownDevices
@@ -66,7 +69,7 @@ $testExcepted = "Missing path: [C:\not\existing\path]"
 TestCase -InputValue $testInput -ExpectedValue $testExcepted -TestName "SelfTestPathCheck / non existing path"
 
 $testInput = SelfTestPathCheck -Path "C:\Windows" -ExitOnFail
-$testExcepted = ""
+$testExcepted = $true
 TestCase -InputValue $testInput -ExpectedValue $testExcepted -TestName "SelfTestPathCheck / existing path    "
 
 $testInput = SelfTestInfFiles -InfArray (Get-ChildItem -Path ".\" -Recurse -Filter *.inf) -ExitOnFail
