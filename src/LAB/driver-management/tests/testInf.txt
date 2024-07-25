@@ -1,0 +1,20 @@
+; THIS ROW NEVER SHOW VEN_1234&DEV_5678
+
+[Version]
+
+;
+; Source file information
+;
+
+[Manufacturer]
+%RHEL%=RHEL,NTamd64
+
+[RHEL.NTamd64]
+%RHELQxl.DeviceDesc% = QxlDod_Inst, PCI\VEN_1B36&DEV_0100&SUBSYS_11001AF4
+
+[QxlDod_Files_Driver]
+qxldod.sys,,,2
+
+SPACE IN NEXT LINE
+ 
+SPACE ABOVE THIS LINE
