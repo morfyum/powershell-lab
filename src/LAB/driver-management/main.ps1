@@ -44,16 +44,17 @@ if ($($config.maintenance) -eq $true) {
     $unknownDevicesCurrent = $unknownDevices
     while ($runAgain -eq $true) {
         PNPInstallByVenDevID -Install -UnknownDeviceList $unknownDevices -InfFiles $infFiles
+        $unknownDevices = GetUnknownDevices
         PNPInstallProcess -Install -UnknownDeviceList $unknownDevices -InfFiles $infFiles
+        $unknownDevices = GetUnknownDevices
         PNPInstallProcess -Install -ByID "CompatibleID" -UnknownDeviceList $unknownDevices -InfFiles $infFiles
         $unknownDevices = GetUnknownDevices
         if ($unknownDevicesCurrent -ne $unknownDevices) {
             $runAgain = $true
             $unknownDevicesCurrent = $unknownDevices
-            Write-Host "OK! Run again"
-            pause
+            Write-Host "[/] Something changed! Run again" -ForegroundColor Green
         } else {
-            Write-Host "Done because solve nothing" -ForegroundColor Yellow
+            Write-Host "[/] Finished because solve nothing else" -ForegroundColor Yellow
             $runAgain = $false
         }
     }
