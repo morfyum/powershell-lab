@@ -1,11 +1,11 @@
 {
     "maintenance": false,
     "appVersion": "0.1.0",
-    "driverLocation": "C:/Users/mars/Downloads/tests-for-pnputil/drivers",
+    "driverLocation": "C:/Users/mars/Downloads/extracted-drivers",
     "logLocation": "C:/app/LOGS/",
     "units": [
         {
-            "name": "Latitude 5520",
+            "name": "BXPC____",
             "isReady": true
         },
         {
