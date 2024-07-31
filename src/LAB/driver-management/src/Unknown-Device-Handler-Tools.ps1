@@ -78,7 +78,6 @@ function PNPInstallProcess {
     if ($($UnknownDeviceList.Length) -eq 0) {
         return "[-] ??? return because Not found Unknown Device !!!"
     }
-    pause
     if ($Install -eq $false) {
         Write-Host "=============================================================" -ForegroundColor Cyan
         Write-Host "*** Running in TEST mode. Add -Install to install drivers ***" -ForegroundColor Cyan
