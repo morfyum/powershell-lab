@@ -1,14 +1,15 @@
 # Unknown Device Handler by github.com/morfyum
 # IMPORT
 . ./src/Unknown-Device-Handler-Tools.ps1
+. ./src/Log-Collector.ps1
 # GLOBAL VARIABLES
 $config = Get-Content -Path "./src/Config.json" | ConvertFrom-Json
 $unitModel = (Get-WmiObject -Class Win32_ComputerSystem).Model
-$unitBiosVersion = $(Get-WmiObject -Class Win32_BIOS).Version
+$unitBiosVersion = $(Get-WmiObject -Class Win32_BIOS).SMBIOSBIOSVersion
 $unitSerialNumber = $(Get-WmiObject -Class Win32_BIOS).SerialNumber
 $driverDirectory = "$($config.driverLocation)/$unitModel"
 $unknownDevices = GetUnknownDevices
-$infFiles = $infFiles = Get-ChildItem -Path $driverDirectory -Recurse -Filter *.inf
+$infFiles = Get-ChildItem -Path $driverDirectory -Recurse -Filter *.inf
 ##### INFO #####
 "#### Config.json #####
 # Maintenance        : $($config.maintenance)
@@ -38,40 +39,31 @@ if ($($config.maintenance) -eq $true) {
     Write-Host "*  In Maintenance mode Driver Updating is unavailable. EXIT                                        *" -ForegroundColor Red
     Write-Host "*                                                                                                  *" -ForegroundColor Red
     Write-Host "****************************************************************************************************" -ForegroundColor Red
-    exit 0
-}
-
-PNPInstallProcess -Install -UnknownDeviceList $unknownDevices -InfFiles $infFiles
-
-PNPInstallProcess -Install -ByID "CompatibleID" -UnknownDeviceList $unknownDevices -InfFiles $infFiles
-
-Write-Host "*** Special Config using for Ready unit ***" -ForegroundColor Cyan
-$counter = 0
-$(($config.units.isReady)) | ForEach-Object {
-    if ($_ -eq $true) {
-        Write-Host " - $(($config.units.name[$counter]))"
-    }
-    $counter++
-}
-
-
-
-
-
-
-
-####### LEGACY ###################
-# $jsonData = Get-Content -Path .\unknownDeviceList.json | ConvertFrom-Json
-
-<#
-foreach ($infFile in $infFiles) {
-    #Write-Host "*** INF LOOKUP ***" -ForegroundColor Cyan
-    
-    CheckDeviceIDInFile -FilePath $($infFile.FullName) -VendorID "1B36" -DeviceID "0100" | ForEach-Object {
-        if ($_ -eq $true) {
-            Write-Host "INSTALL"
-            pnputil.exe /add-driver $infFile.FullName /install
+} else {
+    $runAgain = $true
+    $unknownDevicesCurrent = $unknownDevices
+    while ($runAgain -eq $true) {
+        PNPInstallByVenDevID -Install -UnknownDeviceList $unknownDevices -InfFiles $infFiles
+        PNPInstallProcess -Install -UnknownDeviceList $unknownDevices -InfFiles $infFiles
+        PNPInstallProcess -Install -ByID "CompatibleID" -UnknownDeviceList $unknownDevices -InfFiles $infFiles
+        $unknownDevices = GetUnknownDevices
+        if ($unknownDevicesCurrent -ne $unknownDevices) {
+            $runAgain = $true
+            $unknownDevicesCurrent = $unknownDevices
+            Write-Host "OK! Run again"
+            pause
+        } else {
+            Write-Host "Done because solve nothing" -ForegroundColor Yellow
+            $runAgain = $false
         }
     }
-}#>
 
+    Write-Host "*** Special Config using for Ready unit ***" -ForegroundColor Cyan
+    $counter = 0
+    $(($config.units.isReady)) | ForEach-Object {
+        if ($_ -eq $true) {
+            Write-Host "Ready: $(($config.units.name[$counter]))"
+        }
+        $counter++
+    }
+}
