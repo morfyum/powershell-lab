@@ -25,9 +25,9 @@ function CheckDeviceIDInFile {
         #if ($line -match $Pattern -and $line -notmatch "^;" -and $null -ne $line) {
         if ($line -ne "" -and $line -notmatch "^\s*;" -and $line -match $Pattern) {
             if ($Silent -eq $false) {
-                Write-Host " ! Pattern  : $Pattern" -ForegroundColor Yellow
-                Write-Host " ! FilePath : $FilePath" -ForegroundColor Yellow
-                Write-Host " ! [$line] on line $counter." -ForegroundColor Green
+                Write-Host "[!] Pattern  : $Pattern" -ForegroundColor Yellow
+                Write-Host "[!] FilePath : $FilePath" -ForegroundColor Yellow
+                Write-Host "[!] [$line] on line $counter." -ForegroundColor Green
             }
             return $true
         }
