@@ -1,0 +1,99 @@
+# Windows PE from scratch
+Sources and links:
+> WinPE ADK : https://learn.microsoft.com/en-us/windows-hardware/get-started/adk-install
+
+> Dell Drivers : https://www.dell.com/support/kbdoc/en-us/000107478/dell-command-deploy-winpe-driver-packs
+
+> Optional Components : https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-add-packages--optional-components-reference?view=windows-11
+
+> Add PowerShell support and others : https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-adding-powershell-support-to-windows-pe?view=windows-11
+
+
+## Install ADK & Addons
+- Required only : Deployement tools 
+- Install addons too (3-6GB)
+
+## Run as Administrator: `Deployment and Imaging Tool Environment`
+type `prompt $g` to remove long name of PWD
+
+## How to Create & Customize WinPE 
+- copype
+- dism / mount wim file
+- Add drivers
+- dism / umount wim file
+- MakeWinPEMedia
+
+Copype amd64 create a directory with requirements for winPE. 
+Then we create iso from this library.
+
+```ps
+####################
+# Create basic WinPE library
+####################
+copype		# Show available options
+# ~ 350MB
+copype amd64 %userprofile%\Desktop\WinPE_amd64_20240822
+
+####################
+# Modify WinPE
+####################
+
+cd %userprofile%\Desktop\WinPE_amd64_20240822
+
+# Mount .wim file
+dism /Mount-Wim /WimFile:".\media\sources\boot.wim" /index:1 /MountDir:".\mount"
+
+# Add drivers
+dism /add-driver /driver:"driverFolder" /image:"mount" /recurse
+
+# Add extra .cab files from: C:\WinPE_amd64_PS\mount" /PackagePath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\
+Dism /Add-Package /Image:"C:\WinPE_amd64_PS\mount" /PackagePath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\WinPE-WMI.cab"
+Dism /Add-Package /Image:"C:\WinPE_amd64_PS\mount" /PackagePath:"C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs\en-us\WinPE-WMI_en-us.cab"
+
+# Unmount after finished
+dism /unmount-wim /mountdir:"mount" /commit
+
+####################
+# Create or Burn final image
+####################
+MakeWinPEMedia	# Show available options
+
+# option 1: Write WinPE to ISO file
+MakeWinPEMedia /iso %userprofile%\Desktop\WinPE_amd64_20240822 %userprofile%\Desktop\WinPEx64.iso
+
+# option 2: Write WinPE to usb drive
+MakeWinPEMedia /ufd %userprofile%\Desktop\WinPE_amd64 E:
+
+```
+
+## Write ISO
+- MBR partition required?
+
+```ps1
+# burn iso - Required MBR ?
+diskpart
+
+list disk
+
+# select USB drive
+select disk X
+
+# clean partition
+clean
+
+# convert ot MBR
+convert mbr 
+
+# Create primary partition
+create partition primary
+
+# Format to fat32 in quick mode and add USB drive label
+format fs=fat32 Quick label="MyWinPE"
+
+# optionally assign disk letter
+assign letter="E"
+
+# Exit from diskpart
+exit
+```
+
