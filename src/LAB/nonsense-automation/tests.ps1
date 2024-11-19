@@ -5,7 +5,7 @@
 #SendInput -String "{UP}"
 
 
-<##>
+<#
 AltTab
 Start-Sleep -Seconds 1
 SendInput -String "Minden rendben lesz, csak ékezeteket nem kezel."
@@ -23,3 +23,18 @@ Start-Sleep -Seconds 1
 SendInput -String "Enter"
 CtrlV
 #>
+
+# Read lines from file and do something
+<#
+$fileLines = Get-Content -Path .\lines.txt -Encoding UTF8
+FocusWindow -WindowNameOrID "10856"
+
+$fileLines | ForEach-Object {
+    SendInput -String "TAB"
+    SendInput -String $_
+    Start-Sleep -Milliseconds 250
+    Enter
+}
+#>
+
+AltTabTab

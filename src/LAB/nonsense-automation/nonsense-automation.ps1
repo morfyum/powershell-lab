@@ -1,7 +1,7 @@
 Add-Type -AssemblyName System.Windows.Forms
-Add-Type -MemberDefinition '[DllImport("user32.dll")] public static extern void mouse_event(int flags, int dx, int dy, int cButtons, int info);' -Name U32 -Namespace W;
-[console]::InputEncoding = [console]::OutputEncoding = New-Object System.Text.UTF8Encoding
-$OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = [System.Text.UTF8Encoding]::new()
+# Character Encoding settings
+
+$delayInMiliseconds = 250
 
 <#
 # AVAILABLE INPUT KEYS:
@@ -43,7 +43,7 @@ $wshell.SendKeys('~')
 
 function GetCursorPosition {
     $Position = [System.Windows.Forms.Cursor]::Position
-    Write-Host "Current Position: $Position" -ForegroundColor Cyan
+    Write-Host "Current Position: $Position | X: [$($Position.X)] Y: [$($Position.Y)]" -ForegroundColor Cyan
 }
 
 function GetScreenWidth {
@@ -65,7 +65,7 @@ function FocusWindow {
     )
     $wshell = New-Object -ComObject wscript.shell;
     $wshell.AppActivate($WindowNameOrID)
-    Start-Sleep -Seconds 1
+    Start-Sleep -Milliseconds $delayInMiliseconds
 }
 
 function CursorMove {
@@ -81,7 +81,7 @@ function CursorMove {
     Write-Host "[i] Current Position: $GetCurrentPositionX, $GetCurrentPositionY"
     Write-Host "[i] Set Position: $PositionX, $PositionY"
     [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($PositionX, $PositionY)
-
+    Start-Sleep -Milliseconds $delayInMiliseconds
     if ($Click -eq $true) {
         CursorClickLeft
     }
@@ -90,6 +90,7 @@ function CursorMove {
 function CursorClickLeft {
     [W.U32]::mouse_event(6,0,0,0,0);
     Write-Host "[-] Left Click" -ForegroundColor Cyan
+    Start-Sleep -Milliseconds $delayInMiliseconds
 }
 
 function SendInput {
@@ -106,9 +107,10 @@ function SendInput {
         ctrl+v      {CtrlV}
         alttab      {AltTab}
         alt+tab     {AltTab}
+        tab         {Tab}
         default     {Typing -String $String}
     }
-    Start-Sleep -Seconds 1
+    Start-Sleep -Milliseconds $delayInMiliseconds
 }
 
 function Typing {
@@ -118,7 +120,6 @@ function Typing {
     Write-Host "[-] Typing: $String" -ForegroundColor Cyan
     [System.Windows.Forms.SendKeys]::SendWait("$String")
 }
-
 function CtrlA {
     Write-Host "[-] Ctrl + A" -ForegroundColor Cyan
     [System.Windows.Forms.SendKeys]::SendWait("^{a}")
@@ -135,7 +136,15 @@ function AltTab {
     Write-Host "[-] Alt + Tab" -ForegroundColor Cyan
     [System.Windows.Forms.SendKeys]::SendWait("%{TAB}")
 }
+function AltTabTab {
+    Write-Host "[-] Alt + Tab + Tab" -ForegroundColor Cyan
+    [System.Windows.Forms.SendKeys]::SendWait("%({TAB}{TAB})")
+}
 function Enter {
     Write-Host "[-] Enter" -ForegroundColor Cyan
     [System.Windows.Forms.SendKeys]::SendWait("{ENTER}")
+}
+function Tab {
+    Write-Host "[-] Tab" -ForegroundColor Cyan
+    [System.Windows.Forms.SendKeys]::SendWait("{TAB}")
 }
