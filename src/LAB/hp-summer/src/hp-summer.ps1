@@ -1,4 +1,5 @@
 # hp-summer by Morfyum
+# EXAMPLE: 5CG944B4GD
 
 class Config {
     [string] $usbkey
@@ -113,26 +114,31 @@ function primaryWebRequest {
         [string] $ProductNumber
     )
     $requestHeader = @{
-      "Accept" = "application/json, text/plain, */*"
-      "Accept-Encoding" = "gzip, deflate, br"
-      "Accept-Language" = "en-US,en;q=0.9"
-      "Authorization" = "Basic MjAyMzEzNy1wYXJ0c3VyZmVyOlBTVVJGQCNQUk9E"
-      "Host"="pro-psurf-app.glb.inc.hp.com"
-      "Origin"="https://partsurfer.hp.com"
-      "Referer"="https://partsurfer.hp.com/"
-      "sec-ch-ua"='"Google Chrome";v="117", "Not;A=Brand";v="8", "Chromium";v="117"'
-      "sec-ch-ua-mobile"="?0"
-      "sec-ch-ua-platform"='"Windows"'
-      "Sec-Fetch-Dest"="empty"
-      "Sec-Fetch-Mode"="cors"
-      "Sec-Fetch-Site"="same-site"
-      "User-Agent"="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
+        ":authority" = "pro-psurf-app.hpcloud.hp.com"
+        ":method" = "GET"
+        ":path" = "/Search/GenericSearch?searchText=$SerialNumber&country=US&usertype=EXT"
+        "Accept" = "application/json, text/plain, */*"
+        "Accept-Encoding" = "gzip, deflate, br"
+        "Accept-Language" = "en-US,en;q=0.9"
+        "Authorization" = "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IktleSIsInBpLmF0bSI6InV6eXAifQ.eyJzY29wZSI6IiIsImF1dGhvcml6YXRpb25fZGV0YWlscyI6W10sImNsaWVudF9pZCI6IkRCWERSOE5QNk5JTEhDSlJZUVVCMkw0Rk9NRTVTQk0iLCJpc3MiOiJodHRwczovL2xvZ2luLmV4dGVybmFsLmhwLmNvbSIsImV4cCI6MTc1MjE3MTk4OH0.RZ5238TatPtDtBZwrYCcA1aVdgL-_nR7yBDWWPrUTFroeJZBXZ28LgFPNJQiUZc81sMX_6YN5va6eP9cZ6DlrIRGi9PfU4keW5DXc2ov2CpunYQN9ONXRPuFxfEWepjr-UEQfD7e9Sij3T_ZaAyN2_597jez0aYpGzVMZO64a6uOvxVE1YKpOkdsrZPv3X4XDoO_zhaBagsE175CeC3JZ2L5DOueMWAZVZ_l0tfIX6nVmxjF6nfqpORcui-nI8E_7rpmqhw1ixWUVHuL1pTqTEoWk0MZjujkUx0q1DAtLuElJCpacKuoRP2-hGSXxhFJABMafnbR5LcxvKNmSMPThQ"
+        "Host"="pro-psurf-app.glb.inc.hp.com"
+        "Origin"="https://partsurfer.hp.com"
+        "Referer"="https://partsurfer.hp.com/"
+        "sec-ch-ua"='"Google Chrome";v="138", "Not;A=Brand";v="8", "Chromium";v="138"'
+        "sec-ch-ua-mobile"="?0"
+        "sec-ch-ua-platform"='"Windows"'
+        "Sec-Fetch-Dest"="empty"
+        "Sec-Fetch-Mode"="cors"
+        "Sec-Fetch-Site"="same-site"
+        "User-Agent"="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
     }
     # ApiServer can be changed by HP: [ app.glb ] > [ dr-app ]
     # Secondary Request
     if ($ProductNumber -ne "") {
         try {
-            $result = (Invoke-WebRequest -Uri $ApiServer/partsurferapi/SerialNumber/GetSerialNumber/$SerialNumber/ProductNumber/$ProductNumber/country/US/usertype/EXT -Method Get -Headers $requestHeader).Content | ConvertFrom-Json
+            # 5CG944B4GD
+            #$result = (Invoke-WebRequest -Uri $ApiServer/partsurferapi/SerialNumber/GetSerialNumber/$SerialNumber/ProductNumber/$ProductNumber/country/US/usertype/EXT -Method Get -Headers $requestHeader).Content | ConvertFrom-Json
+            $result = (Invoke-WebRequest -Uri "$ApiServer/Search/GenericSearch?searchText=$SerialNumber/ProductNumber/$ProductNumber&country=US&usertype=EXT" -Method Get -Headers $requestHeader).Content | ConvertFrom-Json
             if (($result.Body.SerialNumberBOM.unit_configuration.part_description).Length -eq 0) {
                 $result = $HPSideErrorMessage
                 return $result
@@ -146,7 +152,7 @@ function primaryWebRequest {
 
     # Primary Request
     try {
-        $result = (Invoke-WebRequest -Uri $ApiServer/partsurferapi/Search/GenericSearch/$SerialNumber/country/US/usertype/EXT -Method Get -Headers $requestHeader).Content | ConvertFrom-Json    
+        $result = (Invoke-WebRequest -Uri "$($ApiServer)/Search/GenericSearch?searchText=$($SerialNumber)&country=US&usertype=EXT" -Method GET -Headers $requestHeader).Content | ConvertFrom-Json
     }
     catch {
         $result = $HPSideErrorMessage

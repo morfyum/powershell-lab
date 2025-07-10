@@ -8,7 +8,7 @@
 
         [switch]$SearchOnlyInMatchingNames = $false,
         [string[]]$IncludeExtensions = @("*"),
-        [string[]]$ExcludeExtensions = @(".dat",".wim", ".ttf", ".exe", ".dll", ".zip", ".rar", ".7z", ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".mp3", ".mp4", ".avi", ".mkv", ".pdf", ".docx", ".xlsx", ".pptx", ".odt", ".ods", ".odp")
+        [string[]]$ExcludeExtensions = @(".pak",".dat",".wim", ".ttf", ".exe", ".dll", ".zip", ".rar", ".7z", ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".mp3", ".mp4", ".avi", ".mkv", ".pdf", ".docx", ".xlsx", ".pptx", ".odt", ".ods", ".odp")
     )
 
     Write-Host "PowerShell finder..." -ForegroundColor Green
@@ -44,7 +44,7 @@
         $filesToSearch = $foundFilesByName
     }
     else {
-        $filesToSearch = Get-ChildItem -Path $Path -Recurse -File -Include $IncludeExtensions -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+        $filesToSearch = Get-ChildItem -Path $Path -Recurse -File -Include $IncludeExtensions -ErrorAction SilentlyContinue -| Select-Object -ExpandProperty FullName
     }
 
     foreach ($file in $filesToSearch) {
@@ -91,4 +91,6 @@
     Write-Host "Search Completed" -ForegroundColor Green
 }
 
-Search-FileContentAndName -Path C:\Windows\ -Keyword "malware"
+$setPath = Read-Host "Path"
+$setKeyword = Read-Host "Keyword(s)"
+Search-FileContentAndName -Path $setPath -Keyword $setKeyword

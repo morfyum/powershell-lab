@@ -30,29 +30,29 @@ Copy-WithExplorerUI $source $destination
 $time_end = (Get-Date).DateTime
 
 if ($? -eq $true ){
-    Write-Host "✅ Copy done. -> Check hash..." -ForegroundColor Green
+    Write-Host "Copy done. -> Check hash..." -ForegroundColor Green
     $destination_hash = (Get-FileHash -Algorithm md5 $destination\$filename).Hash 
-    Write-Host "Hash:      [ $destination_hash ] ✒️" -ForegroundColor DarkGray
+    Write-Host "Hash:      [ $destination_hash ]" -ForegroundColor DarkGray
     if ($source_hash -ne $destination_hash) {
-        Write-Host "🔥 Different hashes, Corrupted copy!" -ForegroundColor Red
+        Write-Host "Different hashes, Corrupted copy!" -ForegroundColor Red
     } else {
-        Write-Host "✅ PASS Hashes match!" -ForegroundColor Green
+        Write-Host "PASS Hashes match!" -ForegroundColor Green
     }
 } else {
-    Write-Host "🔥 Copy interrupted and failed!" -ForegroundColor Red
+    Write-Host "Copy interrupted and failed!" -ForegroundColor Red
 }
 
 $time_in_seconds = (NEW-TIMESPAN -Start $time_start –End $time_end).TotalSeconds
 
-Write-Host "⏱️ Copy time [ $time_in_seconds ] seconds" -ForegroundColor DarkGray
+Write-Host "Copy time [ $time_in_seconds ] seconds" -ForegroundColor DarkGray
 
 $file_size = (Get-Item -Path $destination\$filename).Length/1MB
 
 [int]$megabyte_per_sec = $file_size/$time_in_seconds 
 $megabit_per_sec = $megabyte_per_sec/8
 
-Write-Host "📈 Average MB/s: $megabyte_per_sec" -ForegroundColor Cyan
-Write-Host "📈 Average mbps: $megabit_per_sec" -ForegroundColor Cyan
+Write-Host "Average MB/s: $megabyte_per_sec" -ForegroundColor Cyan
+Write-Host "Average mbps: $megabit_per_sec" -ForegroundColor Cyan
 
 # todo
 function Test-WindowsTerminal { test-path env:WT_SESSION }

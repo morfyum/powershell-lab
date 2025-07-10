@@ -1,7 +1,4 @@
-# bios.txt language settings changer for HPonHP
-
 function Set-Relang() {
-    # 
     $biostxt = $tattoo_file
 
     $newLangCodeInput = Read-Host "NEW LANGUAGE CODE"
