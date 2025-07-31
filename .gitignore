@@ -8,6 +8,6 @@ proc/
 src/scripts/msync/2.txt
 src/scripts/msync/summary.csv
 src/scripts/msync/syncTo/
-
+src/library/logging/tests/*.log
 # pc-summer/src/prod
 src/LAB/hp-summer/src/prod
