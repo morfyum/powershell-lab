@@ -1,46 +1,71 @@
 ﻿# LOGGING v0.1
 
+class LogModel {
+    [string]$Id
+    [string]$Date
+    [string]$Level
+    [string]$File
+    [string]$Message
+}
+
+class LogDetails {
+    <# Define the class. Try constructors, properties, or methods. #>
+}
+
 function Logging {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $False)]
-        [string] $LoggingDateTime = (Get-Date -Format "yyyy-MM-dd HH:mm:ss K"),
+        [string] $logDateTime = (Get-Date -Format "yyyy-MM-dd HH:mm:ss K"),
+        [Parameter(Mandatory = $False)]
+        [string] $logEntity = $MyInvocation.PSCommandPath,
         [Parameter(Mandatory = $True, HelpMessage = "INFO/WARNING/ERROR/CRITICAL")]
         [ValidateSet("INFO", "WARNING", "ERROR", "CRITICAL")]
-        [string] $LoggingLevel,
-        [Parameter(Mandatory = $False)]
-        [string] $LoggingFile = $MyInvocation.PSCommandPath,
+        [string] $logLevel,
         [Parameter(Mandatory = $True)]
-        [string] $LoggingMessage,
+        [string] $logMessage,
         [Parameter(Mandatory = $True)]
-        [string] $LoggingDestination,
+        [string] $logDestination,
         [Parameter(Mandatory = $False)]
-        [switch] $SetColors,
+        [switch] $ShowColors,
         [Parameter(Mandatory = $False)]
         [switch] $SetFilenameOnly,
         [Parameter(Mandatory = $False)]
         [switch] $Less
     )
+    $logEntry = [LogModel]::new()
 
     if ($SetFilenameOnly.IsPresent) {
-        $LoggingFile = (Split-Path -Path $LoggingFile -Leaf)
+        $logEntity = (Split-Path -Path $logEntity -Leaf)
     }
+
+    $logEntry.Id = (New-Guid).ToString()
+    $logEntry.Date = $logDateTime
+    $logEntry.Level = $logLevel
+    $logEntry.File = $logEntity
+    $logEntry.Message = $logMessage
 
     # Set Log message
-    $logMessage = "$LoggingDateTime - $LoggingLevel - $LoggingFile - $LoggingMessage" 
-    # Set logging into a file
-    $logMessage >> $LoggingDestination
-
-    if ($Less.IsPresent) {
-         $LoggingFile = (Split-Path -Path $LoggingFile -Leaf)
-        $logMessage = "$LoggingLevel - $LoggingFile - $LoggingMessage" 
+    $extraSpace = 8 - $($logEntry.Level).Length
+    $spaces = ""
+    for ($i = 0; $i -lt $extraSpace; $i++) {
+        $spaces += " "
     }
 
-    if ($SetColors.IsPresent) {
-        if ($LoggingLevel -eq "INFO"){Write-Host "$logMessage"}
-        if ($LoggingLevel -eq "WARNING"){Write-Host "$logMessage" -ForegroundColor Yellow}
-        if ($LoggingLevel -eq "ERROR"){Write-Host "$logMessage" -ForegroundColor Red}
-        if ($LoggingLevel -eq "CRITICAL"){Write-Host "$logMessage" -ForegroundColor Magenta}
+    $logMessage = "$($logEntry.Date) - $($logEntry.Level)$spaces $($logEntry.File) : $($logEntry.Message)"
+    # Set logging into a file
+    $logEntry | Export-Csv -Path $logDestination -NoTypeInformation -Encoding utf8 -Append
+
+    if ($Less.IsPresent) {
+         $logEntity = (Split-Path -Path $logEntry.File -Leaf)
+        $logMessage = "$($logEntry.Level)$spaces $logEntity : $($logEntry.Message)"
+    }
+
+    if ($ShowColors.IsPresent) {
+        if ($logLevel -eq "INFO"){Write-Host "$logMessage"}
+        if ($logLevel -eq "WARNING"){Write-Host "$logMessage" -ForegroundColor Yellow}
+        if ($logLevel -eq "ERROR"){Write-Host "$logMessage" -ForegroundColor Red}
+        if ($logLevel -eq "CRITICAL"){Write-Host "$logMessage" -ForegroundColor Magenta}
     } else {
         return $logMessage
     }
