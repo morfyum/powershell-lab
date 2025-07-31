@@ -2,6 +2,7 @@
 csv_example.csv
 summaryDatabase.csv
 proc/
+*.log
 
 # src/ => Test files for msync
 src/scripts/msync/2.txt
