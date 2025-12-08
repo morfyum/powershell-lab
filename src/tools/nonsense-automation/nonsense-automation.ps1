@@ -1,4 +1,16 @@
 Add-Type -AssemblyName System.Windows.Forms
+Add-Type @"
+using System;
+using System.Runtime.InteropServices;
+
+public class MouseEvent {
+    [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+    public static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
+
+    public const int MOUSEEVENTF_LEFTDOWN = 0x0002;
+    public const int MOUSEEVENTF_LEFTUP   = 0x0004;
+}
+"@
 # Character Encoding settings
 
 $delayInMiliseconds = 250
@@ -75,7 +87,6 @@ function CursorMove {
         [switch] $Click
     )
     Write-Host "[-] Cursore Move" -ForegroundColor Cyan
-    #$Position = [System.Windows.Forms.Cursor]::Position
     $GetCurrentPositionX = [System.Windows.Forms.Cursor]::Position.X
     $GetCurrentPositionY = [System.Windows.Forms.Cursor]::Position.Y
     Write-Host "[i] Current Position: $GetCurrentPositionX, $GetCurrentPositionY"
@@ -92,6 +103,105 @@ function CursorClickLeft {
     Write-Host "[-] Left Click" -ForegroundColor Cyan
     Start-Sleep -Milliseconds $delayInMiliseconds
 }
+
+function CursorMouseDownLeft {
+    Write-Host "[-] Left Mouse Down" -ForegroundColor Yellow
+    [MouseEvent]::mouse_event([MouseEvent]::MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+}
+
+function CursorMouseUpLeft {
+    Write-Host "[-] Left Mouse Up" -ForegroundColor Yellow
+    [MouseEvent]::mouse_event([MouseEvent]::MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+}
+
+function CursorClickLeft2 {
+    CursorMouseDownLeft
+    Start-Sleep -Milliseconds 80
+    CursorMouseUpLeft
+}
+
+function MouseDrag {
+    param(
+        [int]$StartX,
+        [int]$StartY,
+        [int]$EndX,
+        [int]$EndY,
+        [int]$Delay = 200   # ms
+    )
+    Write-Host "[-] Mouse Drag"
+    Write-Host "[i] Start: $StartX, $StartY"
+    Write-Host "[i] End:   $EndX, $EndY"
+    [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($StartX, $StartY)
+    Start-Sleep -Milliseconds 100
+    # Hold left button
+    [MouseEvent]::mouse_event([MouseEvent]::MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+    # Few waiting (Sometimes required)
+    Start-Sleep -Milliseconds $Delay
+    Write-Host "[i] Set Position: $EndX, $EndY"
+    [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($EndX, $EndY)
+    Start-Sleep -Milliseconds $Delay
+    Write-Host "[i] Drag done." -ForegroundColor Gray
+    [MouseEvent]::mouse_event([MouseEvent]::MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+}
+
+function CursorDrag {
+    param(
+        [int] $StartX,
+        [int] $StartY,
+        [int] $EndX,
+        [int] $EndY,
+        [int] $DragDelay = 250
+    )
+    Write-Host "[-] Cursor Drag Operation" -ForegroundColor Green
+    Write-Host "[i] Start: $StartX, $StartY"
+    Write-Host "[i] End:   $EndX, $EndY"
+    # Start position
+    [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($StartX, $StartY)
+    Start-Sleep -Milliseconds $($DragDelay/2)  ## 80
+    # Cursor Down
+    CursorMouseDownLeft
+    Start-Sleep -Milliseconds $DragDelay
+    # Pull to the end
+    [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($EndX, $EndY)
+    Start-Sleep -Milliseconds $($DragDelay/2)  # 80
+    # Cursor Up
+    CursorMouseUpLeft
+    Write-Host "[+] Drag done." -ForegroundColor Green
+}
+
+function CursorDragSmooth {
+    param(
+        [int] $StartX,
+        [int] $StartY,
+        [int] $EndX,
+        [int] $EndY,
+        [int] $Steps = 25,           # minél nagyobb, annál simább
+        [int] $StepDelay = 5         # ms, minél kisebb, annál gyorsabb
+    )
+    Write-Host "[-] Smooth Cursor Drag" -ForegroundColor Magenta
+    Write-Host "[i] Start: $StartX, $StartY"
+    Write-Host "[i] End:   $EndX, $EndY"
+    # Start pozíció beállítása
+    [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point($StartX, $StartY)
+    Start-Sleep -Milliseconds 50
+    # Egér lenyomása
+    CursorMouseDownLeft
+    # A távolság kiszámítása
+    $dx = $EndX - $StartX
+    $dy = $EndY - $StartY
+    # 50 lépésben mozgatjuk (alapértelmezés)
+    for ($i = 1; $i -le $Steps; $i++) {
+        $newX = $StartX + ($dx * $i / $Steps)
+        $newY = $StartY + ($dy * $i / $Steps)
+        [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point([int]$newX, [int]$newY)
+        Start-Sleep -Milliseconds $StepDelay
+    }
+    # Egér felengedése
+    CursorMouseUpLeft
+    Write-Host "[+] Smooth drag completed." -ForegroundColor Green
+}
+
+
 
 function SendInput {
     param (
